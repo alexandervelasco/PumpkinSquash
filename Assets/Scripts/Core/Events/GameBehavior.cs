@@ -6,13 +6,18 @@ public abstract class GameBehavior : MonoBehaviour {
 
 	public List<string> registeredEvents;
 
-	private string[] eventsCopy = null;
+	private IList<string> eventsCopy = null;
 	private bool awakeDone = false, destroyDone = false;
+
+	protected IList<string> Events {
+		get {
+			return eventsCopy;
+		}
+	}
 
 	public virtual void Awake() {
 		if (!awakeDone) {
-			eventsCopy = new string[registeredEvents.Count];
-			registeredEvents.CopyTo(eventsCopy, 0);
+			eventsCopy = new List<string>(registeredEvents).AsReadOnly();
 			RegisterEvents(eventsCopy);
 			awakeDone = true;
 		}
@@ -27,9 +32,9 @@ public abstract class GameBehavior : MonoBehaviour {
 
 	public abstract void ReceiveEvent (string eventName, object args, object sender);
 
-	void RegisterEvents(string[] registeredEvents)
+	void RegisterEvents(IList<string> registeredEvents)
 	{
-		if (registeredEvents != null && registeredEvents.Length > 0) {
+		if (registeredEvents != null && registeredEvents.Count > 0) {
 			foreach (string registeredEvent in registeredEvents) {
 				if (!string.IsNullOrEmpty (registeredEvent))
 					GameEventManager.RegisterEventReceiver(registeredEvent, ReceiveEvent);
@@ -37,8 +42,8 @@ public abstract class GameBehavior : MonoBehaviour {
 		}
 	}
 
-	private void UnregisterEvents(string[] registeredEvents) {
-		if (registeredEvents != null && registeredEvents.Length > 0) {
+	private void UnregisterEvents(IList<string> registeredEvents) {
+		if (registeredEvents != null && registeredEvents.Count > 0) {
 			foreach (string registeredEvent in registeredEvents) {
 				if (!string.IsNullOrEmpty (registeredEvent))
 					GameEventManager.UnregisterEventReceiver(registeredEvent, ReceiveEvent);
