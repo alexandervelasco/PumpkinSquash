@@ -72,6 +72,26 @@ Transition:
   m_Solo: 0
   m_Mute: 0
   m_CanTransitionToSelf: 0
+--- !u!1101 &110106118
+Transition:
+  serializedVersion: 2
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Run End to Jump Air
+  m_SrcState: {fileID: 110284890}
+  m_DstState: {fileID: 110258784}
+  m_TransitionDuration: .064197354
+  m_TransitionOffset: 0
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Jump
+    m_EventTreshold: 0
+    m_ExitTime: .37500006
+  m_Atomic: 1
+  m_Solo: 0
+  m_Mute: 0
+  m_CanTransitionToSelf: 0
 --- !u!1101 &110107316
 Transition:
   serializedVersion: 2
@@ -241,7 +261,7 @@ Transition:
   m_Name: Run Loop to Jump Air
   m_SrcState: {fileID: 110248082}
   m_DstState: {fileID: 110258784}
-  m_TransitionDuration: .5
+  m_TransitionDuration: .0399998575
   m_TransitionOffset: 0
   m_Conditions:
   - m_ConditionMode: 1
@@ -549,7 +569,7 @@ Transition:
   m_Name: Idle to Jump Air
   m_SrcState: {fileID: 110215764}
   m_DstState: {fileID: 110258784}
-  m_TransitionDuration: .25
+  m_TransitionDuration: .0482715927
   m_TransitionOffset: 0
   m_Conditions:
   - m_ConditionMode: 1
@@ -586,7 +606,7 @@ Transition:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: 
+  m_Name: Idle to Run Loop
   m_SrcState: {fileID: 110215764}
   m_DstState: {fileID: 110248082}
   m_TransitionDuration: .141252995
@@ -1147,6 +1167,14 @@ StateMachine:
   - {x: 156, y: -48, z: 0}
   m_OrderedTransitions:
     data:
+      first: {fileID: 0}
+      second: []
+    data:
+      first: {fileID: 110215764}
+      second:
+      - {fileID: 110198892}
+      - {fileID: 110186490}
+    data:
       first: {fileID: 110210988}
       second:
       - {fileID: 110159446}
@@ -1157,14 +1185,6 @@ StateMachine:
       - {fileID: 110168224}
       - {fileID: 110153368}
     data:
-      first: {fileID: 0}
-      second: []
-    data:
-      first: {fileID: 110215764}
-      second:
-      - {fileID: 110198892}
-      - {fileID: 110186490}
-    data:
       first: {fileID: 110248082}
       second:
       - {fileID: 110105084}
@@ -1174,6 +1194,7 @@ StateMachine:
       second:
       - {fileID: 110126410}
       - {fileID: 110115780}
+      - {fileID: 110106118}
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: 420, y: -144, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

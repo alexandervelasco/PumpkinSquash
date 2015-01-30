@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class CharacterMoveSkill : EventCallingGameBehavior {
 
@@ -9,12 +10,14 @@ public class CharacterMoveSkill : EventCallingGameBehavior {
 
 	private Vector3 destination;
 	private bool moving = false;
+	private CharacterControllerAcceleration targetAcceleration = null;
 
 	// Use this for initialization
 	void Start () {
 		destination = Vector3.zero;
 		if (target == null)
 			target = gameObject;
+		targetAcceleration = target.GetComponent<CharacterControllerAcceleration>();
 	}
 	
 	// Update is called once per frame
@@ -22,15 +25,15 @@ public class CharacterMoveSkill : EventCallingGameBehavior {
 		if (moving)
 		{
 			Transform targetTransform = target.transform;
-			CharacterControllerVelocityAggregate targetControllerVelocity = target.GetComponent<CharacterControllerVelocityAggregate>();
-			if (targetControllerVelocity != null)
+			if (targetAcceleration != null)
 			{
-				Vector3 lookPoint = new Vector3(destination.x, targetTransform.position.y, destination.z);
-				targetTransform.LookAt(lookPoint);
 				if (Vector3.Distance(targetTransform.position, destination) > speedUPS * Time.deltaTime)
 				{
-					Vector3 moveDirection = targetTransform.forward * speedUPS * Time.deltaTime;
-					targetControllerVelocity.currentVelocityUPF += moveDirection;
+					Vector3 lookPoint = new Vector3(destination.x, targetTransform.position.y, destination.z);
+					targetTransform.LookAt(lookPoint);
+					Vector3 moveVelocity = targetTransform.forward * speedUPS * Time.deltaTime;
+					targetAcceleration.absoluteVelocity += moveVelocity;
+					moving = true;
 				}
 				else
 				{
