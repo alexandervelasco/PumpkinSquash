@@ -47,7 +47,7 @@ public class CharacterJumpSkill : EventCallingGameBehavior {
 			if (tapData[tapData.Count-1] is WorldTouch)
 			{
 				WorldTouch tapRelease = tapData[tapData.Count-1] as WorldTouch;
-				if (tapRelease.Transform.gameObject.Equals(target) && 
+				if (tapRelease.Collider.gameObject.Equals(target) && 
 				    targetController != null &&
 				    (targetController.isGrounded || canAirJump))
 				{

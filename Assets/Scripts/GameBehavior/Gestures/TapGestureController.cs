@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 public class TapGestureController : EventCallingGameBehavior {
 
-	public float tapSensitivity = 0;
+	public float tapSensitivity = 0.1f;
+	public float tapMovementTolerance = 0.1f;
 	private Dictionary<int, float> totalTimes = new Dictionary<int, float>();
 	private Dictionary<int, List<IGameTouch>> tapGestureData = new Dictionary<int, List<IGameTouch>>();
 	private Dictionary<int, bool> isStationary = new Dictionary<int, bool>();
@@ -36,13 +37,19 @@ public class TapGestureController : EventCallingGameBehavior {
 					tapGestureData[fingerId].Add(currentTouch);
 					isStationary[fingerId] = true;
 				}
-				else if (currentTouch.Phase == TouchPhase.Stationary)
+				else if (currentTouch.Phase != TouchPhase.Ended &&
+				         currentTouch.Phase != TouchPhase.Canceled)
 				{
-					totalTimes[fingerId] += Time.deltaTime;
-					tapGestureData[fingerId].Add(currentTouch);
+					float distance = Vector2.Distance(currentTouch.Position, tapGestureData[fingerId][0].Position);
+					if (distance < tapMovementTolerance)
+					{
+						totalTimes[fingerId] += Time.deltaTime;
+						tapGestureData[fingerId].Add(currentTouch);
+					}
+					else
+						isStationary[fingerId] = false;
 				}
-				else if (currentTouch.Phase == TouchPhase.Moved ||
-				         currentTouch.Phase == TouchPhase.Canceled)
+				else if (currentTouch.Phase == TouchPhase.Canceled)
 				{
 					isStationary[fingerId] = false;
 				}

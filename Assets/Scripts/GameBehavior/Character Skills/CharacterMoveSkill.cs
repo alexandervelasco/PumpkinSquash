@@ -7,10 +7,12 @@ public class CharacterMoveSkill : EventCallingGameBehavior {
 	public GameObject target = null;
 	public float speedUPS = 1.0f;
 	public string destinationTag = "Terrain";
+	public float minimumDistance = 0.1f;
 
 	private Vector3 destination;
 	private bool moving = false;
 	private CharacterControllerAcceleration targetAcceleration = null;
+	private int currentFingerId = -1;
 
 	// Use this for initialization
 	void Start () {
@@ -25,11 +27,11 @@ public class CharacterMoveSkill : EventCallingGameBehavior {
 		if (moving)
 		{
 			Transform targetTransform = target.transform;
+			Vector3 lookPoint = new Vector3(destination.x, targetTransform.position.y, destination.z);
 			if (targetAcceleration != null)
 			{
-				if (Vector3.Distance(targetTransform.position, destination) > speedUPS * Time.deltaTime)
+				if (Vector3.Distance(targetTransform.position, lookPoint) > minimumDistance)
 				{
-					Vector3 lookPoint = new Vector3(destination.x, targetTransform.position.y, destination.z);
 					targetTransform.LookAt(lookPoint);
 					Vector3 moveVelocity = targetTransform.forward * speedUPS * Time.deltaTime;
 					targetAcceleration.absoluteVelocity += moveVelocity;
@@ -52,7 +54,16 @@ public class CharacterMoveSkill : EventCallingGameBehavior {
 		{
 			WorldTouch[] worldTouches = args as WorldTouch[];
 			WorldTouch firstTouch = worldTouches[0];
-			if (firstTouch.Transform.gameObject.CompareTag(destinationTag))
+			if (firstTouch.Phase == TouchPhase.Began &&
+			    firstTouch.Collider.gameObject.CompareTag(destinationTag))
+			{
+				currentFingerId = firstTouch.FingerId;
+			}
+			else if (firstTouch.Phase == TouchPhase.Ended &&
+			         currentFingerId == firstTouch.FingerId)
+				currentFingerId = -1;
+			if (currentFingerId == firstTouch.FingerId &&
+			         firstTouch.Collider.gameObject.CompareTag(destinationTag))
 			{
 				destination = firstTouch.Point;
 				CallEvent(0, null);
