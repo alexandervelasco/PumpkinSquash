@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class WorldTouch : IGameTouch {
+public class WorldTouch : IWorldTouch {
 
 	private IGameTouch gameTouch;
 	private Vector3 barycentricCoordinate;

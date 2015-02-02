@@ -331,7 +331,7 @@ MonoBehaviour:
   calledEvents:
   - SKILL_MOVESTART
   - SKILL_MOVESTOP
-  target: {fileID: 0}
+  source: {fileID: 0}
   speedUPS: 7
   destinationTag: Terrain
   minimumDistance: .100000001
@@ -385,7 +385,7 @@ MonoBehaviour:
   calledEvents:
   - SKILL_JUMPSTART
   - SKILL_JUMPSTOP
-  target: {fileID: 0}
+  source: {fileID: 0}
   speedUPS: .300000012
   canAirJump: 0
 --- !u!1 &141447562
