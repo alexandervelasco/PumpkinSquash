@@ -366,7 +366,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e38ce5b132db4b4b923d50e2a004d15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterGravityUPF2: {x: 0, y: -.0149999997, z: 0}
   absoluteVelocity: {x: 0, y: 0, z: 0}
   currentVelocity: {x: 0, y: 0, z: 0}
 --- !u!114 &135100525
@@ -387,7 +386,7 @@ MonoBehaviour:
   - SKILL_JUMPSTOP
   source: {fileID: 0}
   speedUPS: .349999994
-  canAirJump: 1
+  canAirJump: 0
 --- !u!1 &141447562
 GameObject:
   m_ObjectHideFlags: 0
