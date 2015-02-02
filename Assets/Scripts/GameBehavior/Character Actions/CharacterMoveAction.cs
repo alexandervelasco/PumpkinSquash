@@ -80,27 +80,24 @@ public class CharacterMoveAction : EventCallingGameBehavior, ICharacterAction {
 		{
 			IWorldTouch[] worldTouches = args as IWorldTouch[];
 			IWorldTouch firstTouch = worldTouches[0];
-			if (firstTouch.Collider != null)
+			if (firstTouch.Phase == TouchPhase.Began &&
+			    firstTouch.Collider.gameObject.CompareTag(destinationTag))
 			{
-				if (firstTouch.Phase == TouchPhase.Began &&
-				    firstTouch.Collider.gameObject.CompareTag(destinationTag))
-				{
-					currentFingerId = firstTouch.FingerId;
-				}
-				else if (firstTouch.Phase == TouchPhase.Ended &&
-				         currentFingerId == firstTouch.FingerId)
-					currentFingerId = -1;
-				if (currentFingerId == firstTouch.FingerId &&
-				         firstTouch.Collider.gameObject.CompareTag(destinationTag))
-				{
-					destination = firstTouch.Point;
-					status = CharacterActionStatus.Started;
-					CallEvent(0, this);
-					if (status != CharacterActionStatus.Cancelled)
-						moving = true;
-					else
-						status = CharacterActionStatus.Inactive;
-				}
+				currentFingerId = firstTouch.FingerId;
+			}
+			else if (firstTouch.Phase == TouchPhase.Ended &&
+			         currentFingerId == firstTouch.FingerId)
+				currentFingerId = -1;
+			if (currentFingerId == firstTouch.FingerId &&
+			         firstTouch.Collider.gameObject.CompareTag(destinationTag))
+			{
+				destination = firstTouch.Point;
+				status = CharacterActionStatus.Started;
+				CallEvent(0, this);
+				if (status != CharacterActionStatus.Cancelled)
+					moving = true;
+				else
+					status = CharacterActionStatus.Inactive;
 			}
 		}
 	}

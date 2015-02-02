@@ -387,7 +387,7 @@ MonoBehaviour:
   - SKILL_JUMPSTOP
   source: {fileID: 0}
   speedUPS: .349999994
-  canAirJump: 1
+  canAirJump: 0
 --- !u!1 &141447562
 GameObject:
   m_ObjectHideFlags: 0
