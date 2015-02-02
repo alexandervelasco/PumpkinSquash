@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public abstract class GameBehavior : MonoBehaviour {
+public abstract class GameBehavior : MonoBehaviour, IGameEventReceiver {
 
 	public List<string> registeredEvents;
 
@@ -30,7 +30,7 @@ public abstract class GameBehavior : MonoBehaviour {
 		}
 	}
 
-	public abstract void ReceiveEvent (string eventName, object args, object sender);
+	public virtual void ReceiveEvent (string eventName, object args, object sender){}
 
 	void RegisterEvents(IList<string> registeredEvents)
 	{

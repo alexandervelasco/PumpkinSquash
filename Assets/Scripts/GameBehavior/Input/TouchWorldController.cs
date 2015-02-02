@@ -22,12 +22,12 @@ public class TouchWorldController : EventCallingGameBehavior {
 		if (args is IGameTouch[] && referenceCamera != null) 
 		{
 			IGameTouch[] gameTouches = args as IGameTouch[];
-			WorldTouch[] worldTouches = new WorldTouch[gameTouches.Length];
+			IWorldTouch[] worldTouches = new WorldTouch[gameTouches.Length];
 			for (int i = 0; i < gameTouches.Length; i++)
 			{
 				IGameTouch gameTouch = gameTouches[i];
-				WorldTouch worldTouch = null;
-				if (!(gameTouch is WorldTouch))
+				IWorldTouch worldTouch = null;
+				if (!(gameTouch is IWorldTouch))
 				{
 					Ray ray = referenceCamera.ScreenPointToRay(new Vector3(gameTouch.Position.x,
 					                                                       gameTouch.Position.y,
@@ -39,7 +39,7 @@ public class TouchWorldController : EventCallingGameBehavior {
 						worldTouch = new WorldTouch(gameTouch);
 				}
 				else
-					worldTouch = gameTouch as WorldTouch;
+					worldTouch = gameTouch as IWorldTouch;
 				worldTouches[i] = worldTouch;
 			}
 
