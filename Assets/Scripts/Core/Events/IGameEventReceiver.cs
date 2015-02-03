@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
-public interface IGameEventReceiver {	
-	void ReceiveEvent (string eventName, object args, object sender);
+public interface IGameEventReceiver {
+	IList<string> ReceivedEvents { get; }
 }

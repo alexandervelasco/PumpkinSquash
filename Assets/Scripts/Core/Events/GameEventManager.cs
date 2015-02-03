@@ -19,6 +19,18 @@ public static class GameEventManager {
 		else
 			eventDict[key] += eventReceiver;
 	}
+
+	public static void RegisterEventReceiver(IEnumerable<string> keys, Action<string, object, object> eventReceiver)
+	{
+		if (keys != null) 
+		{
+			foreach (string key in keys) 
+			{
+				if (!string.IsNullOrEmpty(key))
+					RegisterEventReceiver (key, eventReceiver);
+			}
+		}
+	}
 	
 	public static void UnregisterEventReceiver(string key, Action<string, object, object> eventReceiver)
 	{
@@ -27,6 +39,18 @@ public static class GameEventManager {
 			eventDict[key] -= eventReceiver;
 			if (eventDict[key] == null || eventDict[key].GetInvocationList().Length == 0)
 				eventDict.Remove(key);
+		}
+	}
+
+	public static void UnregisterEventReceiver(IEnumerable<string> keys, Action<string, object, object> eventReceiver)
+	{
+		if (keys != null) 
+		{
+			foreach (string key in keys) 
+			{
+				if (!string.IsNullOrEmpty(key))
+					UnregisterEventReceiver (key, eventReceiver);
+			}
 		}
 	}
 }

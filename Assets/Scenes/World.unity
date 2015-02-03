@@ -366,6 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e38ce5b132db4b4b923d50e2a004d15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterGravityUPF2: {x: 0, y: -.0149999997, z: 0}
   absoluteVelocity: {x: 0, y: 0, z: 0}
   currentVelocity: {x: 0, y: 0, z: 0}
 --- !u!114 &135100525
@@ -669,6 +670,7 @@ GameObject:
   - 4: {fileID: 330502559}
   - 114: {fileID: 330502558}
   - 114: {fileID: 330502560}
+  - 114: {fileID: 330502561}
   m_Layer: 0
   m_Name: Debug
   m_TagString: Untagged
@@ -712,10 +714,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fc0efce8a50ec34aab7c6e0f14ccc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  registeredEvents: []
   calledEvents:
   - EVENT_TOUCH
   mouseButtonId: 0
+--- !u!114 &330502561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 330502557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff12e82aed006a40b1114d502f59080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents: []
 --- !u!1 &342278843
 GameObject:
   m_ObjectHideFlags: 0
@@ -1501,7 +1514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aa50d76766340a4ba2db57c50c36048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  registeredEvents: []
   calledEvents:
   - EVENT_TOUCH
 --- !u!1 &1210187701
