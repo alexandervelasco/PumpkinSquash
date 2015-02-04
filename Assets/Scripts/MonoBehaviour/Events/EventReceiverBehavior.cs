@@ -6,6 +6,7 @@ using System.Linq;
 
 public abstract class EventReceiverBehavior : MonoBehaviour, IGameEventReceiver {
 
+	//serialized data
 	public List<string> registeredEvents;
 
 	private bool awakeDone = false, destroyDone = false;

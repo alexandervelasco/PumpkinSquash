@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 public class TapGestureController : EventTransceiverBehavior {
 
+	//serialized data
 	public float tapSensitivity = 0.1f;
 	public float tapMovementTolerance = 0.1f;
+
 	private Dictionary<int, float> totalTimes = new Dictionary<int, float>();
 	private Dictionary<int, List<IGameTouch>> tapGestureData = new Dictionary<int, List<IGameTouch>>();
 	private Dictionary<int, bool> isStationary = new Dictionary<int, bool>();

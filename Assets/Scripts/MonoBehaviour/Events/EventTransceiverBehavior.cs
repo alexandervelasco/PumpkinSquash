@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 public abstract class EventTransceiverBehavior : MonoBehaviour, IGameEventCaller, IGameEventReceiver {
-	
+
+	//serialized data
 	public List<string> registeredEvents;
 	public List<string> calledEvents;
 	

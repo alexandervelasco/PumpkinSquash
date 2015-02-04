@@ -3,6 +3,7 @@ using System.Collections;
 
 public class TouchWorldController : EventTransceiverBehavior {
 
+	//serialized data
 	public Camera referenceCamera;
 
 	// Use this for initialization

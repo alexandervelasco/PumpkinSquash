@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 public class GameObjectLoader : EventReceiverBehavior {
-	
+
+	//serialized data
 	public GameObject[] dataToLoad;
 	public int frameDelay = 2;
 	public int nextScene = 1;

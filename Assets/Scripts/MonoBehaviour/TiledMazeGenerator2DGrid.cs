@@ -8,7 +8,7 @@ public class TiledMazeGenerator2DGrid : EventReceiverBehavior {
 	//enums
 	public enum MazeConstructorType {StackPickRandomVisitGT};
 
-	//attributes
+	//serialized data
 	public GameObject tile;
 	public string spawnPoolName;
 	public int width, length, gapSize, tileScale;

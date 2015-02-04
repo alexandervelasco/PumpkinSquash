@@ -6,6 +6,7 @@ using System.Linq;
 
 public class EventCallerBehavior : MonoBehaviour, IGameEventCaller {
 
+	//serialized data
 	public List<string> calledEvents;
 	
 	private bool awakeDone = false;

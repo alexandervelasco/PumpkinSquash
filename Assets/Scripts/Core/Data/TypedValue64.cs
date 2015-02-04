@@ -1,4 +1,6 @@
-﻿public struct TypedValue64<T> where T : struct {
+﻿using System;
+
+public struct TypedValue64<T> where T : struct {
 	public ulong Type { get; private set; }
 	public T Value { get; private set; }
 

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System;
 
 public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
-	
+
+	//serialized data
 	public GameObject source = null;
 	public float speedUPS = 1.0f;
 	public bool canAirJump = false;
+	public string id = String.Empty;
+	public ulong type = 0;
 
 	private CharacterControllerAcceleration targetAcceleration = null;
 	private CharacterController targetController = null;
@@ -15,12 +18,34 @@ public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 
 	#region ICharacterAction implementation
 
+	public string ID {
+		get {
+			return id;
+		}
+		set {
+			id = value;
+		}
+	}
+
+	public ulong Type {
+		get {
+			return type;
+		}
+		set {
+			type = value;
+		}
+	}
+
 	public CharacterActionStatus Status {
 		get {
 			return this.status;
 		}
 		set {
-			this.status = value;
+			if (this.status != value)
+			{
+				this.status = value;
+				CallEvent(0, this);
+			}
 		}
 	}
 	
@@ -54,14 +79,13 @@ public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 		if (!targetController.isGrounded)
 		{
 			jumpEnded = false;
-			status = CharacterActionStatus.Active;
+			Status = CharacterActionStatus.Active;
 		}
 		else if (targetController.isGrounded && !jumpEnded)
 		{
-			status = CharacterActionStatus.Ended;
-			CallEvent(1, this);
+			Status = CharacterActionStatus.Ended;
 			jumpEnded = true;
-			status = CharacterActionStatus.Inactive;
+			Status = CharacterActionStatus.Inactive;
 		}
 	}
 
@@ -81,12 +105,13 @@ public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 					    targetController != null &&
 					    (targetController.isGrounded || canAirJump))
 					{
-						status = CharacterActionStatus.Started;
-						CallEvent(0, this);
-						if (status != CharacterActionStatus.Cancelled)
+						Status = CharacterActionStatus.Started;
+						if (Status != CharacterActionStatus.Cancelled)
 							jumpStarted = true;
 						else
-							status = CharacterActionStatus.Inactive;
+						{
+							Status = CharacterActionStatus.Inactive;
+						}
 					}
 				}
 			}

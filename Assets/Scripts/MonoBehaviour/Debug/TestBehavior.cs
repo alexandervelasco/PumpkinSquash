@@ -1,9 +1,10 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class TestBehavior : EventReceiverBehavior {
 
 	public TypedValue64<int> testIntValue;
+	public List<List<int>> twoDimList;
 
 	// Use this for initialization
 	void Start () {

@@ -4,10 +4,13 @@ using System;
 
 public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 
+	//serialized data
 	public GameObject source = null;
 	public float speedUPS = 1.0f;
 	public string destinationTag = "Terrain";
 	public float minimumDistance = 0.1f;
+	public string id = String.Empty;
+	public ulong type = 0;
 
 	private Vector3 destination;
 	private bool moving = false;
@@ -17,12 +20,34 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 
 	#region ICharacterAction implementation
 
+	public string ID {
+		get {
+			return id;
+		}
+		set {
+			id = value;
+		}
+	}
+
+	public ulong Type {
+		get {
+			return type;
+		}
+		set {
+			type = value;
+		}
+	}
+
 	public CharacterActionStatus Status {
 		get {
 			return this.status;
 		}
 		set {
-			this.status = value;
+			if (this.status != value)
+			{
+				this.status = value;
+				CallEvent(0, this);
+			}
 		}
 	}
 
@@ -59,14 +84,13 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 					Vector3 moveVelocity = targetTransform.forward * speedUPS * Time.deltaTime;
 					targetAcceleration.absoluteVelocity += moveVelocity;
 					moving = true;
-					status = CharacterActionStatus.Active;
+					Status = CharacterActionStatus.Active;
 				}
 				else
 				{
-					status = CharacterActionStatus.Ended;
-					CallEvent(1, this);
+					Status = CharacterActionStatus.Ended;
 					moving = false;
-					status = CharacterActionStatus.Inactive;
+					Status = CharacterActionStatus.Inactive;
 				}
 			}
 		}
@@ -92,12 +116,13 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 			         firstTouch.Collider.gameObject.CompareTag(destinationTag))
 			{
 				destination = firstTouch.Point;
-				status = CharacterActionStatus.Started;
-				CallEvent(0, this);
-				if (status != CharacterActionStatus.Cancelled)
+				Status = CharacterActionStatus.Started;
+				if (Status != CharacterActionStatus.Cancelled)
 					moving = true;
 				else
-					status = CharacterActionStatus.Inactive;
+				{
+					Status = CharacterActionStatus.Inactive;
+				}
 			}
 		}
 	}

@@ -6,6 +6,7 @@ using System.Linq;
 [RequireComponent(typeof(CharacterController))]
 public class CharacterControllerAcceleration : MonoBehaviour {
 
+	//serialized data
 	public Vector3 characterGravityUPF2 = Vector3.zero;
 	public Vector3 absoluteVelocity = Vector3.zero;
 	public Vector3 currentVelocity = Vector3.zero;
