@@ -259,6 +259,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 135100519}
   - 95: {fileID: 135100520}
+  - 114: {fileID: 135100523}
   - 143: {fileID: 135100521}
   - 114: {fileID: 135100524}
   - 114: {fileID: 135100522}
@@ -333,7 +334,27 @@ MonoBehaviour:
   speedUPS: 7
   destinationTag: Terrain
   minimumDistance: .100000001
-  id: 
+  id: ACTION_MOVE
+--- !u!114 &135100523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 135100518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47daefff8f6865d4ca94bf822f9221b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents:
+  - EVENT_CHARACTERACTION
+  characterActionIDs:
+  - ACTION_MOVE
+  - ACTION_JUMP
+  booleanAnimationNames:
+  - Run
+  - Jump
+  enableStates: 0200000004000000
 --- !u!114 &135100524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,7 +387,7 @@ MonoBehaviour:
   source: {fileID: 0}
   speedUPS: .349999994
   canAirJump: 0
-  id: 
+  id: ACTION_JUMP
 --- !u!1 &141447562
 GameObject:
   m_ObjectHideFlags: 0

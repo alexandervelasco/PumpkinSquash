@@ -3,9 +3,6 @@ using System.Collections.Generic;
 
 public class TestBehavior : EventReceiverBehavior {
 
-	public TypedValue64<int> testIntValue;
-	public List<List<int>> twoDimList;
-
 	// Use this for initialization
 	void Start () {
 		foreach (string registeredEvent in registeredEvents)
