@@ -1,85 +1,139 @@
 ﻿using System;
 
-public struct TypedValue32<T>
-where T : IConvertible {
-	public int Type { get; private set; }
-	public T Value { get; private set; }
+public struct TypedValue32<T, U> : IConvertible
+where T : IConvertible
+where U : IConvertible {
+	public T Type { get; private set; }
+	public U Value { get; private set; }
 
-	public TypedValue32 (int type, T value) : this()
+	public TypedValue32 (T type, U value) : this()
 	{
-		this.Type = type; this.Value = value;
+		if (!typeof(T).IsEnum)
+			throw new Exception("T must be an enum");
+		else
+			this.Type = type;
+		this.Value = value;
 	}
 
-	public TypedValue32 (T value) : this()
-	{
-		this.Type = 0; this.Value = value;
+	public TypedValue32 (U value) : this()
+	{		
+		this.Type = default(T); this.Value = value;
 	}
 
 	public override bool Equals (object obj)
 	{
 		bool result = false;
-		if (obj is TypedValue32<T>)
-			result = this == (TypedValue32<T>)obj;
+		if (obj is TypedValue32<T,U>)
+			result = this == (TypedValue32<T,U>)obj;
 		return result;
 	}
 
-	public static implicit operator T (TypedValue32<T> typedValue)
+	public static implicit operator U (TypedValue32<T,U> typedValue)
 	{
 		return typedValue.Value;
 	}
 
-	public static implicit operator TypedValue32<T>(T value)
+	public static implicit operator TypedValue32<T,U>(U value)
 	{
-		return new TypedValue32<T>(value);
+		return new TypedValue32<T,U>(value);
 	}
 
-	public static bool operator == (TypedValue32<T> op1, TypedValue32<T> op2)
+	public static bool operator == (TypedValue32<T,U> op1, TypedValue32<T,U> op2)
 	{
-		return (op1.Type == op2.Type && op1.Value.Equals(op2.Value));
+		return (op1.Type.Equals(op2.Type) && op1.Value.Equals(op2.Value));
 	}
 
-	public static bool operator != (TypedValue32<T> op1, TypedValue32<T> op2)
+	public static bool operator != (TypedValue32<T,U> op1, TypedValue32<T,U> op2)
 	{
-		return (op1.Type != op2.Type || !op1.Value.Equals(op2.Value));
+		return (!op1.Type.Equals(op2.Type) || !op1.Value.Equals(op2.Value));
 	}
 
-	public static TypedValue32<T> operator & (TypedValue32<T> op1, int op2)
+	#region IConvertible implementation
+
+	public TypeCode GetTypeCode ()
 	{
-		return new TypedValue32<T>(op1.Type & op2, op1.Value);
+		return Value.GetTypeCode();
 	}
 
-	public static TypedValue32<T> operator & (TypedValue32<T> op1, TypedValue32<T> op2)
+	public bool ToBoolean (IFormatProvider provider)
 	{
-		return op1 & op2.Type;
+		return Value.ToBoolean(provider);
 	}
 
-	public static TypedValue32<T> operator | (TypedValue32<T> op1, int op2)
+	public char ToChar (IFormatProvider provider)
 	{
-		return new TypedValue32<T>(op1.Type | op2, op1.Value);
+		return Value.ToChar(provider);
 	}
 
-	public static TypedValue32<T> operator | (TypedValue32<T> op1, TypedValue32<T> op2)
+	public sbyte ToSByte (IFormatProvider provider)
 	{
-		return op1 | op2.Type;
+		return Value.ToSByte(provider);
 	}
 
-	public static TypedValue32<T> operator ^ (TypedValue32<T> op1, int op2)
+	public byte ToByte (IFormatProvider provider)
 	{
-		return new TypedValue32<T>(op1.Type ^ op2, op1.Value);
+		return Value.ToByte(provider);
 	}
 
-	public static TypedValue32<T> operator ^ (TypedValue32<T> op1, TypedValue32<T> op2)
+	public short ToInt16 (IFormatProvider provider)
 	{
-		return op1 ^ op2.Type;
+		return Value.ToInt16(provider);
 	}
 
-	public static TypedValue32<T> operator << (TypedValue32<T> op1, int op2)
+	public ushort ToUInt16 (IFormatProvider provider)
 	{
-		return new TypedValue32<T>(op1.Type << op2, op1.Value);
+		return Value.ToUInt16(provider);
 	}
 
-	public static TypedValue32<T> operator >> (TypedValue32<T> op1, int op2)
+	public int ToInt32 (IFormatProvider provider)
 	{
-		return new TypedValue32<T>(op1.Type >> op2, op1.Value);
+		return Value.ToInt32(provider);
 	}
+
+	public uint ToUInt32 (IFormatProvider provider)
+	{
+		return Value.ToUInt32(provider);
+	}
+
+	public long ToInt64 (IFormatProvider provider)
+	{
+		return Value.ToInt64(provider);
+	}
+
+	public ulong ToUInt64 (IFormatProvider provider)
+	{
+		return Value.ToUInt64(provider);
+	}
+
+	public float ToSingle (IFormatProvider provider)
+	{
+		return Value.ToSingle(provider);
+	}
+
+	public double ToDouble (IFormatProvider provider)
+	{
+		return Value.ToDouble(provider);
+	}
+
+	public decimal ToDecimal (IFormatProvider provider)
+	{
+		return Value.ToDecimal(provider);
+	}
+
+	public DateTime ToDateTime (IFormatProvider provider)
+	{
+		return Value.ToDateTime(provider);
+	}
+
+	public string ToString (IFormatProvider provider)
+	{
+		return Value.ToString(provider);
+	}
+
+	public object ToType (System.Type conversionType, IFormatProvider provider)
+	{
+		return Value.ToType(conversionType, provider);
+	}
+
+	#endregion
 }

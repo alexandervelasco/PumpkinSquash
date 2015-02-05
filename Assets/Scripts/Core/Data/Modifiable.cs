@@ -1,21 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-public class Modifiable<T> : IModifiable<T> {
+public class Modifiable<T> : IModifiable<T> where T : IConvertible {
 
-	private ISingleOperandModifier<T> modifiers = new GetterModifier<T>();
+	private ISingleOperandModifier<TypedValue32<ModifiableType,T>> modifiers = new GetterModifier<TypedValue32<ModifiableType,T>>();
 
 	#region IModifiable implementation
-	public TypedValue32<string> ID { get;set; }
+	public string ID { get;set; }
 
-	public ISingleOperandModifier<T> Modifiers {
+	public ISingleOperandModifier<TypedValue32<ModifiableType,T>> Modifiers {
 		get {
 			return this.modifiers;
 		}
 	}
 
-	public T BaseValue { get;set; }
+	public TypedValue32<ModifiableType,T> BaseValue { get;set; }
 
-	public T FinalValue {
+	public TypedValue32<ModifiableType,T> FinalValue {
 		get {
 			return Modifiers.Resolve(BaseValue);
 		}

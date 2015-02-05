@@ -17,7 +17,7 @@ public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 
 	#region ICharacterAction implementation
 
-	public TypedValue32<string> ID {
+	public string ID {
 		get {
 			return id;
 		}

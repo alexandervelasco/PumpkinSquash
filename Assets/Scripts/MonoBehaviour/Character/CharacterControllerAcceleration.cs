@@ -7,7 +7,7 @@ using System.Linq;
 public class CharacterControllerAcceleration : MonoBehaviour {
 
 	//serialized data
-	public Vector3 characterGravityUPF2 = Vector3.zero;
+	public Vector3 characterGravityUPS2 = Vector3.zero;
 	public Vector3 absoluteVelocity = Vector3.zero;
 	public Vector3 currentVelocity = Vector3.zero;
 
@@ -22,7 +22,7 @@ public class CharacterControllerAcceleration : MonoBehaviour {
 		if (characterController == null)
 			characterController = gameObject.GetComponent<CharacterController>();
 		if (!characterController.isGrounded)
-			currentVelocity = currentVelocity + characterGravityUPF2;
+			currentVelocity = currentVelocity + (characterGravityUPS2 * Time.deltaTime);
 		characterController.Move (absoluteVelocity + currentVelocity);
 		absoluteVelocity = Vector3.zero;
 	}

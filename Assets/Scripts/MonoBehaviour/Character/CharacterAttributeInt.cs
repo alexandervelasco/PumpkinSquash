@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharacterAttributeInt : EventCallerBehavior, IModifiable<TypedValue32<int>> {
+public class CharacterAttributeInt : EventCallerBehavior, IModifiable<int> {
 
 	//serialized data
 	public string id = string.Empty;
 	public int defaultValue = 0;
 
-	private ISingleOperandModifier<TypedValue32<int>> modifiers = null;
-	private TypedValue32<int> baseValue = 0;
+	private ISingleOperandModifier<TypedValue32<ModifiableType, int>> modifiers = null;
+	private TypedValue32<ModifiableType, int> baseValue = 0;
 
 	#region IModifiable implementation
 
-	public TypedValue32<string> ID {
+	public string ID {
 		get {
 			return this.id;
 		}
@@ -21,13 +21,13 @@ public class CharacterAttributeInt : EventCallerBehavior, IModifiable<TypedValue
 		}
 	}
 
-	public ISingleOperandModifier<TypedValue32<int>> Modifiers {
+	public ISingleOperandModifier<TypedValue32<ModifiableType, int>> Modifiers {
 		get {
 			return this.modifiers;
 		}
 	}
 
-	public TypedValue32<int> BaseValue {
+	public TypedValue32<ModifiableType, int> BaseValue {
 		get {
 			return baseValue;
 		}
@@ -37,7 +37,7 @@ public class CharacterAttributeInt : EventCallerBehavior, IModifiable<TypedValue
 		}
 	}
 
-	public TypedValue32<int> FinalValue {
+	public TypedValue32<ModifiableType, int> FinalValue {
 		get {
 			CallEvent(0, this);
 			return Modifiers.Resolve(BaseValue);
@@ -48,7 +48,7 @@ public class CharacterAttributeInt : EventCallerBehavior, IModifiable<TypedValue
 
 	// Use this for initialization
 	void Start () {
-		this.modifiers = new GetterModifier<TypedValue32<int>>();
+		this.modifiers = new GetterModifier<TypedValue32<ModifiableType, int>>();
 		this.BaseValue = defaultValue;
 	}
 	
