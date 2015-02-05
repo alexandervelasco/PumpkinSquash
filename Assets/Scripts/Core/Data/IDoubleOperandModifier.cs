@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public interface IDoubleOperandModifier<T> where T : struct {
+public interface IDoubleOperandModifier<T> {
 	int AddModifier (int priorityGroup, Func<T, T, T> modifier);
 	void SetModifier (int priorityGroup, int id, Func<T, T, T> modifier);
 	void RemoveModifier (int priorityGroup, int id);

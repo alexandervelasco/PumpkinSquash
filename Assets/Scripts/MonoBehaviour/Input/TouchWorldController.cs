@@ -20,9 +20,9 @@ public class TouchWorldController : EventTransceiverBehavior {
 
 	public override void ReceiveEvent (string eventName, object args, object sender)
 	{
-		if (args is IGameTouch[] && referenceCamera != null) 
+		IGameTouch[] gameTouches = args as IGameTouch[];
+		if (gameTouches != null && referenceCamera != null) 
 		{
-			IGameTouch[] gameTouches = args as IGameTouch[];
 			IWorldTouch[] worldTouches = new WorldTouch[gameTouches.Length];
 			for (int i = 0; i < gameTouches.Length; i++)
 			{

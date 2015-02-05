@@ -25,9 +25,9 @@ public class TapGestureController : EventTransceiverBehavior {
 
 	public override void ReceiveEvent (string eventName, object args, object sender)
 	{
-		if (args is List<IGameTouch[]>)
+		List<IGameTouch[]> gestureData = args as List<IGameTouch[]>;
+		if (gestureData != null)
 		{
-			List<IGameTouch[]> gestureData = args as List<IGameTouch[]>;
 			IGameTouch[] currentTouches = gestureData[gestureData.Count-1];
 			foreach (IGameTouch currentTouch in currentTouches)
 			{

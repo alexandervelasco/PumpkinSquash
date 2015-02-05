@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public class ChainModifier<T> : IDoubleOperandModifier<T> where T : struct {
+public class ChainModifier<T> : IDoubleOperandModifier<T> {
 
 	private List<List<Func<T, T, T>>> modifiers = new List<List<Func<T, T, T>>>();
 

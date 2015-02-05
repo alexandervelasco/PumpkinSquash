@@ -9,7 +9,6 @@ public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 	public float speedUPS = 1.0f;
 	public bool canAirJump = false;
 	public string id = String.Empty;
-	public ulong type = 0;
 
 	private CharacterControllerAcceleration targetAcceleration = null;
 	private CharacterController targetController = null;
@@ -18,21 +17,12 @@ public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 
 	#region ICharacterAction implementation
 
-	public string ID {
+	public TypedValue32<string> ID {
 		get {
 			return id;
 		}
 		set {
 			id = value;
-		}
-	}
-
-	public ulong Type {
-		get {
-			return type;
-		}
-		set {
-			type = value;
 		}
 	}
 
@@ -93,9 +83,9 @@ public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 
 	public override void ReceiveEvent (string eventName, object args, object sender)
 	{
-		if (eventName.Equals(ReceivedEvents[0]) && args is List<IGameTouch>)
+		List<IGameTouch> tapData = args as List<IGameTouch>;
+		if (eventName.Equals(ReceivedEvents[0]) && tapData != null)
 		{
-			List<IGameTouch> tapData = args as List<IGameTouch>;
 			if (tapData[tapData.Count-1] is IGameRaycastHit)
 			{
 				IGameRaycastHit tapRelease = tapData[tapData.Count-1] as IGameRaycastHit;

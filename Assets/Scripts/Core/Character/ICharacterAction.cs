@@ -14,8 +14,7 @@ public enum CharacterActionStatus
 };
 
 public interface ICharacterAction {
-	string ID { get;set; }
-	ulong Type { get;set; }
+	TypedValue32<string> ID { get;set; }
 	CharacterActionStatus Status { get;set; }
 	GameObject Source { get; set; }
 }

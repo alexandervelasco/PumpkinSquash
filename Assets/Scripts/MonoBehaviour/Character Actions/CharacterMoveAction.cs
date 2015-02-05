@@ -6,12 +6,12 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 
 	//serialized data
 	public GameObject source = null;
-	public float speedUPS = 1.0f;
+	public float defaultSpeedUPS = 1.0f;
 	public string destinationTag = "Terrain";
 	public float minimumDistance = 0.1f;
 	public string id = String.Empty;
-	public ulong type = 0;
 
+	private IModifiable<float> speedUPS = null;
 	private Vector3 destination;
 	private bool moving = false;
 	private CharacterControllerAcceleration targetAcceleration = null;
@@ -20,21 +20,12 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 
 	#region ICharacterAction implementation
 
-	public string ID {
+	public TypedValue32<string> ID {
 		get {
 			return id;
 		}
 		set {
 			id = value;
-		}
-	}
-
-	public ulong Type {
-		get {
-			return type;
-		}
-		set {
-			type = value;
 		}
 	}
 
@@ -68,6 +59,7 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 		if (source == null)
 			source = gameObject;
 		targetAcceleration = source.GetComponent<CharacterControllerAcceleration>();
+		speedUPS = new Modifiable<float>(defaultSpeedUPS);
 	}
 	
 	// Update is called once per frame
@@ -81,7 +73,7 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 				if (Vector3.Distance(targetTransform.position, lookPoint) > minimumDistance)
 				{
 					targetTransform.LookAt(lookPoint);
-					Vector3 moveVelocity = targetTransform.forward * speedUPS * Time.deltaTime;
+					Vector3 moveVelocity = targetTransform.forward * speedUPS.FinalValue * Time.deltaTime;
 					targetAcceleration.absoluteVelocity += moveVelocity;
 					moving = true;
 					Status = CharacterActionStatus.Active;
@@ -100,9 +92,9 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 
 	public override void ReceiveEvent (string eventName, object args, object sender)
 	{
-		if (args is IWorldTouch[])
+		IWorldTouch[] worldTouches = args as IWorldTouch[];
+		if (worldTouches != null)
 		{
-			IWorldTouch[] worldTouches = args as IWorldTouch[];
 			IWorldTouch firstTouch = worldTouches[0];
 			if (firstTouch.Phase == TouchPhase.Began &&
 			    firstTouch.Collider.gameObject.CompareTag(destinationTag))

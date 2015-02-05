@@ -1,7 +1,7 @@
 ﻿using System;
 
 public struct TypedValue32<T>
-where T : struct {
+where T : IConvertible {
 	public int Type { get; private set; }
 	public T Value { get; private set; }
 
@@ -48,14 +48,29 @@ where T : struct {
 		return new TypedValue32<T>(op1.Type & op2, op1.Value);
 	}
 
+	public static TypedValue32<T> operator & (TypedValue32<T> op1, TypedValue32<T> op2)
+	{
+		return op1 & op2.Type;
+	}
+
 	public static TypedValue32<T> operator | (TypedValue32<T> op1, int op2)
 	{
 		return new TypedValue32<T>(op1.Type | op2, op1.Value);
 	}
 
+	public static TypedValue32<T> operator | (TypedValue32<T> op1, TypedValue32<T> op2)
+	{
+		return op1 | op2.Type;
+	}
+
 	public static TypedValue32<T> operator ^ (TypedValue32<T> op1, int op2)
 	{
 		return new TypedValue32<T>(op1.Type ^ op2, op1.Value);
+	}
+
+	public static TypedValue32<T> operator ^ (TypedValue32<T> op1, TypedValue32<T> op2)
+	{
+		return op1 ^ op2.Type;
 	}
 
 	public static TypedValue32<T> operator << (TypedValue32<T> op1, int op2)

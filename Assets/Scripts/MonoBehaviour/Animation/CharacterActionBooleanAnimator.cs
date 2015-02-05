@@ -40,10 +40,10 @@ public class CharacterActionBooleanAnimator : EventReceiverBehavior {
 
 	public override void ReceiveEvent (string eventName, object args, object sender)
 	{
-		if (args is ICharacterAction)
+		ICharacterAction characterAction = args as ICharacterAction;
+		if (characterAction != null)
 		{
-			ICharacterAction characterAction = args as ICharacterAction;
-			if (CharacterActionIDMappings.ContainsKey(characterAction.ID))
+			if (characterAction.Source == gameObject && CharacterActionIDMappings.ContainsKey(characterAction.ID))
 				animator.SetBool(Animator.StringToHash(CharacterActionIDMappings[characterAction.ID]), 
 				                 EnableStates.Contains(characterAction.Status));
 		}

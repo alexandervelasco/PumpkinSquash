@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public class GetterModifier<T> : ISingleOperandModifier<T> where T : struct {
+public class GetterModifier<T> : ISingleOperandModifier<T> {
 
 	private List<List<Func<T, T>>> modifiers = new List<List<Func<T, T>>>();
 
