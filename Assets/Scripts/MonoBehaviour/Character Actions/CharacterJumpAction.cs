@@ -2,18 +2,43 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
+public enum CharacterJumpActionProperties
+{
+	None,
+	SpeedUPS
+}
+
 public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 
 	//serialized data
 	public GameObject source = null;
-	public float speedUPS = 1.0f;
+	public float defaultSpeedUPS = 1.0f;
 	public bool canAirJump = false;
 	public string id = String.Empty;
 
+	private IModifiable<float> speedUPS = null;
 	private CharacterControllerAcceleration targetAcceleration = null;
 	private CharacterController targetController = null;
 	private bool jumpStarted = false, jumpEnded = false;
 	private CharacterActionStatus status = CharacterActionStatus.Inactive;
+
+	private TypedValue32<ModifiableType, float> BaseSpeedUPS
+	{
+		set
+		{			
+			CallEvent(2, this.speedUPS, this);
+			this.speedUPS.BaseValue = value;
+		}
+	}
+
+	private TypedValue32<ModifiableType, float> FinalSpeedUPS
+	{
+		get
+		{
+			CallEvent(1, this.speedUPS, this);
+			return speedUPS.FinalValue;		
+		}
+	}
 
 	#region ICharacterAction implementation
 
@@ -48,6 +73,44 @@ public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 		}
 	}
 
+	public U GetProperty<T, U>(T propertyId) where T : IConvertible
+	{
+		U result = default(U);
+		
+		CharacterJumpActionProperties id = (CharacterJumpActionProperties)(object)propertyId;
+		switch (id) 
+		{
+		case CharacterJumpActionProperties.SpeedUPS:
+		{
+			Type propertyType = typeof(U);
+			if (propertyType.Equals(typeof(float)) || propertyType.Equals(typeof(TypedValue32<ModifiableType, float>)))
+			{
+				result = (U)(object)this.FinalSpeedUPS;
+			}
+			break;
+		}
+		}
+		
+		return result;
+	}
+
+	public void SetProperty<T, U>(T propertyId, U propertyValue) where T : IConvertible
+	{
+		CharacterJumpActionProperties id = (CharacterJumpActionProperties)(object)propertyId;
+		switch (id) 
+		{
+		case CharacterJumpActionProperties.SpeedUPS:
+		{
+			Type propertyType = typeof(U);
+			if (propertyType.Equals(typeof(float)))
+				this.BaseSpeedUPS = (float)(object)propertyValue;
+			else if (propertyType.Equals(typeof(TypedValue32<ModifiableType, float>)))
+				this.BaseSpeedUPS = (TypedValue32<ModifiableType, float>)(object)propertyValue;	
+			break;
+		}
+		}
+	}
+
 	#endregion
 
 	// Use this for initialization
@@ -56,13 +119,14 @@ public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 			source = gameObject;
 		targetAcceleration = source.GetComponent<CharacterControllerAcceleration>();
 		targetController = source.GetComponent<CharacterController>();
+		speedUPS = new Modifiable<float>(defaultSpeedUPS);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (jumpStarted) 
 		{
-			Vector3 jumpVelocity = source.transform.up * speedUPS;
+			Vector3 jumpVelocity = source.transform.up * FinalSpeedUPS;
 			targetAcceleration.currentVelocity = jumpVelocity;
 			jumpStarted = false;
 		}

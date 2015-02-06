@@ -17,4 +17,6 @@ public interface ICharacterAction {
 	string ID { get;set; }
 	CharacterActionStatus Status { get;set; }
 	GameObject Source { get; set; }
+	U GetProperty<T, U>(T propertyId) where T : IConvertible;
+	void SetProperty<T, U>(T propertyId, U propertyValue) where T : IConvertible;
 }

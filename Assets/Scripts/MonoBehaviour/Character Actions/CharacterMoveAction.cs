@@ -2,6 +2,13 @@ using UnityEngine;
 using System.Collections;
 using System;
 
+public enum CharacterMoveActionProperties
+{
+	None,
+	SpeedUPS,
+	Destination
+}
+
 public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 
 	//serialized data
@@ -17,6 +24,24 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 	private CharacterControllerAcceleration targetAcceleration = null;
 	private int currentFingerId = -1;
 	private CharacterActionStatus status = CharacterActionStatus.Inactive;
+
+	private TypedValue32<ModifiableType, float> BaseSpeedUPS
+	{
+		set
+		{			
+			CallEvent(2, this.speedUPS, this);
+			this.speedUPS.BaseValue = value;
+		}
+	}
+
+	private TypedValue32<ModifiableType, float> FinalSpeedUPS
+	{
+		get
+		{
+			CallEvent(1, this.speedUPS, this);
+			return speedUPS.FinalValue;		
+		}
+	}
 
 	#region ICharacterAction implementation
 
@@ -51,6 +76,56 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 		}
 	}
 
+	public U GetProperty<T, U>(T propertyId) where T : IConvertible
+	{
+		U result = default(U);
+			
+		CharacterMoveActionProperties id = (CharacterMoveActionProperties)(object)propertyId;
+		switch (id) 
+		{
+		case CharacterMoveActionProperties.Destination:
+		{
+			if (typeof(U).Equals(typeof(Vector3)))
+				result = (U)(object)this.destination;
+			break;
+		}
+		case CharacterMoveActionProperties.SpeedUPS:
+		{
+			Type propertyType = typeof(U);
+			if (propertyType.Equals(typeof(float)) || propertyType.Equals(typeof(TypedValue32<ModifiableType, float>)))
+			{
+				result = (U)(object)this.FinalSpeedUPS;
+			}
+			break;
+		}
+		}
+
+		return result;
+	}
+
+	public void SetProperty<T, U>(T propertyId, U propertyValue) where T : IConvertible
+	{
+		CharacterMoveActionProperties id = (CharacterMoveActionProperties)(object)propertyId;
+		switch (id) 
+		{
+		case CharacterMoveActionProperties.Destination:
+		{
+			if (typeof(U).Equals(typeof(Vector3)))
+				this.destination = (Vector3)(object)propertyValue;
+			break;
+		}
+		case CharacterMoveActionProperties.SpeedUPS:
+		{
+			Type propertyType = typeof(U);
+			if (propertyType.Equals(typeof(float)))
+				this.BaseSpeedUPS = (float)(object)propertyValue;
+			else if (propertyType.Equals(typeof(TypedValue32<ModifiableType, float>)))
+				this.BaseSpeedUPS = (TypedValue32<ModifiableType, float>)(object)propertyValue;	
+			break;
+		}
+		}
+	}
+
 	#endregion
 
 	// Use this for initialization
@@ -73,7 +148,7 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 				if (Vector3.Distance(targetTransform.position, lookPoint) > minimumDistance)
 				{
 					targetTransform.LookAt(lookPoint);
-					Vector3 moveVelocity = targetTransform.forward * speedUPS.FinalValue * Time.deltaTime;
+					Vector3 moveVelocity = targetTransform.forward * FinalSpeedUPS * Time.deltaTime;
 					targetAcceleration.absoluteVelocity += moveVelocity;
 					moving = true;
 					Status = CharacterActionStatus.Active;

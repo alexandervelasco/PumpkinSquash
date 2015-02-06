@@ -265,6 +265,7 @@ GameObject:
   - 114: {fileID: 135100526}
   - 114: {fileID: 135100522}
   - 114: {fileID: 135100525}
+  - 114: {fileID: 135100527}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -331,6 +332,8 @@ MonoBehaviour:
   - EVENT_WORLDTOUCH
   calledEvents:
   - EVENT_CHARACTERACTION
+  - EVENT_MODIFIERGET
+  - EVENT_MODIFIERSET
   source: {fileID: 0}
   defaultSpeedUPS: 7
   destinationTag: Terrain
@@ -385,8 +388,10 @@ MonoBehaviour:
   - EVENT_GESTURETAP
   calledEvents:
   - EVENT_CHARACTERACTION
+  - EVENT_MODIFIERGET
+  - EVENT_MODIFIERSET
   source: {fileID: 0}
-  speedUPS: .5
+  defaultSpeedUPS: .5
   canAirJump: 0
   id: ACTION_JUMP
 --- !u!114 &135100526
@@ -401,10 +406,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   calledEvents:
-  - EVENT_ATTRIBUTEGET
-  - EVENT_ATTRIBUTESET
+  - EVENT_MODIFIERGET
+  - EVENT_MODIFIERSET
   id: ATTRIBUTE_HP
   defaultValue: 100
+--- !u!114 &135100527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 135100518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a4cbbd750d8a0440bf01d26884ea0fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents:
+  - EVENT_MODIFIERSET
+  calledEvents:
+  - EVENT_CHARACTERACTION
+  modifiableID: ATTRIBUTE_HP
+  deathThreshold: 0
+  source: {fileID: 0}
+  id: ACTION_DEATH
 --- !u!1 &141447562
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,7 +731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   registeredEvents:
-  - EVENT_GESTURETAP
+  - EVENT_CHARACTERACTION
 --- !u!4 &330502559
 Transform:
   m_ObjectHideFlags: 0

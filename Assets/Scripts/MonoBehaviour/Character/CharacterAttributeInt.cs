@@ -33,13 +33,13 @@ public class CharacterAttributeInt : EventCallerBehavior, IModifiable<int> {
 		}
 		set {
 			baseValue = value;
-			CallEvent(1, this);
+			CallEvent(1, this, this);
 		}
 	}
 
 	public TypedValue32<ModifiableType, int> FinalValue {
 		get {
-			CallEvent(0, this);
+			CallEvent(0, this, this);
 			return Modifiers.Resolve(BaseValue);
 		}
 	}

@@ -1,0 +1,88 @@
+﻿using UnityEngine;
+using System.Collections.Generic;
+using System;
+
+public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
+
+	//serialized data
+	public string modifiableID = string.Empty;
+	public int deathThreshold = 0;
+	public GameObject source = null;
+	public string id = String.Empty;
+
+	private CharacterActionStatus status = CharacterActionStatus.Inactive;
+
+	#region ICharacterAction implementation
+	public U GetProperty<T, U> (T propertyId) where T : System.IConvertible
+	{
+		throw new System.NotImplementedException ();
+	}
+	public void SetProperty<T, U> (T propertyId, U propertyValue) where T : System.IConvertible
+	{
+		throw new System.NotImplementedException ();
+	}
+	public string ID {
+		get {
+			return id;
+		}
+		set {
+			id = value;
+		}
+	}
+	public CharacterActionStatus Status {
+		get {
+			return this.status;
+		}
+		set {
+			if (this.status != value)
+			{
+				this.status = value;
+				CallEvent(0, this);
+			}
+		}
+	}
+	public GameObject Source {
+		get {
+			return this.source;
+		}
+		set {
+			this.source = value;
+		}
+	}
+	#endregion
+
+	// Use this for initialization
+	void Start () {
+		if (source == null)
+			source = gameObject;
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+
+	#region implemented abstract members of EventTransceiverBehavior
+
+	public override void ReceiveEvent (string eventName, object args, object sender)
+	{
+		IModifiable<int> modifiable = args as IModifiable<int>;
+		MonoBehaviour behavior = sender as MonoBehaviour;
+		if (modifiable != null && behavior != null &&
+						modifiable.ID.Equals (modifiableID))
+		{
+			if (modifiable.FinalValue.Value <= deathThreshold)
+			{
+				Status = CharacterActionStatus.Started;
+				Status = CharacterActionStatus.Active;
+			}
+			else
+			{
+				Status = CharacterActionStatus.Ended;
+				Status = CharacterActionStatus.Inactive;
+			}
+		}
+	}
+
+	#endregion
+}

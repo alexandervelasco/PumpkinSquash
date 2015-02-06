@@ -28,6 +28,11 @@ where U : IConvertible {
 		return result;
 	}
 
+	public override int GetHashCode ()
+	{
+		return base.GetHashCode ();
+	}
+
 	public static implicit operator U (TypedValue32<T,U> typedValue)
 	{
 		return typedValue.Value;
