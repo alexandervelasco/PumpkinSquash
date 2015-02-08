@@ -5,14 +5,14 @@ using System.Collections.Generic;
 public class CharacterActionBooleanAnimator : EventReceiverBehavior {
 
 	//serialized data
-	public List<string> characterActionIDs = new List<string>();
+	public List<CharacterActionID> characterActionIDs = new List<CharacterActionID>();
 	public List<string> booleanAnimationNames = new List<string>();
 	public List<CharacterActionStatus> enableStates = new List<CharacterActionStatus>();
 
-	private Dictionary<string, string> characterActionIDMappings = null;
+	private Dictionary<CharacterActionID, string> characterActionIDMappings = null;
 	private Animator animator = null;
 
-	public Dictionary<string, string> CharacterActionIDMappings {
+	public Dictionary<CharacterActionID, string> CharacterActionIDMappings {
 		get {
 			return characterActionIDMappings;
 		}
@@ -26,7 +26,7 @@ public class CharacterActionBooleanAnimator : EventReceiverBehavior {
 
 	// Use this for initialization
 	void Start () {
-		this.characterActionIDMappings = new Dictionary<string, string>();
+		this.characterActionIDMappings = new Dictionary<CharacterActionID, string>();
 		CharacterActionIDMappings.Load(characterActionIDs, booleanAnimationNames);
 		animator = gameObject.GetComponent<Animator>();
 	}

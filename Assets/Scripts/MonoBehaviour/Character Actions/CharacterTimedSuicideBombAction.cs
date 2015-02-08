@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
-using System;
+using System.Collections;
 
-public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
+[RequireComponent(typeof(CharacterAttributeInt))]
+[RequireComponent(typeof(Collider))]
+public class CharacterTimedSuicideBombAction : EventTransceiverBehavior, ICharacterAction {
 
 	//serialized data
-	public string modifiableID = string.Empty;
-	public int deathThreshold = 0;
 	public GameObject source = null;
 	public CharacterActionID id;
-
+	
 	private CharacterActionStatus status = CharacterActionStatus.Inactive;
 
 	#region ICharacterAction implementation
@@ -29,6 +28,7 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 			id = value;
 		}
 	}
+	
 	public CharacterActionStatus Status {
 		get {
 			return this.status;
@@ -41,6 +41,7 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 			}
 		}
 	}
+	
 	public GameObject Source {
 		get {
 			return this.source;
@@ -53,8 +54,7 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 
 	// Use this for initialization
 	void Start () {
-		if (source == null)
-			source = gameObject;
+	
 	}
 	
 	// Update is called once per frame
@@ -66,22 +66,7 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 
 	public override void ReceiveEvent (string eventName, object args, object sender)
 	{
-		IModifiable<int> modifiable = args as IModifiable<int>;
-		MonoBehaviour behavior = sender as MonoBehaviour;
-		if (modifiable != null && behavior != null &&
-						modifiable.ID.Equals (modifiableID))
-		{
-			if (modifiable.FinalValue.Value <= deathThreshold)
-			{
-				Status = CharacterActionStatus.Started;
-				Status = CharacterActionStatus.Active;
-			}
-			else
-			{
-				Status = CharacterActionStatus.Ended;
-				Status = CharacterActionStatus.Inactive;
-			}
-		}
+		throw new System.NotImplementedException ();
 	}
 
 	#endregion

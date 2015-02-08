@@ -4,7 +4,7 @@ using System.Collections;
 public class CharacterAttributeInt : EventCallerBehavior, IModifiable<int> {
 
 	//serialized data
-	public string id = string.Empty;
+	public ModifiableID id;
 	public int defaultValue = 0;
 
 	private ISingleOperandModifier<TypedValue32<ModifiableType, int>> modifiers = null;
@@ -12,7 +12,7 @@ public class CharacterAttributeInt : EventCallerBehavior, IModifiable<int> {
 
 	#region IModifiable implementation
 
-	public string ID {
+	public ModifiableID ID {
 		get {
 			return this.id;
 		}

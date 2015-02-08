@@ -14,7 +14,7 @@ public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 	public GameObject source = null;
 	public float defaultSpeedUPS = 1.0f;
 	public bool canAirJump = false;
-	public string id = String.Empty;
+	public CharacterActionID id;
 
 	private IModifiable<float> speedUPS = null;
 	private CharacterControllerAcceleration targetAcceleration = null;
@@ -42,7 +42,7 @@ public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 
 	#region ICharacterAction implementation
 
-	public string ID {
+	public CharacterActionID ID {
 		get {
 			return id;
 		}

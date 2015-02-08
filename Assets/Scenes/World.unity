@@ -338,7 +338,7 @@ MonoBehaviour:
   defaultSpeedUPS: 7
   destinationTag: Terrain
   minimumDistance: .100000001
-  id: ACTION_MOVE
+  id: 1
 --- !u!114 &135100523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,9 +352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registeredEvents:
   - EVENT_CHARACTERACTION
-  characterActionIDs:
-  - ACTION_MOVE
-  - ACTION_JUMP
+  characterActionIDs: 0100000002000000
   booleanAnimationNames:
   - Run
   - Jump
@@ -393,7 +391,7 @@ MonoBehaviour:
   source: {fileID: 0}
   defaultSpeedUPS: .5
   canAirJump: 0
-  id: ACTION_JUMP
+  id: 2
 --- !u!114 &135100526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,7 +406,7 @@ MonoBehaviour:
   calledEvents:
   - EVENT_MODIFIERGET
   - EVENT_MODIFIERSET
-  id: ATTRIBUTE_HP
+  id: 1
   defaultValue: 100
 --- !u!114 &135100527
 MonoBehaviour:
@@ -428,7 +426,7 @@ MonoBehaviour:
   modifiableID: ATTRIBUTE_HP
   deathThreshold: 0
   source: {fileID: 0}
-  id: ACTION_DEATH
+  id: 3
 --- !u!1 &141447562
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,15 @@
 using System;
 using System.Collections.Generic;
 
+public enum CharacterActionID
+{
+	None,
+	CharacterMove,
+	CharacterJump,
+	CharacterDeath,
+	CharacterTimedSuicideBomb
+}
+
 [Flags]
 public enum CharacterActionStatus
 {
@@ -14,7 +23,7 @@ public enum CharacterActionStatus
 };
 
 public interface ICharacterAction {
-	string ID { get;set; }
+	CharacterActionID ID { get;set; }
 	CharacterActionStatus Status { get;set; }
 	GameObject Source { get; set; }
 	U GetProperty<T, U>(T propertyId) where T : IConvertible;

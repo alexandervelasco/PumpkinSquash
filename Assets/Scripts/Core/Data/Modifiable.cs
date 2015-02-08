@@ -6,7 +6,7 @@ public class Modifiable<T> : IModifiable<T> where T : IConvertible {
 	private ISingleOperandModifier<TypedValue32<ModifiableType,T>> modifiers = new GetterModifier<TypedValue32<ModifiableType,T>>();
 
 	#region IModifiable implementation
-	public string ID { get;set; }
+	public ModifiableID ID { get;set; }
 
 	public ISingleOperandModifier<TypedValue32<ModifiableType,T>> Modifiers {
 		get {

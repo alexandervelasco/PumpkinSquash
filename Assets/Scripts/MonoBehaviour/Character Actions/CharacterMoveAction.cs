@@ -16,7 +16,7 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 	public float defaultSpeedUPS = 1.0f;
 	public string destinationTag = "Terrain";
 	public float minimumDistance = 0.1f;
-	public string id = String.Empty;
+	public CharacterActionID id;
 
 	private IModifiable<float> speedUPS = null;
 	private Vector3 destination;
@@ -45,7 +45,7 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 
 	#region ICharacterAction implementation
 
-	public string ID {
+	public CharacterActionID ID {
 		get {
 			return id;
 		}

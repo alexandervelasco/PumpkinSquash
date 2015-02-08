@@ -1,5 +1,11 @@
 ﻿using System;
 
+public enum ModifiableID
+{
+	None,
+	AttributeHP
+}
+
 [Flags]
 public enum ModifiableType
 {
@@ -7,7 +13,7 @@ public enum ModifiableType
 }
 
 public interface IModifiable<T> where T : IConvertible {
-	string ID { get;set; }
+	ModifiableID ID { get;set; }
 	ISingleOperandModifier<TypedValue32<ModifiableType,T>> Modifiers { get; }
 	TypedValue32<ModifiableType,T> BaseValue { get; set; }
 	TypedValue32<ModifiableType,T> FinalValue { get; }
