@@ -20,6 +20,18 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
+  - m_Name: Melee
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: Index
+    m_Type: 3
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 3
     m_Name: Base Layer
@@ -429,7 +441,7 @@ Transition:
   m_TransitionOffset: .276778162
   m_Conditions:
   - m_ConditionMode: 5
-    m_ConditionEvent: 
+    m_ConditionEvent: Melee
     m_EventTreshold: 0
     m_ExitTime: .985201359
   - m_ConditionMode: 2
@@ -504,6 +516,26 @@ Transition:
   m_Solo: 0
   m_Mute: 0
   m_CanTransitionToSelf: 1
+--- !u!1101 &110167024
+Transition:
+  serializedVersion: 2
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_SrcState: {fileID: 110262116}
+  m_DstState: {fileID: 110215764}
+  m_TransitionDuration: .0995536074
+  m_TransitionOffset: 0
+  m_Conditions:
+  - m_ConditionMode: 5
+    m_ConditionEvent: 
+    m_EventTreshold: 0
+    m_ExitTime: .899999976
+  m_Atomic: 0
+  m_Solo: 0
+  m_Mute: 0
+  m_CanTransitionToSelf: 0
 --- !u!1101 &110168224
 Transition:
   serializedVersion: 2
@@ -524,6 +556,30 @@ Transition:
     m_ConditionEvent: Run
     m_EventTreshold: 0
     m_ExitTime: .5
+  m_Atomic: 0
+  m_Solo: 0
+  m_Mute: 0
+  m_CanTransitionToSelf: 0
+--- !u!1101 &110174236
+Transition:
+  serializedVersion: 2
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_SrcState: {fileID: 110215764}
+  m_DstState: {fileID: 110252290}
+  m_TransitionDuration: .00661975145
+  m_TransitionOffset: 0
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Melee
+    m_EventTreshold: 0
+    m_ExitTime: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: Index
+    m_EventTreshold: 0
+    m_ExitTime: 0
   m_Atomic: 0
   m_Solo: 0
   m_Mute: 0
@@ -568,6 +624,30 @@ Transition:
   m_Solo: 0
   m_Mute: 0
   m_CanTransitionToSelf: 1
+--- !u!1101 &110179812
+Transition:
+  serializedVersion: 2
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_SrcState: {fileID: 110215764}
+  m_DstState: {fileID: 110262116}
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: Melee
+    m_EventTreshold: 0
+    m_ExitTime: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: Index
+    m_EventTreshold: 1
+    m_ExitTime: 0
+  m_Atomic: 0
+  m_Solo: 0
+  m_Mute: 0
+  m_CanTransitionToSelf: 0
 --- !u!1101 &110182696
 Transition:
   serializedVersion: 2
@@ -588,6 +668,26 @@ Transition:
   m_Solo: 0
   m_Mute: 0
   m_CanTransitionToSelf: 1
+--- !u!1101 &110184804
+Transition:
+  serializedVersion: 2
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_SrcState: {fileID: 110252290}
+  m_DstState: {fileID: 110215764}
+  m_TransitionDuration: .108169027
+  m_TransitionOffset: .509295702
+  m_Conditions:
+  - m_ConditionMode: 5
+    m_ConditionEvent: 
+    m_EventTreshold: 0
+    m_ExitTime: .897283792
+  m_Atomic: 0
+  m_Solo: 0
+  m_Mute: 0
+  m_CanTransitionToSelf: 0
 --- !u!1101 &110186490
 Transition:
   serializedVersion: 2
@@ -935,6 +1035,22 @@ State:
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
+--- !u!1102 &110252290
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Left Jab
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions:
+  - {fileID: 7400000, guid: 85d24213cf5826c438fded0871140de8, type: 3}
+  - {fileID: 0}
+  m_ParentStateMachine: {fileID: 110741484}
+  m_Position: {x: 540, y: 24, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
 --- !u!1102 &110258784
 State:
   m_ObjectHideFlags: 3
@@ -963,6 +1079,22 @@ State:
   - {fileID: 7400000, guid: e261b3aeb38bc1e46b874c209ae94658, type: 3}
   m_ParentStateMachine: {fileID: 110700000}
   m_Position: {x: 900, y: 132, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
+--- !u!1102 &110262116
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Right Kick
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions:
+  - {fileID: 7400000, guid: a3c21daefdd0e4d45969dadbc24421b4, type: 3}
+  - {fileID: 0}
+  m_ParentStateMachine: {fileID: 110741484}
+  m_Position: {x: 540, y: 108, z: 0}
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
@@ -1190,10 +1322,20 @@ StateMachine:
   m_ChildStateMachine:
   - {fileID: 110755574}
   - {fileID: 110730496}
+  - {fileID: 110741484}
   m_ChildStateMachinePosition:
   - {x: 396, y: 48, z: 0}
   - {x: 156, y: -48, z: 0}
+  - {x: 396, y: -156, z: 0}
   m_OrderedTransitions:
+    data:
+      first: {fileID: 110262116}
+      second:
+      - {fileID: 110167024}
+    data:
+      first: {fileID: 110252290}
+      second:
+      - {fileID: 110184804}
     data:
       first: {fileID: 0}
       second: []
@@ -1202,6 +1344,8 @@ StateMachine:
       second:
       - {fileID: 110198892}
       - {fileID: 110186490}
+      - {fileID: 110174236}
+      - {fileID: 110179812}
     data:
       first: {fileID: 110210988}
       second:
@@ -1225,7 +1369,7 @@ StateMachine:
       - {fileID: 110115780}
       - {fileID: 110106118}
   m_MotionSetCount: 1
-  m_AnyStatePosition: {x: 420, y: -144, z: 0}
+  m_AnyStatePosition: {x: 528, y: -252, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
 --- !u!1107 &110730496
 StateMachine:
@@ -1244,6 +1388,23 @@ StateMachine:
   m_MotionSetCount: 2
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
   m_ParentStateMachinePosition: {x: 804, y: 24, z: 0}
+--- !u!1107 &110741484
+StateMachine:
+  serializedVersion: 2
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Melee
+  m_DefaultState: {fileID: 110252290}
+  m_States:
+  - {fileID: 110252290}
+  - {fileID: 110262116}
+  m_ChildStateMachine: []
+  m_ChildStateMachinePosition: []
+  m_OrderedTransitions: {}
+  m_MotionSetCount: 2
+  m_AnyStatePosition: {x: 50, y: 20, z: 0}
+  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
 --- !u!1107 &110755574
 StateMachine:
   serializedVersion: 2

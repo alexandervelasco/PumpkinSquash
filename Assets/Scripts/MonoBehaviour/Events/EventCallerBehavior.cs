@@ -25,6 +25,10 @@ public class EventCallerBehavior : MonoBehaviour, IGameEventCaller {
 		}
 	}
 
+	public virtual void Start() {}
+
+	public virtual void Update() {}
+
 	protected virtual void CallEvent(int eventIndex, object args, object sender = null)
 	{
 		eventCaller.CallEvent(eventIndex, args, sender);

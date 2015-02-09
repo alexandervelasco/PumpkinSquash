@@ -33,4 +33,9 @@ public class ThreadSafeRandom
 	{
 		return _local.Next (minValue, maxValue);
 	}
+
+	public double NextDouble()
+	{
+		return _local.NextDouble();
+	}
 }

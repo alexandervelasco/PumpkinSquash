@@ -12,12 +12,12 @@ public class TapGestureController : EventTransceiverBehavior {
 	private Dictionary<int, bool> isStationary = new Dictionary<int, bool>();
 
 	// Use this for initialization
-	void Start () {
+	public override void Start () {
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public override void Update () {
 	
 	}
 

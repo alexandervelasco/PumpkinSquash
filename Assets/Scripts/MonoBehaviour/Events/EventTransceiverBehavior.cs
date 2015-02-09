@@ -32,6 +32,10 @@ public abstract class EventTransceiverBehavior : MonoBehaviour, IGameEventCaller
 		}
 	}
 	
+	public virtual void Start() {}
+	
+	public virtual void Update() {}
+	
 	public virtual void OnDestroy() {
 		if (!destroyDone) {
 			eventReceiver.Dispose();

@@ -19,7 +19,9 @@ public enum CharacterActionStatus
 	Started = 2,
 	Active = 4,
 	Cancelled = 8,
-	Ended = 16
+	Ended = 16,
+	Windup = 32,
+	Recovery = 64
 };
 
 public interface ICharacterAction {

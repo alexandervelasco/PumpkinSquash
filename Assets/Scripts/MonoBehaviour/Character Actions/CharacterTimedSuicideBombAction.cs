@@ -1,15 +1,21 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+using System;
 
-[RequireComponent(typeof(CharacterAttributeInt))]
-[RequireComponent(typeof(Collider))]
-public class CharacterTimedSuicideBombAction : EventTransceiverBehavior, ICharacterAction {
+public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAction {
 
 	//serialized data
 	public GameObject source = null;
 	public CharacterActionID id;
+	public ModifiableID sourceAttributeID = ModifiableID.None, targetAttributeID = ModifiableID.None;
+	public int minimumAttributeAmount = 0, maximumAttributeAmount = 0;
+	public float minimumDelayTime = 0, maximumDelayTime = 0;
+	public float effectRadius = 0;
 	
 	private CharacterActionStatus status = CharacterActionStatus.Inactive;
+	private float delayTime = 0;
+	private CharacterAttributeInt sourceAttribute = null;
+	private TypedValue32<ModifiableType, int> startAttributeAmount = 0;
 
 	#region ICharacterAction implementation
 	public U GetProperty<T, U> (T propertyId) where T : System.IConvertible
@@ -53,21 +59,49 @@ public class CharacterTimedSuicideBombAction : EventTransceiverBehavior, ICharac
 	#endregion
 
 	// Use this for initialization
-	void Start () {
-	
+	public override void Start () {
+		ThreadSafeRandom r = new ThreadSafeRandom();
+		if (source == null)
+			source = gameObject;
+		sourceAttribute = source.GetComponent<CharacterAttributeInt>();
+		if (sourceAttribute != null && sourceAttribute.ID == sourceAttributeID)
+		{
+			sourceAttribute.BaseValue = r.Next(minimumAttributeAmount, maximumAttributeAmount);
+			startAttributeAmount = sourceAttribute.FinalValue;
+		}
+		delayTime = minimumDelayTime + ((maximumDelayTime - minimumDelayTime) * (float)r.NextDouble());
+		Status = CharacterActionStatus.Started;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	public override void Update () {
+		if (Status == CharacterActionStatus.Started)
+			Status = CharacterActionStatus.Windup;
+		if (Status == CharacterActionStatus.Windup)
+		{
+			delayTime -= Time.deltaTime;
+			if (delayTime <= 0) 
+			{
+				Status = CharacterActionStatus.Active;
+				TypedValue32<ModifiableType, int> finalAttributeAmount = sourceAttribute.FinalValue;
+				IModifiable<int> damage = new Modifiable<int> (new TypedValue32<ModifiableType, int> (
+					ModifiableType.Damage | finalAttributeAmount.Type, startAttributeAmount.Value - finalAttributeAmount.Value));
+				CallEvent (1, damage, this);
+				Collider[] effectHit = Physics.OverlapSphere (source.transform.position, effectRadius);
+				foreach (Collider collider in effectHit)
+				{
+					CharacterAttributeInt targetAttribute = collider.gameObject.GetComponent<CharacterAttributeInt> ();
+					if (targetAttribute != null && targetAttribute.ID == targetAttributeID)
+					{
+						targetAttribute.BaseValue = new TypedValue32<ModifiableType, int> (
+							targetAttribute.BaseValue.Type, targetAttribute.BaseValue.Value - damage.FinalValue.Value);
+					}
+
+				}
+				Status = CharacterActionStatus.Ended;
+				sourceAttribute.BaseValue = 0;
+				Status = CharacterActionStatus.Inactive;
+			}
+		}
 	}
-
-	#region implemented abstract members of EventTransceiverBehavior
-
-	public override void ReceiveEvent (string eventName, object args, object sender)
-	{
-		throw new System.NotImplementedException ();
-	}
-
-	#endregion
 }

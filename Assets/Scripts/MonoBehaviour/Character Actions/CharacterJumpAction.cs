@@ -114,7 +114,7 @@ public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 	#endregion
 
 	// Use this for initialization
-	void Start () {
+	public override void Start () {
 		if (source == null)
 			source = gameObject;
 		targetAcceleration = source.GetComponent<CharacterControllerAcceleration>();
@@ -123,7 +123,7 @@ public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public override void Update () {
 		if (jumpStarted) 
 		{
 			Vector3 jumpVelocity = source.transform.up * FinalSpeedUPS;

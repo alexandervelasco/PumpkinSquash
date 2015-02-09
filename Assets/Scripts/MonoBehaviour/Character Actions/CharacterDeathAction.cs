@@ -5,7 +5,7 @@ using System;
 public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 
 	//serialized data
-	public string modifiableID = string.Empty;
+	public ModifiableID modifiableID = ModifiableID.None;
 	public int deathThreshold = 0;
 	public GameObject source = null;
 	public CharacterActionID id;
@@ -52,13 +52,13 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 	#endregion
 
 	// Use this for initialization
-	void Start () {
+	public override void Start () {
 		if (source == null)
 			source = gameObject;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public override void Update () {
 	
 	}
 
@@ -69,7 +69,7 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 		IModifiable<int> modifiable = args as IModifiable<int>;
 		MonoBehaviour behavior = sender as MonoBehaviour;
 		if (modifiable != null && behavior != null &&
-						modifiable.ID.Equals (modifiableID))
+						modifiable.ID == modifiableID)
 		{
 			if (modifiable.FinalValue.Value <= deathThreshold)
 			{

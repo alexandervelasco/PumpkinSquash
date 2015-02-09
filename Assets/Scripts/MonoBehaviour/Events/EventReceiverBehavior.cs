@@ -22,6 +22,10 @@ public abstract class EventReceiverBehavior : MonoBehaviour, IGameEventReceiver 
 			awakeDone = true;
 		}
 	}
+	
+	public virtual void Start() {}
+	
+	public virtual void Update() {}
 
 	public virtual void OnDestroy() {
 		if (!destroyDone) {

@@ -27,4 +27,9 @@ public class Modifiable<T> : IModifiable<T> where T : IConvertible {
 	{
 		BaseValue = initialBaseValue;
 	}
+
+	public Modifiable (TypedValue32<ModifiableType,T> initialBaseValue)
+	{
+		BaseValue = initialBaseValue;
+	}
 }

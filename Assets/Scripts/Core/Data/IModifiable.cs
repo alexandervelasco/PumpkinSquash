@@ -9,7 +9,8 @@ public enum ModifiableID
 [Flags]
 public enum ModifiableType
 {
-	None = 0
+	None = 0,
+	Damage = 1
 }
 
 public interface IModifiable<T> where T : IConvertible {
