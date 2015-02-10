@@ -70,20 +70,18 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 	{
 		IModifiable<int> modifiable = args as IModifiable<int>;
 		MonoBehaviour behavior = sender as MonoBehaviour;
+		ICharacterAction characterAction = args as ICharacterAction;
 		if (modifiable != null && behavior != null &&
-						modifiable.ID == modifiableID)
-		{
-			if (modifiable.FinalValue.Value <= deathThreshold)
-			{
-				Status = CharacterActionStatus.Started;
-				Status = CharacterActionStatus.Active;
-			}
-			else if (modifiable.FinalValue.Value <= deathThreshold && Status != CharacterActionStatus.Ended)
-			{
-				Status = CharacterActionStatus.Ended;
-				Status = CharacterActionStatus.Inactive;
-			}
-		}
+						modifiable.ID == modifiableID) {
+						if (modifiable.FinalValue.Value <= deathThreshold) {
+								Status = CharacterActionStatus.Started;
+								Status = CharacterActionStatus.Active;
+						} else if (modifiable.FinalValue.Value <= deathThreshold && Status != CharacterActionStatus.Ended) {
+								Status = CharacterActionStatus.Ended;
+								Status = CharacterActionStatus.Inactive;
+						}
+				} else if (characterAction != null && characterAction != this && Status == CharacterActionStatus.Active)
+						characterAction.Status = CharacterActionStatus.Cancelled;
 	}
 
 	#endregion

@@ -156,8 +156,9 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 					Status = CharacterActionStatus.Active;
 				}
 				else
-				{
 					Status = CharacterActionStatus.Ended;
+				if (Status != CharacterActionStatus.Active)
+				{
 					moving = false;
 					Status = CharacterActionStatus.Inactive;
 				}

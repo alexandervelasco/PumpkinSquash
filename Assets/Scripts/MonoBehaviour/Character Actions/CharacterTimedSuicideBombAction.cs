@@ -104,6 +104,8 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 				sourceAttribute.BaseValue = 0;
 				Status = CharacterActionStatus.Inactive;
 			}
+			else
+				CallEvent(0, this);
 		}
 	}
 }

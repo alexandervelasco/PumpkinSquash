@@ -139,7 +139,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
       propertyPath: m_Controller
@@ -260,6 +260,7 @@ GameObject:
   - 4: {fileID: 135100519}
   - 95: {fileID: 135100520}
   - 114: {fileID: 135100523}
+  - 114: {fileID: 135100522}
   - 143: {fileID: 135100521}
   - 114: {fileID: 135100524}
   - 114: {fileID: 135100526}
@@ -283,7 +284,7 @@ Transform:
   - {fileID: 342278844}
   - {fileID: 1686593503}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!95 &135100520
 Animator:
   serializedVersion: 3
@@ -314,6 +315,23 @@ CharacterController:
   m_SkinWidth: .0799999982
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &135100522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 135100518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db899762f53b6ba4697ceaf77cdc2c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents:
+  - EVENT_CHARACTERACTION
+  characterActionIDs: 03000000
+  triggerAnimationNames:
+  - Death
+  triggerStates: 02000000
 --- !u!114 &135100523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -662,7 +680,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
 --- !u!114 &330502560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1188,7 +1206,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
 --- !u!114 &940656354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1399,6 +1417,53 @@ Transform:
   - {fileID: 1510562744}
   m_Father: {fileID: 2122665786}
   m_RootOrder: 0
+--- !u!1 &1141866274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1141866276}
+  - 114: {fileID: 1141866275}
+  m_Layer: 0
+  m_Name: Player HP Drain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1141866275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1141866274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb3c0932ee92534f9bf1d0ee44b91b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  calledEvents:
+  - EVENT_CHARACTERACTION
+  - EVENT_MODIFIERGET
+  source: {fileID: 135100518}
+  id: 5
+  sourceAttributeID: 1
+  amountPerTick: 10
+  tickInterval: 1
+--- !u!4 &1141866276
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1141866274}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.06748664, y: 2.13610983, z: 1.16676903}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
 --- !u!1 &1159898710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,7 +1547,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
 --- !u!114 &1198270488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1729,6 +1794,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registeredEvents:
   - EVENT_MODIFIERSET
+  - EVENT_CHARACTERACTION
   calledEvents:
   - EVENT_CHARACTERACTION
   modifiableID: 1
@@ -1926,7 +1992,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
 --- !u!1 &1613828278
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,38 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(Animator))]
-public class CharacterActionBooleanAnimator : EventReceiverBehavior {
-
+public class CharacterActionTriggerAnimator : EventReceiverBehavior {
+		
 	//serialized data
 	public List<CharacterActionID> characterActionIDs = new List<CharacterActionID>();
-	public List<string> booleanAnimationNames = new List<string>();
-	public List<CharacterActionStatus> enableStates = new List<CharacterActionStatus>();
+	public List<string> triggerAnimationNames = new List<string>();
+	public List<CharacterActionStatus> triggerStates = new List<CharacterActionStatus>();
 
 	private Dictionary<CharacterActionID, string> characterActionIDMappings = null;
 	private Animator animator = null;
-
+	
 	public Dictionary<CharacterActionID, string> CharacterActionIDMappings {
 		get {
 			return characterActionIDMappings;
 		}
 	}
-
-	public List<CharacterActionStatus> EnableStates {
+	
+	public List<CharacterActionStatus> TriggerStates {
 		get {
-			return enableStates;
+			return triggerStates;
 		}
 	}
 
 	// Use this for initialization
-	public void Start () {
+	void Start () {
 		this.characterActionIDMappings = new Dictionary<CharacterActionID, string>();
-		CharacterActionIDMappings.Load(characterActionIDs, booleanAnimationNames);
-		animator = gameObject.GetComponent<Animator>();
+		CharacterActionIDMappings.Load(characterActionIDs, triggerAnimationNames);
+		animator = gameObject.GetComponent<Animator>();	
 	}
 	
 	// Update is called once per frame
-	public void Update () {
+	void Update () {
 	
 	}
 
@@ -43,10 +42,10 @@ public class CharacterActionBooleanAnimator : EventReceiverBehavior {
 		ICharacterAction characterAction = args as ICharacterAction;
 		if (characterAction != null)
 		{
-			CharacterActionStatus effectiveStatus = GetEffectiveStatus(EnableStates);
-			if (characterAction.Source == gameObject && CharacterActionIDMappings != null && CharacterActionIDMappings.ContainsKey(characterAction.ID))
-				animator.SetBool(Animator.StringToHash(CharacterActionIDMappings[characterAction.ID]), 
-				                 (effectiveStatus & characterAction.Status) == characterAction.Status);
+			CharacterActionStatus effectiveStatus = GetEffectiveStatus(TriggerStates);
+			if (characterAction.Source == gameObject && CharacterActionIDMappings != null && CharacterActionIDMappings.ContainsKey(characterAction.ID) &&
+			    (effectiveStatus & characterAction.Status) == characterAction.Status)
+				animator.SetTrigger(Animator.StringToHash(CharacterActionIDMappings[characterAction.ID]));
 		}
 	}
 
