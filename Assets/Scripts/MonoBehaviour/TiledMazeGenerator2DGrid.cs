@@ -19,13 +19,13 @@ public class TiledMazeGenerator2DGrid : EventReceiverBehavior {
 	private SpawnPool terrainPool;
 
 	// Use this for initialization
-	public override void Start () {
+	public void Start () {
 		GenerateMaze();
 		SpawnTiles ();
 	}
 	
 	// Update is called once per frame
-	public override void Update () {
+	public void Update () {
 	
 	}
 

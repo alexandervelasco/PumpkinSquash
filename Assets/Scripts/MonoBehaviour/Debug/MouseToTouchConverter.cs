@@ -8,13 +8,13 @@ public class MouseToTouchConverter : EventCallerBehavior {
 	private Vector3 previousMousePosition = Vector3.zero;
 
 	// Use this for initialization
-	public override void Start () {
+	public void Start () {
 		if (mouseButtonId < 0 || mouseButtonId > 2)
 			mouseButtonId = 0;
 	}
 	
 	// Update is called once per frame
-	public override void Update () {
+	public void Update () {
 		if (Input.GetMouseButton (mouseButtonId) ||
 			Input.GetMouseButtonDown (mouseButtonId) ||
 			Input.GetMouseButtonUp (mouseButtonId)) 

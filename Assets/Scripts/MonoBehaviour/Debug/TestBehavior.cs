@@ -4,13 +4,13 @@ using System.Collections.Generic;
 public class TestBehavior : EventReceiverBehavior {
 
 	// Use this for initialization
-	public override void Start () {
+	public void Start () {
 		foreach (string registeredEvent in registeredEvents)
 			GameEventManager.CallEvent(registeredEvent, null);
 	}
 	
 	// Update is called once per frame
-	public override void Update () {
+	public void Update () {
 	}
 
 	#region implemented abstract members of GameBehavior

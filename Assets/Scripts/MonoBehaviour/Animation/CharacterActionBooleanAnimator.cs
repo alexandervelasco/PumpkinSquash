@@ -25,14 +25,14 @@ public class CharacterActionBooleanAnimator : EventReceiverBehavior {
 	}
 
 	// Use this for initialization
-	public override void Start () {
+	public void Start () {
 		this.characterActionIDMappings = new Dictionary<CharacterActionID, string>();
 		CharacterActionIDMappings.Load(characterActionIDs, booleanAnimationNames);
 		animator = gameObject.GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
-	public override void Update () {
+	public void Update () {
 	
 	}
 

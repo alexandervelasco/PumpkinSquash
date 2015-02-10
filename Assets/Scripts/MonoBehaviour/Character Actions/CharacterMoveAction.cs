@@ -69,6 +69,8 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 
 	public GameObject Source {
 		get {
+			if (source == null)
+				source = gameObject;
 			return this.source;
 		}
 		set {
@@ -129,7 +131,7 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 	#endregion
 
 	// Use this for initialization
-	public override void Start () {
+	public void Start () {
 		destination = Vector3.zero;
 		if (source == null)
 			source = gameObject;
@@ -138,7 +140,7 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 	}
 	
 	// Update is called once per frame
-	public override void Update () {
+	public void Update () {
 		if (moving)
 		{
 			Transform targetTransform = source.transform;

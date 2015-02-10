@@ -10,7 +10,7 @@ public class GameObjectLoader : EventReceiverBehavior {
 	public bool persistLoadedObjects = true;
 	
 	// Use this for initialization
-	public override void Start () {
+	public void Start () {
 		BeginLoad();
 	}
 

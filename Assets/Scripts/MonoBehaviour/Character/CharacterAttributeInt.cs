@@ -47,13 +47,13 @@ public class CharacterAttributeInt : EventCallerBehavior, IModifiable<int> {
 	#endregion
 
 	// Use this for initialization
-	public override void Start () {
+	public void Start () {
 		this.modifiers = new GetterModifier<TypedValue32<ModifiableType, int>>();
 		this.BaseValue = defaultValue;
 	}
 	
 	// Update is called once per frame
-	public override void Update () {
+	public void Update () {
 	
 	}
 }

@@ -16,13 +16,13 @@ public class PoolSpawner : EventCallerBehavior {
 	private SpawnPool spawnPool = null;
 
 	// Use this for initialization
-	public override void Start () {
+	public void Start () {
 		spawnTimer = spawnRate;
 		spawnPool = PoolManager.Pools[spawnPoolName];
 	}
 	
 	// Update is called once per frame
-	public override void Update () {
+	public void Update () {
 		spawnTimer -= Time.deltaTime;
 		if (spawnTimer <= 0)
 		{

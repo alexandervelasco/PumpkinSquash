@@ -43,6 +43,8 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 	}
 	public GameObject Source {
 		get {
+			if (source == null)
+				source = gameObject;
 			return this.source;
 		}
 		set {
@@ -52,13 +54,13 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 	#endregion
 
 	// Use this for initialization
-	public override void Start () {
+	public void Start () {
 		if (source == null)
 			source = gameObject;
 	}
 	
 	// Update is called once per frame
-	public override void Update () {
+	public void Update () {
 	
 	}
 
@@ -76,7 +78,7 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 				Status = CharacterActionStatus.Started;
 				Status = CharacterActionStatus.Active;
 			}
-			else
+			else if (modifiable.FinalValue.Value <= deathThreshold && Status != CharacterActionStatus.Ended)
 			{
 				Status = CharacterActionStatus.Ended;
 				Status = CharacterActionStatus.Inactive;

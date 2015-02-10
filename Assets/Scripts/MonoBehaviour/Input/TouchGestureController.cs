@@ -6,12 +6,12 @@ public class TouchGestureController : EventTransceiverBehavior {
 	private List<IGameTouch[]> gestureData = null;
 
 	// Use this for initialization
-	public override void Start () {
+	public void Start () {
 	
 	}
 	
 	// Update is called once per frame
-	public override void Update () {
+	public void Update () {
 	
 	}
 

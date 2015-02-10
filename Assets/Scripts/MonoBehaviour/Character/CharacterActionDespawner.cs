@@ -9,16 +9,16 @@ public class CharacterActionDespawner : EventTransceiverBehavior {
 	public CharacterActionID characterActionID = CharacterActionID.None;
 
 	private SpawnPool spawnPool = null;
-	private Transform transform = null;
+	private Transform localTransform = null;
 
 	// Use this for initialization
-	public override void Start () {
+	public void Start () {
 		spawnPool = PoolManager.Pools[spawnPoolName];
-		transform = gameObject.transform;
+		localTransform = gameObject.transform;
 	}
 	
 	// Update is called once per frame
-	public override void Update () {
+	public void Update () {
 	
 	}
 
@@ -27,11 +27,11 @@ public class CharacterActionDespawner : EventTransceiverBehavior {
 	public override void ReceiveEvent (string eventName, object args, object sender)
 	{
 		ICharacterAction characterAction = args as ICharacterAction;
-		if (characterAction != null && characterAction.Source.transform == transform && characterAction.ID == characterActionID &&
-		    spawnPool != null && spawnPool.IsSpawned(transform)) 
+		if (characterAction != null && characterAction.ID == characterActionID && characterAction.Source.transform == localTransform &&
+		    spawnPool != null && spawnPool.IsSpawned(localTransform)) 
 		{
 			CallEvent(0, this);
-			spawnPool.Despawn(transform);
+			spawnPool.Despawn(localTransform);
 		}
 	}
 

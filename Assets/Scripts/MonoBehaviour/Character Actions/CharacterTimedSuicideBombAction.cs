@@ -50,6 +50,8 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 	
 	public GameObject Source {
 		get {
+			if (source == null)
+				source = gameObject;
 			return this.source;
 		}
 		set {
@@ -59,7 +61,7 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 	#endregion
 
 	// Use this for initialization
-	public override void Start () {
+	public void Start () {
 		ThreadSafeRandom r = new ThreadSafeRandom();
 		if (source == null)
 			source = gameObject;
@@ -74,7 +76,7 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 	}
 	
 	// Update is called once per frame
-	public override void Update () {
+	public void Update () {
 		if (Status == CharacterActionStatus.Started)
 			Status = CharacterActionStatus.Windup;
 		if (Status == CharacterActionStatus.Windup)
