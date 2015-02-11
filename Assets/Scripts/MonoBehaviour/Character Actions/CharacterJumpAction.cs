@@ -152,17 +152,17 @@ public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 		List<IGameTouch> tapData = args as List<IGameTouch>;
 		if (eventName.Equals(ReceivedEvents[0]) && tapData != null)
 		{
-			if (tapData[tapData.Count-1] is IGameRaycastHit)
+			IGameRaycastHit tapRelease = tapData[tapData.Count-1] as IGameRaycastHit;
+			if (tapRelease != null)
 			{
-				IGameRaycastHit tapRelease = tapData[tapData.Count-1] as IGameRaycastHit;
 				if (tapRelease.Collider != null)
 				{
-					if (tapRelease.Collider.gameObject.Equals(source) && 
+					if (tapRelease.Collider.gameObject.Equals(Source) && 
 					    targetController != null &&
 					    (targetController.isGrounded || canAirJump))
 					{
 						Status = CharacterActionStatus.Started;
-						if (Status != CharacterActionStatus.Cancelled)
+						if ((Status & CharacterActionStatus.Cancelled) != CharacterActionStatus.Cancelled)
 							jumpStarted = true;
 						else
 						{

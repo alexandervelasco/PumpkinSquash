@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class CharacterActionTriggerAnimator : EventReceiverBehavior {
 		
@@ -32,7 +33,6 @@ public class CharacterActionTriggerAnimator : EventReceiverBehavior {
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 
 	#region implemented abstract members of EventReceiverBehavior
@@ -45,7 +45,9 @@ public class CharacterActionTriggerAnimator : EventReceiverBehavior {
 			CharacterActionStatus effectiveStatus = GetEffectiveStatus(TriggerStates);
 			if (characterAction.Source == gameObject && CharacterActionIDMappings != null && CharacterActionIDMappings.ContainsKey(characterAction.ID) &&
 			    (effectiveStatus & characterAction.Status) == characterAction.Status)
-				animator.SetTrigger(Animator.StringToHash(CharacterActionIDMappings[characterAction.ID]));
+			{
+				StartCoroutine(Trigger(Animator.StringToHash(CharacterActionIDMappings[characterAction.ID])));
+			}
 		}
 	}
 
@@ -57,5 +59,12 @@ public class CharacterActionTriggerAnimator : EventReceiverBehavior {
 		foreach (CharacterActionStatus status in statusItems)
 			result = result | status;
 		return result;
+	}
+
+	private IEnumerator Trigger (int id)
+	{
+		animator.SetTrigger(id);
+		yield return null;
+		animator.ResetTrigger(id);
 	}
 }

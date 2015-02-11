@@ -69,9 +69,9 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 	public override void ReceiveEvent (string eventName, object args, object sender)
 	{
 		IModifiable<int> modifiable = args as IModifiable<int>;
-		MonoBehaviour behavior = sender as MonoBehaviour;
+		MonoBehaviour sourceBehavior = sender as MonoBehaviour;
 		ICharacterAction characterAction = args as ICharacterAction;
-		if (modifiable != null && behavior != null &&
+		if (modifiable != null && sourceBehavior != null && sourceBehavior.gameObject == Source &&
 						modifiable.ID == modifiableID) {
 						if (modifiable.FinalValue.Value <= deathThreshold) {
 								Status = CharacterActionStatus.Started;

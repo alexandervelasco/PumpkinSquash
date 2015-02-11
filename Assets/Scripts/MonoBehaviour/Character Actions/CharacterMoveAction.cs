@@ -14,7 +14,7 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 	//serialized data
 	public GameObject source = null;
 	public float defaultSpeedUPS = 1.0f;
-	public string destinationTag = "Terrain";
+	public string terrainLayerName = "Terrain";
 	public float minimumDistance = 0.1f;
 	public CharacterActionID id;
 
@@ -164,6 +164,11 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 				}
 			}
 		}
+		else
+		{
+			Status = CharacterActionStatus.Ended;
+			Status = CharacterActionStatus.Inactive;
+		}
 	}
 
 	#region implemented abstract members of GameBehavior
@@ -171,11 +176,13 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 	public override void ReceiveEvent (string eventName, object args, object sender)
 	{
 		IWorldTouch[] worldTouches = args as IWorldTouch[];
+		ICharacterAction characterAction = args as ICharacterAction;
 		if (worldTouches != null)
 		{
 			IWorldTouch firstTouch = worldTouches[0];
-			if (firstTouch.Phase == TouchPhase.Began &&
-			    firstTouch.Collider.gameObject.CompareTag(destinationTag))
+			int targetLayerMask = 1 << firstTouch.Collider.gameObject.layer;
+			int terrainLayerMask = 1 << LayerMask.NameToLayer(terrainLayerName);
+			if (firstTouch.Phase == TouchPhase.Began)
 			{
 				currentFingerId = firstTouch.FingerId;
 			}
@@ -183,17 +190,27 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 			         currentFingerId == firstTouch.FingerId)
 				currentFingerId = -1;
 			if (currentFingerId == firstTouch.FingerId &&
-			         firstTouch.Collider.gameObject.CompareTag(destinationTag))
+			    (targetLayerMask & terrainLayerMask) == terrainLayerMask)
 			{
 				destination = firstTouch.Point;
-				Status = CharacterActionStatus.Started;
-				if (Status != CharacterActionStatus.Cancelled)
+				if (Status != CharacterActionStatus.Started)
+					Status = CharacterActionStatus.Started;
+				if ((Status & CharacterActionStatus.Cancelled) != CharacterActionStatus.Cancelled)
 					moving = true;
 				else
 				{
+					Status = CharacterActionStatus.Ended;
+					moving = false;
 					Status = CharacterActionStatus.Inactive;
 				}
 			}
+		}
+		else if (characterAction != null && characterAction != this && 
+		    characterAction.Status == CharacterActionStatus.Started && Status != CharacterActionStatus.Inactive)
+		{			
+			Status = CharacterActionStatus.Ended;
+			moving = false;
+			Status = CharacterActionStatus.Inactive;
 		}
 	}
 

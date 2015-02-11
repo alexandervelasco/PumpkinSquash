@@ -139,7 +139,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
       propertyPath: m_Controller
@@ -160,6 +160,10 @@ Prefab:
     - target: {fileID: 13700000, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
       propertyPath: m_CastShadows
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
@@ -264,7 +268,7 @@ GameObject:
   - 143: {fileID: 135100521}
   - 114: {fileID: 135100524}
   - 114: {fileID: 135100526}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +288,7 @@ Transform:
   - {fileID: 342278844}
   - {fileID: 1686593503}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
 --- !u!95 &135100520
 Animator:
   serializedVersion: 3
@@ -328,9 +332,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registeredEvents:
   - EVENT_CHARACTERACTION
-  characterActionIDs: 03000000
+  characterActionIDs: 0300000006000000
   triggerAnimationNames:
   - Death
+  - Attack
   triggerStates: 02000000
 --- !u!114 &135100523
 MonoBehaviour:
@@ -447,7 +452,7 @@ GameObject:
   - 33: {fileID: 170317144}
   - 64: {fileID: 170317143}
   - 23: {fileID: 170317142}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Terrain
   m_TagString: Terrain
   m_Icon: {fileID: 0}
@@ -680,7 +685,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
 --- !u!114 &330502560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1206,7 +1211,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
 --- !u!114 &940656354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1450,8 +1455,8 @@ MonoBehaviour:
   source: {fileID: 135100518}
   id: 5
   sourceAttributeID: 1
-  amountPerTick: 10
-  tickInterval: 1
+  amountPerTick: -1
+  tickInterval: .600000024
 --- !u!4 &1141866276
 Transform:
   m_ObjectHideFlags: 0
@@ -1459,11 +1464,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1141866274}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.06748664, y: 2.13610983, z: 1.16676903}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!1 &1159898710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1547,7 +1552,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
 --- !u!114 &1198270488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1992,7 +1997,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
 --- !u!1 &1613828278
 GameObject:
   m_ObjectHideFlags: 0
@@ -2137,6 +2142,59 @@ Transform:
   - {fileID: 1358328879}
   m_Father: {fileID: 135100519}
   m_RootOrder: 1
+--- !u!1 &1691267941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1691267942}
+  - 114: {fileID: 1691267943}
+  m_Layer: 0
+  m_Name: Character Attack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1691267942
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1691267941}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+--- !u!114 &1691267943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1691267941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699a52a8e530a4e45b74da49de7b53e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents:
+  - EVENT_GESTURETAP
+  calledEvents:
+  - EVENT_CHARACTERACTION
+  - EVENT_MODIFIERGET
+  - EVENT_MODIFIERSET
+  source: {fileID: 135100518}
+  defaultDamage: 10
+  defaultWindupTime: .140000001
+  defaultRecoveryTime: .442999989
+  defaultRange: 3
+  id: 6
+  sourceAttributeID: 1
+  targetLayerName: Interactable
 --- !u!1 &1741360875
 GameObject:
   m_ObjectHideFlags: 0
@@ -2406,13 +2464,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registeredEvents:
   - EVENT_WORLDTOUCH
+  - EVENT_CHARACTERACTION
   calledEvents:
   - EVENT_CHARACTERACTION
   - EVENT_MODIFIERGET
   - EVENT_MODIFIERSET
   source: {fileID: 135100518}
   defaultSpeedUPS: 7
-  destinationTag: Terrain
+  terrainLayerName: Terrain
   minimumDistance: .100000001
   id: 1
 --- !u!4 &1930766352

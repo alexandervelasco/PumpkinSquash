@@ -9,7 +9,8 @@ public enum CharacterActionID
 	CharacterJump,
 	CharacterDeath,
 	CharacterTimedSuicideBomb,
-	CharacterAttributeIntOverTime
+	CharacterAttributeIntOverTime,
+	CharacterAttack
 }
 
 [Flags]
