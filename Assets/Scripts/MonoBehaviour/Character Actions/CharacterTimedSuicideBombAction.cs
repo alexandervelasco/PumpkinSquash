@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAction {
 
@@ -65,7 +66,8 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 		ThreadSafeRandom r = new ThreadSafeRandom();
 		if (source == null)
 			source = gameObject;
-		sourceAttribute = source.GetComponent<CharacterAttributeInt>();
+		CharacterAttributeInt[] sourceAttributesInt = source.GetComponents<CharacterAttributeInt>();
+		sourceAttribute = sourceAttributesInt.FirstOrDefault(attribute => attribute.ID == targetAttributeID);
 		if (sourceAttribute != null && sourceAttribute.ID == sourceAttributeID)
 		{
 			sourceAttribute.BaseValue = r.Next(minimumAttributeAmount, maximumAttributeAmount);
@@ -86,19 +88,23 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 			{
 				Status = CharacterActionStatus.Active;
 				TypedValue32<ModifiableType, int> finalAttributeAmount = sourceAttribute.FinalValue;
-				IModifiable<int> damage = new Modifiable<int> (new TypedValue32<ModifiableType, int> (
-					ModifiableType.Damage | finalAttributeAmount.Type, startAttributeAmount.Value - finalAttributeAmount.Value));
-				CallEvent (1, damage, this);
-				Collider[] effectHit = Physics.OverlapSphere (source.transform.position, effectRadius);
-				foreach (Collider collider in effectHit)
+				if (finalAttributeAmount.Value > 0)
 				{
-					CharacterAttributeInt targetAttribute = collider.gameObject.GetComponent<CharacterAttributeInt> ();
-					if (targetAttribute != null && targetAttribute.ID == targetAttributeID)
+					IModifiable<int> damage = new Modifiable<int> (new TypedValue32<ModifiableType, int> (
+						ModifiableType.Damage | finalAttributeAmount.Type, startAttributeAmount.Value - finalAttributeAmount.Value));
+					CallEvent (1, damage, this);
+					Collider[] effectHit = Physics.OverlapSphere (source.transform.position, effectRadius);
+					foreach (Collider collider in effectHit)
 					{
-						targetAttribute.BaseValue = new TypedValue32<ModifiableType, int> (
-							targetAttribute.BaseValue.Type, targetAttribute.BaseValue.Value - damage.FinalValue.Value);
-					}
+						CharacterAttributeInt[] targetAttributesInt = collider.gameObject.GetComponents<CharacterAttributeInt>();
+						CharacterAttributeInt targetAttribute = targetAttributesInt.FirstOrDefault(attribute => attribute.ID == targetAttributeID);
+						if (targetAttribute != null && targetAttribute.ID == targetAttributeID)
+						{
+							targetAttribute.BaseValue = new TypedValue32<ModifiableType, int> (
+								targetAttribute.BaseValue.Type, targetAttribute.BaseValue.Value - damage.FinalValue.Value);
+						}
 
+					}
 				}
 				Status = CharacterActionStatus.Ended;
 				sourceAttribute.BaseValue = 0;

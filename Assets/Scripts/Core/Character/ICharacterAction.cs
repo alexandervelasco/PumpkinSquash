@@ -26,10 +26,9 @@ public enum CharacterActionStatus
 	Recovery = 64
 };
 
-public interface ICharacterAction {
+public interface ICharacterAction : IGameObjectSource {
 	CharacterActionID ID { get;set; }
 	CharacterActionStatus Status { get;set; }
-	GameObject Source { get; set; }
 	U GetProperty<T, U>(T propertyId) where T : IConvertible;
 	void SetProperty<T, U>(T propertyId, U propertyValue) where T : IConvertible;
 }

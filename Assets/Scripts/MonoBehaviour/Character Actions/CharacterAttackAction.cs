@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 public enum CharacterAttackActionProperties
 {
@@ -11,7 +12,7 @@ public enum CharacterAttackActionProperties
 	Range
 }
 
-public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction {
+public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction, ITargeted<GameObject> {
 	
 	//serialized data
 	public GameObject source = null;
@@ -20,7 +21,7 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction 
 	public float defaultRecoveryTime = 0;
 	public float defaultRange = 0;
 	public CharacterActionID id;
-	public ModifiableID sourceAttributeID = ModifiableID.None;
+	public ModifiableID targetAttributeID = ModifiableID.None;
 	public string targetLayerName = "Interactable";
 	
 	private IModifiable<int> damage = null;
@@ -30,7 +31,7 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction 
 	private CharacterActionStatus status = CharacterActionStatus.Inactive;
 	private bool attacking = false;
 	private float currentTime = 0;
-	private GameObject target = null;
+	private List<GameObject> targets = null;
 
 	private TypedValue32<ModifiableType, int> BaseDamage
 	{
@@ -194,6 +195,18 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction 
 
 	#endregion
 
+	#region ITargeted implementation
+
+	public List<GameObject> Targets {
+		get {
+			if (targets == null)
+				targets = new List<GameObject>();
+			return targets;
+		}
+	}
+
+	#endregion
+
 	// Use this for initialization
 	void Start () {
 		if (source == null)
@@ -208,6 +221,9 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction 
 	void Update () {
 		if (attacking)
 		{
+			GameObject target = null;
+			if (Targets.Count > 0)
+				target = Targets[0];
 			if ((Status & CharacterActionStatus.Started) == CharacterActionStatus.Started)
 			{
 				currentTime = 0;
@@ -224,6 +240,13 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction 
 			else if ((Status & CharacterActionStatus.Active) == CharacterActionStatus.Active)
 			{
 				currentTime = 0;
+				if (target != null && Vector3.Distance(Source.transform.position, target.transform.position) <= FinalRange)
+				{
+					CharacterAttributeInt[] targetAttributesInt = target.GetComponents<CharacterAttributeInt>();
+					CharacterAttributeInt targetAttribute = targetAttributesInt.FirstOrDefault(attribute => attribute.ID == targetAttributeID);
+					if (targetAttribute != null)
+						targetAttribute.BaseValue -= FinalDamage;
+				}
 				Status = CharacterActionStatus.Recovery;
 			}
 			else if ((Status & CharacterActionStatus.Recovery) == CharacterActionStatus.Recovery)
@@ -251,7 +274,9 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction 
 			IGameRaycastHit tapRelease = tapData[tapData.Count-1] as IGameRaycastHit;
 			if (tapRelease != null && tapRelease.Collider != null)
 			{
-				target = tapRelease.Collider.gameObject;
+				GameObject target = tapRelease.Collider.gameObject;
+				if (!Targets.Contains(target))
+					Targets.Add(target);
 				int targetLayerMask = 1 << target.layer;
 				int terrainLayerMask = 1 << LayerMask.NameToLayer(targetLayerName);
 				if (!target.Equals(Source) && (targetLayerMask & terrainLayerMask) == terrainLayerMask &&
@@ -273,7 +298,7 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction 
 		         characterAction.Status == CharacterActionStatus.Started && Status != CharacterActionStatus.Inactive)
 		{			
 			attacking = false;
-			target = null;
+			Targets.Clear();
 			Status = CharacterActionStatus.Ended;
 			Status = CharacterActionStatus.Inactive;
 		}
