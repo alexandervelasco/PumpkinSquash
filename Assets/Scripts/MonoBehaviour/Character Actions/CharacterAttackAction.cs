@@ -255,7 +255,7 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction,
 				if (currentTime >= FinalRecoveryTime)
 				{
 					attacking = false;
-					target = null;
+					Targets.Clear();
 					Status = CharacterActionStatus.Ended;
 					Status = CharacterActionStatus.Inactive;
 				}
@@ -278,8 +278,8 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction,
 				if (!Targets.Contains(target))
 					Targets.Add(target);
 				int targetLayerMask = 1 << target.layer;
-				int terrainLayerMask = 1 << LayerMask.NameToLayer(targetLayerName);
-				if (!target.Equals(Source) && (targetLayerMask & terrainLayerMask) == terrainLayerMask &&
+				int hitLayerMask = 1 << LayerMask.NameToLayer(targetLayerName);
+				if (!target.Equals(Source) && (targetLayerMask & hitLayerMask) == hitLayerMask &&
 				    (Status & (CharacterActionStatus.Started | CharacterActionStatus.Active | CharacterActionStatus.Windup)) == CharacterActionStatus.None)
 				{
 					Status = CharacterActionStatus.Started;

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using PathologicalGames;
 
 [RequireComponent(typeof(TransformConstraint))]
@@ -9,9 +10,10 @@ public class CharacterAttributeIntBar : EventReceiverBehavior, IGameObjectSource
 	public GameObject source = null;
 	public ModifiableID attributeID = ModifiableID.None;
 	public int minimumValue = 0;
-	public int maximumValue = 100;
 	public Gradient colorGradient = null;
-
+	public string currentValueGOName = string.Empty;
+	
+	private int maximumValue = 100;
 	private TransformConstraint transformConstraint = null;
 	private Image barImage = null;
 
@@ -29,7 +31,10 @@ public class CharacterAttributeIntBar : EventReceiverBehavior, IGameObjectSource
 	private Image BarImage {
 		get {
 			if (barImage == null)
-				barImage = GetComponentInChildren<Image>();
+			{
+				Image[] images = GetComponentsInChildren<Image>();
+				barImage = images.FirstOrDefault(image => image.gameObject.name.Equals(currentValueGOName));
+			}
 			return barImage;
 		}
 	}
@@ -39,6 +44,10 @@ public class CharacterAttributeIntBar : EventReceiverBehavior, IGameObjectSource
 		transformConstraint = gameObject.GetComponent<TransformConstraint>();
 		if (transformConstraint != null)
 			transformConstraint.target = Source.transform;
+		IModifiable<int>[] sourceAttributes = Source.GetComponents<CharacterAttributeInt>();
+		IModifiable<int> sourceAttribute = sourceAttributes.FirstOrDefault (attribute => attribute.ID == attributeID);
+		if (sourceAttribute != null)
+			maximumValue = sourceAttribute.FinalValue;
 	}
 	
 	// Update is called once per frame

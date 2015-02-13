@@ -23,6 +23,8 @@ public class CharacterAttributeInt : EventCallerBehavior, IModifiable<int> {
 
 	public ISingleOperandModifier<TypedValue32<ModifiableType, int>> Modifiers {
 		get {
+			if (this.modifiers == null)
+				this.modifiers = new GetterModifier<TypedValue32<ModifiableType, int>>();
 			return this.modifiers;
 		}
 	}

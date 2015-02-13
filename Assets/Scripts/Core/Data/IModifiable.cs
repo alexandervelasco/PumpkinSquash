@@ -3,7 +3,8 @@
 public enum ModifiableID
 {
 	None,
-	AttributeHP
+	AttributeHP,
+	AttributeClamp
 }
 
 [Flags]
