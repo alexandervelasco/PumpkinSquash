@@ -16,10 +16,10 @@ public class CharacterAttributeIntClampModifier : EventTransceiverBehavior, IMod
 	public int defaultValue = 0;
 	public ModifiableID targetModifiableID = ModifiableID.None;
 	public int modifierPriority = 3;
+	public bool clampBaseValue = false;
 	
 	private ISingleOperandModifier<TypedValue32<ModifiableType, int>> modifiers = null;
 	private TypedValue32<ModifiableType, int> baseValue = 0;
-	private IModifiable<int> targetAttribute = null;
 	private Guid modifierID = Guid.NewGuid();
 
 	#region IModifiable implementation
@@ -78,7 +78,15 @@ public class CharacterAttributeIntClampModifier : EventTransceiverBehavior, IMod
 		if (modifiable != null && senderBehavior != null &&
 			modifiable.ID == targetModifiableID && senderBehavior.gameObject.Equals(this.gameObject))
 		{
-			modifiable.Modifiers.SetModifier(modifierPriority, modifierID, ClampMaxValue);
+			if (clampBaseValue)
+			{
+				TypedValue32<ModifiableType, int> clampValue = FinalValue;
+				if ((clampType == ClampType.ClampMaximum && modifiable.BaseValue > clampValue) ||
+				    (clampType == ClampType.ClampMinimum && modifiable.BaseValue < clampValue))
+					modifiable.BaseValue = clampValue;
+			}
+			else
+				modifiable.Modifiers.SetModifier(modifierPriority, modifierID, ClampMaxValue);
 		}
 	}
 
