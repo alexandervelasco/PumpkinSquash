@@ -47,7 +47,13 @@ public class CharacterAttributeIntBar : EventReceiverBehavior, IGameObjectSource
 		IModifiable<int>[] sourceAttributes = Source.GetComponents<CharacterAttributeInt>();
 		IModifiable<int> sourceAttribute = sourceAttributes.FirstOrDefault (attribute => attribute.ID == attributeID);
 		if (sourceAttribute != null)
+		{
 			maximumValue = sourceAttribute.FinalValue;
+			BarImage.color = colorGradient.Evaluate(1);
+			BarImage.transform.localScale = new Vector3(1,
+			                                            BarImage.transform.localScale.y,
+			                                            BarImage.transform.localScale.z);
+		}
 	}
 	
 	// Update is called once per frame

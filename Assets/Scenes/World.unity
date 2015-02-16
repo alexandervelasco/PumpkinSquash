@@ -440,6 +440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registeredEvents:
   - EVENT_MODIFIERGET
+  - EVENT_MODIFIERSET
   calledEvents:
   - EVENT_MODIFIERGET
   - EVENT_MODIFIERSET
@@ -478,6 +479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registeredEvents:
   - EVENT_MODIFIERGET
+  - EVENT_MODIFIERSET
   calledEvents:
   - EVENT_MODIFIERGET
   - EVENT_MODIFIERSET
@@ -2451,7 +2453,7 @@ MonoBehaviour:
   logMessages: 0
   _perPrefabPoolOptions:
   - prefab: {fileID: 403320, guid: 72f8a1f61d9771c4f995fe9ba7fd60d5, type: 2}
-    preloadAmount: 10
+    preloadAmount: 1
     preloadTime: 0
     preloadFrames: 2
     preloadDelay: 0
@@ -2790,8 +2792,8 @@ MonoBehaviour:
   - EVENT_MODIFIERSET
   source: {fileID: 135100518}
   defaultDamage: 10
-  defaultWindupTime: .140000001
-  defaultRecoveryTime: .442999989
+  defaultWindupTime: .0700000003
+  defaultRecoveryTime: .221499994
   defaultRange: 3
   id: 6
   targetAttributeID: 1

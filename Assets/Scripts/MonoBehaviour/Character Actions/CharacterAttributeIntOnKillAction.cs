@@ -99,7 +99,7 @@ public class CharacterAttributeIntOnKillAction : EventTransceiverBehavior, IChar
 			}
 			else if (action.ID == deathActionID)
 			{
-				if (!deathActive && action.Status != CharacterActionStatus.Active)
+				if (!deathActive && action.Status == CharacterActionStatus.Active)
 				{
 					ITargeted<GameObject> triggerTargets = triggerAction as ITargeted<GameObject>;
 					if (triggerTargets != null && triggerTargets.Targets.Contains(action.Source))

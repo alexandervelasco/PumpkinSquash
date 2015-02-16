@@ -275,8 +275,6 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction,
 			if (tapRelease != null && tapRelease.Collider != null)
 			{
 				GameObject target = tapRelease.Collider.gameObject;
-				if (!Targets.Contains(target))
-					Targets.Add(target);
 				int targetLayerMask = 1 << target.layer;
 				int hitLayerMask = 1 << LayerMask.NameToLayer(targetLayerName);
 				if (!target.Equals(Source) && (targetLayerMask & hitLayerMask) == hitLayerMask &&
@@ -284,7 +282,11 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction,
 				{
 					Status = CharacterActionStatus.Started;
 					if ((Status & CharacterActionStatus.Cancelled) != CharacterActionStatus.Cancelled)
+					{
+						if (!Targets.Contains(target))
+							Targets.Add(target);
 						attacking = true;
+					}
 					else
 					{
 						attacking = true;

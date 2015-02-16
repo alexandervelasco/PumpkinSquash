@@ -32,6 +32,7 @@ public class PoolSpawner : EventCallerBehavior {
 				Vector3 randomDirection = Vector3.Normalize(new Vector3((float)r.NextDouble(), 0, (float)r.NextDouble()));
 				Transform spawn = spawnPool.Spawn(spawnedPrefab);
 				spawn.Translate((randomDirection * (maxSpawnRadius * (float)r.NextDouble())) + spawnOffset);
+				spawn.BroadcastMessage("Start");
 			}
 			spawnTimer = spawnRate;
 		}

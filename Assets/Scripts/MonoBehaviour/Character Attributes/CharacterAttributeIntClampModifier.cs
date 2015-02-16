@@ -81,9 +81,9 @@ public class CharacterAttributeIntClampModifier : EventTransceiverBehavior, IMod
 			if (clampBaseValue)
 			{
 				TypedValue32<ModifiableType, int> clampValue = FinalValue;
-				if ((clampType == ClampType.ClampMaximum && modifiable.BaseValue > clampValue) ||
-				    (clampType == ClampType.ClampMinimum && modifiable.BaseValue < clampValue))
-					modifiable.BaseValue = clampValue;
+				if ((clampType == ClampType.ClampMaximum && modifiable.BaseValue.Value > clampValue.Value) ||
+				    (clampType == ClampType.ClampMinimum && modifiable.BaseValue.Value < clampValue.Value))
+					modifiable.BaseValue = new TypedValue32<ModifiableType, int>(modifiable.BaseValue.Type | clampValue.Type, clampValue.Value);
 			}
 			else
 				modifiable.Modifiers.SetModifier(modifierPriority, modifierID, ClampMaxValue);
