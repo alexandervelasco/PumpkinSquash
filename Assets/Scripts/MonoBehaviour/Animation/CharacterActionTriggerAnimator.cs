@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Collections;
 
-public class CharacterActionTriggerAnimator : EventReceiverBehavior {
+public class CharacterActionTriggerAnimator : EventReceiverBehavior, IGameObjectSource {
 		
 	//serialized data
+	public GameObject source = null;
 	public List<CharacterActionID> characterActionIDs = new List<CharacterActionID>();
 	public List<string> triggerAnimationNames = new List<string>();
 	public List<CharacterActionStatus> triggerStates = new List<CharacterActionStatus>();
@@ -23,6 +24,21 @@ public class CharacterActionTriggerAnimator : EventReceiverBehavior {
 			return triggerStates;
 		}
 	}
+
+	#region IGameObjectSource implementation
+
+	public GameObject Source {
+		get {
+			if (source == null)
+				source = gameObject;
+			return source;
+		}
+		set {
+			source = value;
+		}
+	}
+
+	#endregion
 
 	// Use this for initialization
 	void Start () {
@@ -43,7 +59,7 @@ public class CharacterActionTriggerAnimator : EventReceiverBehavior {
 		if (characterAction != null)
 		{
 			CharacterActionStatus effectiveStatus = GetEffectiveStatus(TriggerStates);
-			if (characterAction.Source == gameObject && CharacterActionIDMappings != null && CharacterActionIDMappings.ContainsKey(characterAction.ID) &&
+			if (characterAction.Source == Source && CharacterActionIDMappings != null && CharacterActionIDMappings.ContainsKey(characterAction.ID) &&
 			    (effectiveStatus & characterAction.Status) == characterAction.Status)
 			{
 				StartCoroutine(Trigger(Animator.StringToHash(CharacterActionIDMappings[characterAction.ID])));

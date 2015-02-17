@@ -72,16 +72,19 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 		MonoBehaviour sourceBehavior = sender as MonoBehaviour;
 		ICharacterAction characterAction = args as ICharacterAction;
 		if (modifiable != null && sourceBehavior != null && sourceBehavior.gameObject == Source &&
-						modifiable.ID == modifiableID) {
-						if (modifiable.FinalValue.Value <= deathThreshold) {
-								Status = CharacterActionStatus.Started;
-								Status = CharacterActionStatus.Active;
-						} else if (modifiable.FinalValue.Value <= deathThreshold && Status != CharacterActionStatus.Ended) {
-								Status = CharacterActionStatus.Ended;
-								Status = CharacterActionStatus.Inactive;
-						}
-				} else if (characterAction != null && characterAction != this && Status == CharacterActionStatus.Active)
-						characterAction.Status = CharacterActionStatus.Cancelled;
+						modifiable.ID == modifiableID)
+		{
+			if (modifiable.FinalValue.Value <= deathThreshold && (Status & CharacterActionStatus.Started) != CharacterActionStatus.Started) 
+			{
+				Status = CharacterActionStatus.Started;
+				if ((Status & CharacterActionStatus.Cancelled) != CharacterActionStatus.Cancelled)
+					Status = CharacterActionStatus.Active;
+			} else if (modifiable.FinalValue.Value > deathThreshold && (Status & CharacterActionStatus.Active) == CharacterActionStatus.Active) {
+				Status = CharacterActionStatus.Ended;
+				Status = CharacterActionStatus.Inactive;
+			}
+		} else if (characterAction != null && characterAction != this && (Status & CharacterActionStatus.Active) == CharacterActionStatus.Active)
+			characterAction.Status = CharacterActionStatus.Cancelled;
 	}
 
 	#endregion

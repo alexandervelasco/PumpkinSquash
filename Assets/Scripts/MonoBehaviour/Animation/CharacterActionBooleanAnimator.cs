@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 
 [RequireComponent(typeof(Animator))]
-public class CharacterActionBooleanAnimator : EventReceiverBehavior {
+public class CharacterActionBooleanAnimator : EventReceiverBehavior, IGameObjectSource {
 
 	//serialized data
+	public GameObject source = null;
 	public List<CharacterActionID> characterActionIDs = new List<CharacterActionID>();
 	public List<string> booleanAnimationNames = new List<string>();
 	public List<CharacterActionStatus> enableStates = new List<CharacterActionStatus>();
@@ -23,6 +24,21 @@ public class CharacterActionBooleanAnimator : EventReceiverBehavior {
 			return enableStates;
 		}
 	}
+
+	#region IGameObjectSource implementation
+
+	public GameObject Source {
+		get {
+			if (source == null)
+				source = gameObject;
+			return source;
+		}
+		set {
+			source = value;
+		}
+	}
+
+	#endregion
 
 	// Use this for initialization
 	public void Start () {
@@ -44,7 +60,7 @@ public class CharacterActionBooleanAnimator : EventReceiverBehavior {
 		if (characterAction != null)
 		{
 			CharacterActionStatus effectiveStatus = GetEffectiveStatus(EnableStates);
-			if (characterAction.Source == gameObject && CharacterActionIDMappings != null && CharacterActionIDMappings.ContainsKey(characterAction.ID))
+			if (characterAction.Source == Source && CharacterActionIDMappings != null && CharacterActionIDMappings.ContainsKey(characterAction.ID))
 				animator.SetBool(Animator.StringToHash(CharacterActionIDMappings[characterAction.ID]), 
 				                 (effectiveStatus & characterAction.Status) == characterAction.Status);
 		}
