@@ -60,6 +60,7 @@ public class CharacterAttributeIntOverTimeAction : EventCallerBehavior, ICharact
 
 	// Use this for initialization
 	void Start () {
+		Status = CharacterActionStatus.Inactive;
 		if (source == null)
 			source = gameObject;
 		sourceAttribute = source.GetComponent<CharacterAttributeInt>();
@@ -73,9 +74,11 @@ public class CharacterAttributeIntOverTimeAction : EventCallerBehavior, ICharact
 	
 	// Update is called once per frame
 	void Update () {
-		if (Status == CharacterActionStatus.Started)
+		if ((Status & CharacterActionStatus.Cancelled) == CharacterActionStatus.Cancelled)
+			Status = CharacterActionStatus.Started;
+		if ((Status & CharacterActionStatus.Started) == CharacterActionStatus.Started)
 				Status = CharacterActionStatus.Windup;
-		if (Status == CharacterActionStatus.Windup) 
+		if ((Status & CharacterActionStatus.Windup) == CharacterActionStatus.Windup) 
 		{
 			currentTick -= Time.deltaTime;
 			if (currentTick <= 0) {

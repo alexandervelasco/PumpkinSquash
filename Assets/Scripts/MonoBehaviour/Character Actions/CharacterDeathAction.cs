@@ -57,6 +57,7 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 	public void Start () {
 		if (source == null)
 			source = gameObject;
+		Status = CharacterActionStatus.Inactive;
 	}
 	
 	// Update is called once per frame
@@ -83,7 +84,7 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 				Status = CharacterActionStatus.Ended;
 				Status = CharacterActionStatus.Inactive;
 			}
-		} else if (characterAction != null && characterAction != this && (Status & CharacterActionStatus.Active) == CharacterActionStatus.Active)
+		} else if (characterAction != null && characterAction.Source == Source && characterAction != this && (Status & CharacterActionStatus.Active) == CharacterActionStatus.Active)
 			characterAction.Status = CharacterActionStatus.Cancelled;
 	}
 

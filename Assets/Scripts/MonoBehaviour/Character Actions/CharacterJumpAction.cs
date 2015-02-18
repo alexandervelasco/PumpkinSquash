@@ -122,6 +122,7 @@ public class CharacterJumpAction : EventTransceiverBehavior, ICharacterAction {
 		targetAcceleration = source.GetComponent<CharacterControllerAcceleration>();
 		targetController = source.GetComponent<CharacterController>();
 		speedUPS = new Modifiable<float>(defaultSpeedUPS);
+		Status = CharacterActionStatus.Inactive;
 	}
 	
 	// Update is called once per frame

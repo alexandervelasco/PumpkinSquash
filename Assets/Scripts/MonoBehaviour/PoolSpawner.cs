@@ -8,9 +8,10 @@ public class PoolSpawner : EventCallerBehavior {
 	public string spawnPoolName = string.Empty;
 	public GameObject spawnedPrefab = null;
 	public float spawnRate = 0;
-	public int maxSpawn = 0;
+	public int maximumSpawnAmount = 0;
 	public Vector3 spawnOffset = Vector3.zero;
-	public float maxSpawnRadius = 0;
+	public Vector3 maximumSpawnDistance = Vector3.zero;
+	public float minimumSpawnGapRadius = 0;
 
 	private float spawnTimer = 0;
 	private SpawnPool spawnPool = null;
@@ -26,12 +27,20 @@ public class PoolSpawner : EventCallerBehavior {
 		spawnTimer -= Time.deltaTime;
 		if (spawnTimer <= 0)
 		{
-			if (spawnPool != null && spawnPool.Count < maxSpawn)
+			if (spawnPool != null && spawnPool.Count < maximumSpawnAmount)
 			{
 				ThreadSafeRandom r = new ThreadSafeRandom();
-				Vector3 randomDirection = Vector3.Normalize(new Vector3((float)r.NextDouble(), 0, (float)r.NextDouble()));
+				Vector3 randomPosition = Vector3.zero;
 				Transform spawn = spawnPool.Spawn(spawnedPrefab);
-				spawn.Translate((randomDirection * (maxSpawnRadius * (float)r.NextDouble())) + spawnOffset);
+				bool nearbyInteractables = false;
+				do
+				{
+					randomPosition = (new Vector3(maximumSpawnDistance.x * (float)r.NextDouble(),
+					                              maximumSpawnDistance.y * (float)r.NextDouble(),
+					                              maximumSpawnDistance.z * (float)r.NextDouble())) + spawnOffset;
+					nearbyInteractables = Physics.CheckSphere(randomPosition, minimumSpawnGapRadius, 1 << spawn.gameObject.layer);
+				} while (nearbyInteractables);
+				spawn.position = randomPosition;
 				spawn.BroadcastMessage("Start");
 			}
 			spawnTimer = spawnRate;

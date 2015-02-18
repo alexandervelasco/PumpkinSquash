@@ -22,7 +22,7 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction,
 	public float defaultRange = 0;
 	public CharacterActionID id;
 	public ModifiableID targetAttributeID = ModifiableID.None;
-	public string targetLayerName = "Interactable";
+	public Vector3 originOffset = Vector3.zero;
 	
 	private IModifiable<int> damage = null;
 	private IModifiable<float> windupTime = null;
@@ -215,6 +215,7 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction,
 		windupTime = new Modifiable<float>(defaultWindupTime);
 		recoveryTime = new Modifiable<float>(defaultRecoveryTime);
 		range = new Modifiable<float>(defaultRange);
+		Status = CharacterActionStatus.Inactive;
 	}
 	
 	// Update is called once per frame
@@ -235,19 +236,22 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction,
 			{
 				currentTime += Time.deltaTime;
 				if (currentTime >= FinalWindupTime)
-					Status = CharacterActionStatus.Active;
-			}
-			else if ((Status & CharacterActionStatus.Active) == CharacterActionStatus.Active)
-			{
-				currentTime = 0;
-				if (target != null && Vector3.Distance(Source.transform.position, target.transform.position) <= FinalRange)
 				{
-					CharacterAttributeInt[] targetAttributesInt = target.GetComponents<CharacterAttributeInt>();
-					CharacterAttributeInt targetAttribute = targetAttributesInt.FirstOrDefault(attribute => attribute.ID == targetAttributeID);
-					if (targetAttribute != null)
-						targetAttribute.BaseValue -= FinalDamage;
+					Status = CharacterActionStatus.Active;
+					currentTime = 0;
+					RaycastHit hitCheck;
+					if (Physics.Raycast(Source.transform.position + originOffset, Source.transform.forward, out hitCheck, FinalRange, 1 << Source.layer))
+					{
+						if (hitCheck.collider.gameObject == target)
+						{
+							CharacterAttributeInt[] targetAttributesInt = target.GetComponents<CharacterAttributeInt>();
+							CharacterAttributeInt targetAttribute = targetAttributesInt.FirstOrDefault(attribute => attribute.ID == targetAttributeID);
+							if (targetAttribute != null)
+								targetAttribute.BaseValue -= FinalDamage;
+						}
+					}
+					Status = CharacterActionStatus.Recovery;
 				}
-				Status = CharacterActionStatus.Recovery;
 			}
 			else if ((Status & CharacterActionStatus.Recovery) == CharacterActionStatus.Recovery)
 			{
@@ -276,15 +280,15 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction,
 			{
 				GameObject target = tapRelease.Collider.gameObject;
 				int targetLayerMask = 1 << target.layer;
-				int hitLayerMask = 1 << LayerMask.NameToLayer(targetLayerName);
-				if (!target.Equals(Source) && (targetLayerMask & hitLayerMask) == hitLayerMask &&
+				int sourceLayerMask = 1 << Source.layer;
+				if (!target.Equals(Source) && (targetLayerMask & sourceLayerMask) == sourceLayerMask &&
 				    (Status & (CharacterActionStatus.Started | CharacterActionStatus.Active | CharacterActionStatus.Windup)) == CharacterActionStatus.None)
 				{
 					Status = CharacterActionStatus.Started;
 					if ((Status & CharacterActionStatus.Cancelled) != CharacterActionStatus.Cancelled)
 					{
-						if (!Targets.Contains(target))
-							Targets.Add(target);
+						Targets.Clear();
+						Targets.Add(target);
 						attacking = true;
 					}
 					else

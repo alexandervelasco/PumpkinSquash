@@ -321,6 +321,7 @@ GameObject:
   - 95: {fileID: 135100520}
   - 114: {fileID: 135100523}
   - 114: {fileID: 135100522}
+  - 114: {fileID: 135100528}
   - 143: {fileID: 135100521}
   - 114: {fileID: 135100524}
   - 114: {fileID: 135100526}
@@ -491,6 +492,24 @@ MonoBehaviour:
   targetModifiableID: 1
   modifierPriority: 3
   clampBaseValue: 1
+--- !u!114 &135100528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 135100518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db899762f53b6ba4697ceaf77cdc2c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents:
+  - EVENT_CHARACTERACTION
+  source: {fileID: 0}
+  characterActionIDs: 03000000
+  triggerAnimationNames:
+  - Idle
+  triggerStates: 01000000
 --- !u!1 &141447562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,6 +1644,7 @@ GameObject:
   - 114: {fileID: 940656355}
   - 114: {fileID: 940656356}
   - 114: {fileID: 940656357}
+  - 114: {fileID: 940656358}
   m_Layer: 0
   m_Name: World System
   m_TagString: Untagged
@@ -1709,10 +1729,29 @@ MonoBehaviour:
   - EVENT_SPAWN
   spawnPoolName: unitPool
   spawnedPrefab: {fileID: 103316, guid: 72f8a1f61d9771c4f995fe9ba7fd60d5, type: 2}
-  spawnRate: 1
-  maxSpawn: 1
-  spawnOffset: {x: 0, y: 1, z: 0}
-  maxSpawnRadius: 10
+  spawnRate: .25
+  maximumSpawnAmount: 1
+  spawnOffset: {x: -45, y: 1, z: -45}
+  maximumSpawnDistance: {x: 90, y: 0, z: 90}
+  minimumSpawnGapRadius: 0
+--- !u!114 &940656358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 940656352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35acc5b425ce2b541a86e340f22f4c6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents:
+  - EVENT_UIACTION
+  calledEvents:
+  - EVENT_WORLDRESET
+  targets:
+  - {fileID: 135100518}
+  actionID: 1
 --- !u!1 &967105197
 GameObject:
   m_ObjectHideFlags: 0
@@ -2471,7 +2510,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1381680364
 Transform:
   m_ObjectHideFlags: 0
@@ -2622,7 +2661,7 @@ MonoBehaviour:
   logMessages: 0
   _perPrefabPoolOptions:
   - prefab: {fileID: 403320, guid: 72f8a1f61d9771c4f995fe9ba7fd60d5, type: 2}
-    preloadAmount: 1
+    preloadAmount: 50
     preloadTime: 0
     preloadFrames: 2
     preloadDelay: 0
@@ -3036,10 +3075,10 @@ MonoBehaviour:
   defaultDamage: 10
   defaultWindupTime: .0700000003
   defaultRecoveryTime: .221499994
-  defaultRange: 3
+  defaultRange: 1
   id: 6
   targetAttributeID: 1
-  targetLayerName: Interactable
+  originOffset: {x: 0, y: 1, z: 0}
 --- !u!1 &1741360875
 GameObject:
   m_ObjectHideFlags: 0

@@ -137,6 +137,7 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 			source = gameObject;
 		targetAcceleration = source.GetComponent<CharacterControllerAcceleration>();
 		speedUPS = new Modifiable<float>(defaultSpeedUPS);
+		Status = CharacterActionStatus.Inactive;
 	}
 	
 	// Update is called once per frame
@@ -205,7 +206,7 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 				}
 			}
 		}
-		else if (characterAction != null && characterAction != this && 
+		else if (characterAction != null && characterAction != this && characterAction.Source == Source &&
 		    characterAction.Status == CharacterActionStatus.Started && Status != CharacterActionStatus.Inactive)
 		{			
 			Status = CharacterActionStatus.Ended;

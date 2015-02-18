@@ -76,6 +76,7 @@ public class CharacterAttributeIntOnKillAction : EventTransceiverBehavior, IChar
 		if (source == null)
 			source = gameObject;
 		attributeAmount = new Modifiable<int>(defaultAttributeAmount);
+		Status = CharacterActionStatus.Inactive;
 	}
 	
 	// Update is called once per frame

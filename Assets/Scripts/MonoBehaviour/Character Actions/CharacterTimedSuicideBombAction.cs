@@ -63,6 +63,7 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 
 	// Use this for initialization
 	public void Start () {
+		Status = CharacterActionStatus.Inactive;
 		ThreadSafeRandom r = new ThreadSafeRandom();
 		if (source == null)
 			source = gameObject;
@@ -79,9 +80,9 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 	
 	// Update is called once per frame
 	public void Update () {
-		if (Status == CharacterActionStatus.Started)
+		if ((Status & CharacterActionStatus.Started) == CharacterActionStatus.Started)
 			Status = CharacterActionStatus.Windup;
-		if (Status == CharacterActionStatus.Windup)
+		if ((Status & CharacterActionStatus.Windup) == CharacterActionStatus.Windup)
 		{
 			delayTime -= Time.deltaTime;
 			if (delayTime <= 0) 
