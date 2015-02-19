@@ -448,7 +448,6 @@ MonoBehaviour:
   - EVENT_MODIFIERGET
   - EVENT_MODIFIERSET
   id: 2
-  clampType: 0
   defaultValue: 100
   targetModifiableID: 1
   modifierPriority: 3
@@ -486,8 +485,7 @@ MonoBehaviour:
   calledEvents:
   - EVENT_MODIFIERGET
   - EVENT_MODIFIERSET
-  id: 2
-  clampType: 1
+  id: 3
   defaultValue: 0
   targetModifiableID: 1
   modifierPriority: 3
@@ -1730,7 +1728,7 @@ MonoBehaviour:
   spawnPoolName: unitPool
   spawnedPrefab: {fileID: 103316, guid: 72f8a1f61d9771c4f995fe9ba7fd60d5, type: 2}
   spawnRate: .25
-  maximumSpawnAmount: 1
+  maximumSpawnAmount: 50
   spawnOffset: {x: -45, y: 1, z: -45}
   maximumSpawnDistance: {x: 90, y: 0, z: 90}
   minimumSpawnGapRadius: 0

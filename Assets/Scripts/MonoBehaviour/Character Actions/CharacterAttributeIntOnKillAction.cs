@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class CharacterAttributeIntOnKillAction : EventTransceiverBehavior, ICharacterAction {
+public class CharacterAttributeIntOnKillAction : EventTransceiverBehavior, ICharacterAction, ITargeted<GameObject> {
 
 	//serialized data
 	public GameObject source = null;
@@ -16,6 +16,7 @@ public class CharacterAttributeIntOnKillAction : EventTransceiverBehavior, IChar
 	private ICharacterAction triggerAction = null;
 	private CharacterActionStatus status = CharacterActionStatus.Inactive;
 	private bool deathActive = false;
+	private List<GameObject> targets = null;
 
 	private TypedValue32<ModifiableType, int> BaseAttributeAmount
 	{
@@ -71,12 +72,23 @@ public class CharacterAttributeIntOnKillAction : EventTransceiverBehavior, IChar
 
 	#endregion
 
+	#region ITargeted implementation
+
+	public List<GameObject> Targets {
+		get {
+			return targets;
+		}
+	}
+
+	#endregion
+
 	// Use this for initialization
 	void Start () {
 		if (source == null)
 			source = gameObject;
 		attributeAmount = new Modifiable<int>(defaultAttributeAmount);
 		Status = CharacterActionStatus.Inactive;
+		targets = new List<GameObject>();
 	}
 	
 	// Update is called once per frame
@@ -109,6 +121,8 @@ public class CharacterAttributeIntOnKillAction : EventTransceiverBehavior, IChar
 						if ((Status & CharacterActionStatus.Cancelled) != CharacterActionStatus.Cancelled)
 						{
 							Status = CharacterActionStatus.Active;
+							Targets.Clear();
+							Targets.AddRange(triggerTargets.Targets);
 							deathActive = true;
 							CharacterAttributeInt[] sourceAttributesInt = source.GetComponents<CharacterAttributeInt>();
 							CharacterAttributeInt sourceAttribute = sourceAttributesInt.FirstOrDefault(attribute => attribute.ID == sourceAttributeID);

@@ -8,14 +8,19 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 	//serialized data
 	public GameObject source = null;
 	public CharacterActionID id;
-	public ModifiableID sourceAttributeID = ModifiableID.None, targetAttributeID = ModifiableID.None;
-	public int minimumAttributeAmount = 0, maximumAttributeAmount = 0;
-	public float minimumDelayTime = 0, maximumDelayTime = 0;
+	public ModifiableID sourceAttributeID = ModifiableID.None, randomValueAttributeID = ModifiableID.None, targetAttributeID = ModifiableID.None;
+	public int defaultMinimumAttributeAmount = 0, defaultMaximumAttributeAmount = 0;
+	public float defaultMinimumDelayTime = 0, defaultMaximumDelayTime = 0;
 	public float effectRadius = 0;
 	
 	private CharacterActionStatus status = CharacterActionStatus.Inactive;
 	private float delayTime = 0;
-	private CharacterAttributeInt sourceAttribute = null;
+	private IModifiable<int> sourceAttribute = null;
+	private IModifiable<int> randomValueAttribute = null;
+	private IModifiable<int> minimumAttributeAmount = null;
+	private IModifiable<int> maximumAttributeAmount = null;
+	private IModifiable<float> minimumDelayTime = null;
+	private IModifiable<float> maximumDelayTime = null;
 	private TypedValue32<ModifiableType, int> startAttributeAmount = 0;
 
 	#region ICharacterAction implementation
@@ -67,14 +72,29 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 		ThreadSafeRandom r = new ThreadSafeRandom();
 		if (source == null)
 			source = gameObject;
-		CharacterAttributeInt[] sourceAttributesInt = source.GetComponents<CharacterAttributeInt>();
-		sourceAttribute = sourceAttributesInt.FirstOrDefault(attribute => attribute.ID == targetAttributeID);
-		if (sourceAttribute != null && sourceAttribute.ID == sourceAttributeID)
+		MonoBehaviour[] behaviors = source.GetComponents<MonoBehaviour>();
+		IEnumerable<IModifiable<int>> attributes = behaviors.OfType<IModifiable<int>>();
+		sourceAttribute = attributes.FirstOrDefault(t => t.ID == sourceAttributeID);
+		randomValueAttribute = attributes.FirstOrDefault(t => t.ID == randomValueAttributeID);
+		if (sourceAttribute != null && randomValueAttribute != null)
 		{
-			sourceAttribute.BaseValue = r.Next(minimumAttributeAmount, maximumAttributeAmount);
+			minimumAttributeAmount = new Modifiable<int>(defaultMinimumAttributeAmount);
+			maximumAttributeAmount = new Modifiable<int>(defaultMaximumAttributeAmount);
+			minimumAttributeAmount.ID = ModifiableID.ModifiableRandomMinimum;
+			maximumAttributeAmount.ID = ModifiableID.ModifiableRandomMaximum;
+			CallEvent(1, minimumAttributeAmount, this);
+			CallEvent(1, maximumAttributeAmount, this);
+			randomValueAttribute.BaseValue = r.Next(minimumAttributeAmount.FinalValue, maximumAttributeAmount.FinalValue);
+			sourceAttribute.BaseValue = randomValueAttribute.FinalValue;
 			startAttributeAmount = sourceAttribute.FinalValue;
 		}
-		delayTime = minimumDelayTime + ((maximumDelayTime - minimumDelayTime) * (float)r.NextDouble());
+		minimumDelayTime = new Modifiable<float>(defaultMinimumDelayTime);
+		maximumDelayTime = new Modifiable<float>(defaultMaximumDelayTime);
+		minimumDelayTime.ID = ModifiableID.ModifiableRandomMinimum;
+		maximumDelayTime.ID = ModifiableID.ModifiableRandomMaximum;
+		CallEvent(1, minimumDelayTime, this);
+		CallEvent(1, maximumDelayTime, this);
+		delayTime = minimumDelayTime.FinalValue + ((maximumDelayTime.FinalValue - minimumDelayTime.FinalValue) * (float)r.NextDouble());
 		Status = CharacterActionStatus.Started;
 	}
 	
@@ -91,8 +111,8 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 				TypedValue32<ModifiableType, int> finalAttributeAmount = sourceAttribute.FinalValue;
 				if (finalAttributeAmount.Value > 0)
 				{
-					IModifiable<int> damage = new Modifiable<int> (new TypedValue32<ModifiableType, int> (
-						ModifiableType.Damage | finalAttributeAmount.Type, startAttributeAmount.Value - finalAttributeAmount.Value));
+					IModifiable<int> damage = new Modifiable<int> (startAttributeAmount.Value - finalAttributeAmount.Value);
+					damage.ID = ModifiableID.Damage;
 					CallEvent (1, damage, this);
 					Collider[] effectHit = Physics.OverlapSphere (source.transform.position, effectRadius);
 					foreach (Collider collider in effectHit)
@@ -108,7 +128,7 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 					}
 				}
 				Status = CharacterActionStatus.Ended;
-				sourceAttribute.BaseValue = 0;
+				sourceAttribute.BaseValue = int.MinValue;
 				Status = CharacterActionStatus.Inactive;
 			}
 			else

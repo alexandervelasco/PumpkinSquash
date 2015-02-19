@@ -4,7 +4,11 @@ public enum ModifiableID
 {
 	None,
 	AttributeHP,
-	AttributeClamp
+	AttributeClampMaximum,
+	AttributeClampMinimum,
+	Damage,
+	ModifiableRandomMaximum,
+	ModifiableRandomMinimum
 }
 
 [Flags]

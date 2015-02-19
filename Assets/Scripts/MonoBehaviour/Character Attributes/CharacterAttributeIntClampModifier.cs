@@ -4,15 +4,8 @@ using System;
 
 public class CharacterAttributeIntClampModifier : EventTransceiverBehavior, IModifiable<int> {
 
-	public enum ClampType
-	{
-		ClampMaximum,
-		ClampMinimum
-	}
-
 	//serialized data
 	public ModifiableID id;
-	public ClampType clampType = ClampType.ClampMaximum;
 	public int defaultValue = 0;
 	public ModifiableID targetModifiableID = ModifiableID.None;
 	public int modifierPriority = 3;
@@ -81,8 +74,8 @@ public class CharacterAttributeIntClampModifier : EventTransceiverBehavior, IMod
 			if (clampBaseValue)
 			{
 				TypedValue32<ModifiableType, int> clampValue = FinalValue;
-				if ((clampType == ClampType.ClampMaximum && modifiable.BaseValue.Value > clampValue.Value) ||
-				    (clampType == ClampType.ClampMinimum && modifiable.BaseValue.Value < clampValue.Value))
+				if ((ID == ModifiableID.AttributeClampMaximum && modifiable.BaseValue.Value > clampValue.Value) ||
+				    (ID == ModifiableID.AttributeClampMinimum && modifiable.BaseValue.Value < clampValue.Value))
 					modifiable.BaseValue = new TypedValue32<ModifiableType, int>(modifiable.BaseValue.Type | clampValue.Type, clampValue.Value);
 			}
 			else
@@ -95,9 +88,11 @@ public class CharacterAttributeIntClampModifier : EventTransceiverBehavior, IMod
 	private TypedValue32<ModifiableType, int> ClampMaxValue(TypedValue32<ModifiableType, int> currentValue)
 	{
 		TypedValue32<ModifiableType, int> clampValue = FinalValue;
-		if (clampType == ClampType.ClampMaximum)
+		if (ID == ModifiableID.AttributeClampMaximum)
 			return currentValue.Value > clampValue.Value ? clampValue : currentValue;
-		else
+		else if (ID == ModifiableID.AttributeClampMinimum)
 			return currentValue.Value < clampValue.Value ? clampValue : currentValue;
+		else
+			return currentValue;
 	}
 }
