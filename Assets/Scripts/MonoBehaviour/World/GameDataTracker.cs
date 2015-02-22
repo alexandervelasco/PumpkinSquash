@@ -6,9 +6,12 @@ public class GameDataTracker : EventTransceiverBehavior {
 
 	//serialized data
 	public UIActionID resetActionID = UIActionID.WorldReset;
+	public UIActionStatus resetActionStatus = UIActionStatus.None;
 	public GameObject trackedGameObject = null;
 	public CharacterActionID killActionID = CharacterActionID.None;
+	public CharacterActionStatus killActionStatus = CharacterActionStatus.None;
 	public CharacterActionID saveActionID = CharacterActionID.None;
+	public CharacterActionStatus saveActionStatus = CharacterActionStatus.None;
 	public string fileName = String.Empty;
 
 	private DateTime sessionTime;
@@ -32,19 +35,19 @@ public class GameDataTracker : EventTransceiverBehavior {
 		ICharacterAction characterAction = args as ICharacterAction;
 		if (characterAction != null && characterAction.Source == trackedGameObject)
 		{
-			if (characterAction.ID == killActionID)
+			if (characterAction.ID == killActionID && (characterAction.Status & killActionStatus) == killActionStatus)
 			{
 				GameDataManager.Current.Kills++;
 				CallEvent(0, GameDataManager.Current);
 			}
-			else if (characterAction.ID == saveActionID)
+			else if (characterAction.ID == saveActionID && (characterAction.Status & saveActionStatus) == saveActionStatus)
 			{
 				GameDataManager.Current.TimeInSeconds = (int)(DateTime.Now - sessionTime).TotalSeconds;
 				CallEvent(0, GameDataManager.Current);
 				GameDataManager.SaveHigh(fileName);
 			}
 		}
-		else if (uiAction != null && uiAction.ID == resetActionID)
+		else if (uiAction != null && uiAction.ID == resetActionID && (uiAction.Status & resetActionStatus) == resetActionStatus)
 		{
 			GameDataManager.Current.Reset();
 			sessionTime = DateTime.Now;

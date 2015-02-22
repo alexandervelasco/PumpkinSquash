@@ -105,34 +105,30 @@ public class CharacterAttributeIntOnKillAction : EventTransceiverBehavior, IChar
 		{
 			if (action.ID == triggerActionID && action.Source == Source)
 			{
-				if (action.Status == CharacterActionStatus.Active)
+				if ((action.Status & CharacterActionStatus.Active) == CharacterActionStatus.Active)
 					triggerAction = action;
 				else
 					triggerAction = null;
 			}
-			else if (action.ID == deathActionID)
+			else if (action.ID == deathActionID && (action.Status & CharacterActionStatus.Active) == CharacterActionStatus.Active)
 			{
-				if (!deathActive && action.Status == CharacterActionStatus.Active)
+				ITargeted<GameObject> triggerTargets = triggerAction as ITargeted<GameObject>;
+				if (triggerTargets != null && triggerTargets.Targets.Contains(action.Source))
 				{
-					ITargeted<GameObject> triggerTargets = triggerAction as ITargeted<GameObject>;
-					if (triggerTargets != null && triggerTargets.Targets.Contains(action.Source))
+					Status = CharacterActionStatus.Started;
+					if ((Status & CharacterActionStatus.Cancelled) != CharacterActionStatus.Cancelled)
 					{
-						Status = CharacterActionStatus.Started;
-						if ((Status & CharacterActionStatus.Cancelled) != CharacterActionStatus.Cancelled)
-						{
-							Status = CharacterActionStatus.Active;
-							Targets.Clear();
-							Targets.AddRange(triggerTargets.Targets);
-							deathActive = true;
-							CharacterAttributeInt[] sourceAttributesInt = source.GetComponents<CharacterAttributeInt>();
-							CharacterAttributeInt sourceAttribute = sourceAttributesInt.FirstOrDefault(attribute => attribute.ID == sourceAttributeID);
-							if (sourceAttribute != null)
-								sourceAttribute.BaseValue += FinalAttributeAmount;
-						}
+						Status = CharacterActionStatus.Active;
+						Targets.Clear();
+						Targets.AddRange(triggerTargets.Targets);
+						CharacterAttributeInt[] sourceAttributesInt = source.GetComponents<CharacterAttributeInt>();
+						CharacterAttributeInt sourceAttribute = sourceAttributesInt.FirstOrDefault(attribute => attribute.ID == sourceAttributeID);
+						if (sourceAttribute != null)
+							sourceAttribute.BaseValue += FinalAttributeAmount;
+						Status = CharacterActionStatus.Ended;
+						Status = CharacterActionStatus.Inactive;
 					}
 				}
-				else if (deathActive && action.Status != CharacterActionStatus.Active)
-					deathActive = false;
 			}
 		}
 	}
