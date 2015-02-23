@@ -20,6 +20,7 @@ public class GameDataTracker : EventTransceiverBehavior {
 	void Start () {
 		sessionTime = DateTime.Now;
 		GameDataManager.LoadHigh(fileName);
+		CallEvent(1, GameDataManager.High);
 	}
 	
 	// Update is called once per frame
@@ -38,6 +39,8 @@ public class GameDataTracker : EventTransceiverBehavior {
 			if (characterAction.ID == killActionID && (characterAction.Status & killActionStatus) == killActionStatus)
 			{
 				GameDataManager.Current.Kills++;
+				if (GameDataManager.UpdateHigh())
+					CallEvent(1, GameDataManager.High);
 				CallEvent(0, GameDataManager.Current);
 			}
 			else if (characterAction.ID == saveActionID && (characterAction.Status & saveActionStatus) == saveActionStatus)

@@ -75,7 +75,7 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 		if (modifiable != null && sourceBehavior != null && sourceBehavior.gameObject == Source &&
 						modifiable.ID == modifiableID)
 		{
-			if (modifiable.FinalValue.Value <= deathThreshold && (Status & CharacterActionStatus.Started) != CharacterActionStatus.Started) 
+			if (modifiable.FinalValue.Value <= deathThreshold && (Status & CharacterActionStatus.Active) != CharacterActionStatus.Active) 
 			{
 				Status = CharacterActionStatus.Started;
 				if ((Status & CharacterActionStatus.Cancelled) != CharacterActionStatus.Cancelled)

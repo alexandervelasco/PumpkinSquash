@@ -51,6 +51,12 @@ public class CharacterAttributeIntClampModifier : EventTransceiverBehavior, IMod
 	}
 	#endregion
 
+	public ModifiableID TargetModifiableID {
+		get {
+			return targetModifiableID;
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
 		this.modifiers = new GetterModifier<TypedValue32<ModifiableType, int>>();

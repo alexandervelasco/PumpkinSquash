@@ -6,25 +6,25 @@ public class CharacterAttributeIntOnKillAction : EventTransceiverBehavior, IChar
 
 	//serialized data
 	public GameObject source = null;
-	public int defaultAttributeAmount = 0;
+	public float defaultAttributeMultiplier = 0;
 	public CharacterActionID triggerActionID = CharacterActionID.None;
 	public CharacterActionID deathActionID = CharacterActionID.None;
 	public ModifiableID sourceAttributeID = ModifiableID.None;
+	public ModifiableID targetAttributeID = ModifiableID.None;
 	public CharacterActionID id;
 	
-	private IModifiable<int> attributeAmount = null;
+	private IModifiable<float> attributeMultiplier = null;
 	private ICharacterAction triggerAction = null;
 	private CharacterActionStatus status = CharacterActionStatus.Inactive;
-	private bool deathActive = false;
 	private List<GameObject> targets = null;
 
-	private TypedValue32<ModifiableType, int> BaseAttributeAmount
+	private TypedValue32<ModifiableType, float> BaseAttributeMultiplier
 	{
-		set { CallEvent (2, this.attributeAmount, this); this.attributeAmount.BaseValue = value; }
+		set { this.attributeMultiplier.BaseValue = value; CallEvent (2, this.attributeMultiplier, this); }
 	}
-	private TypedValue32<ModifiableType, int> FinalAttributeAmount
+	private TypedValue32<ModifiableType, float> FinalAttributeMultiplier
 	{
-		get { CallEvent (1, this.attributeAmount, this); return this.attributeAmount.FinalValue; }
+		get { CallEvent (1, this.attributeMultiplier, this); return this.attributeMultiplier.FinalValue; }
 	}
 
 	#region ICharacterAction implementation
@@ -86,7 +86,7 @@ public class CharacterAttributeIntOnKillAction : EventTransceiverBehavior, IChar
 	void Start () {
 		if (source == null)
 			source = gameObject;
-		attributeAmount = new Modifiable<int>(defaultAttributeAmount);
+		attributeMultiplier = new Modifiable<float>(defaultAttributeMultiplier);
 		Status = CharacterActionStatus.Inactive;
 		targets = new List<GameObject>();
 	}
@@ -124,7 +124,18 @@ public class CharacterAttributeIntOnKillAction : EventTransceiverBehavior, IChar
 						CharacterAttributeInt[] sourceAttributesInt = source.GetComponents<CharacterAttributeInt>();
 						CharacterAttributeInt sourceAttribute = sourceAttributesInt.FirstOrDefault(attribute => attribute.ID == sourceAttributeID);
 						if (sourceAttribute != null)
-							sourceAttribute.BaseValue += FinalAttributeAmount;
+						{
+							float totalAttribute = 0;
+							foreach (GameObject target in Targets)
+							{
+								CharacterAttributeIntClampModifier maximumAttributeModifier = target.GetComponents<MonoBehaviour>()
+									.OfType<CharacterAttributeIntClampModifier>()
+										.FirstOrDefault(t => t.ID == ModifiableID.AttributeClampMaximum && t.TargetModifiableID == targetAttributeID);
+								if (maximumAttributeModifier != null)
+									totalAttribute = totalAttribute + ((float)maximumAttributeModifier.FinalValue.Value * FinalAttributeMultiplier);
+							}
+							sourceAttribute.BaseValue += (int)totalAttribute;
+						}
 						Status = CharacterActionStatus.Ended;
 						Status = CharacterActionStatus.Inactive;
 					}

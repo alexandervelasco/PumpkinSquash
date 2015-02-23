@@ -42,10 +42,7 @@ public static class GameDataManager {
 
 	public static void SaveHigh(string fileName)
 	{
-		if (Current.Kills > High.Kills)
-			High.Kills = Current.Kills;
-		if (Current.TimeInSeconds > High.TimeInSeconds)
-			High.TimeInSeconds = Current.TimeInSeconds;
+		UpdateHigh();
 #if !UNITY_EDITOR
 		BinaryFormatter formatter = new BinaryFormatter();
 		using (FileStream file = File.Open(string.Format ("{0}/{1}", Application.persistentDataPath, fileName), FileMode.Create))
@@ -53,5 +50,21 @@ public static class GameDataManager {
 			formatter.Serialize(file, High);
 		}
 #endif
+	}
+
+	public static bool UpdateHigh()
+	{
+		bool changed = false;
+		if (Current.Kills > High.Kills)
+		{
+			High.Kills = Current.Kills;
+			changed = true;
+		}
+		if (Current.TimeInSeconds > High.TimeInSeconds)
+		{
+			High.TimeInSeconds = Current.TimeInSeconds;
+			changed = true;
+		}
+		return changed;
 	}
 }
