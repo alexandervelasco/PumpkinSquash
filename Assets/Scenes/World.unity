@@ -324,6 +324,7 @@ GameObject:
   - 114: {fileID: 135100528}
   - 143: {fileID: 135100521}
   - 114: {fileID: 135100524}
+  - 114: {fileID: 135100529}
   - 114: {fileID: 135100526}
   - 114: {fileID: 135100525}
   - 114: {fileID: 135100527}
@@ -508,6 +509,19 @@ MonoBehaviour:
   triggerAnimationNames:
   - Idle
   triggerStates: 01000000
+--- !u!114 &135100529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 135100518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aac4d3d2a5f34a8459a5fecff6b356df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  calledEvents:
+  - EVENT_GAMECOLLISION
 --- !u!1 &141447562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,6 +1093,7 @@ GameObject:
   - 4: {fileID: 330502559}
   - 114: {fileID: 330502560}
   - 114: {fileID: 330502561}
+  - 114: {fileID: 330502558}
   m_Layer: 0
   m_Name: Debug
   m_TagString: Untagged
@@ -1086,6 +1101,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &330502558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 330502557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a14425594e2ac547a061ff4cd8c1958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents: []
 --- !u!4 &330502559
 Transform:
   m_ObjectHideFlags: 0
@@ -3404,11 +3431,12 @@ MonoBehaviour:
   - EVENT_CHARACTERACTION
   - EVENT_MODIFIERGET
   - EVENT_MODIFIERSET
+  - EVENT_MOVETOPOINT
   source: {fileID: 135100518}
   defaultDamage: 10
   defaultWindupTime: .0700000003
   defaultRecoveryTime: .221499994
-  defaultRange: 1
+  defaultRange: 2
   id: 6
   targetAttributeID: 1
   originOffset: {x: 0, y: 1, z: 0}
@@ -3793,6 +3821,8 @@ MonoBehaviour:
   registeredEvents:
   - EVENT_WORLDTOUCH
   - EVENT_CHARACTERACTION
+  - EVENT_GAMECOLLISION
+  - EVENT_MOVETOPOINT
   calledEvents:
   - EVENT_CHARACTERACTION
   - EVENT_MODIFIERGET

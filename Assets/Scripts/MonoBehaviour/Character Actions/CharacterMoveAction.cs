@@ -178,6 +178,8 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 	{
 		IWorldTouch[] worldTouches = args as IWorldTouch[];
 		ICharacterAction characterAction = args as ICharacterAction;
+		IGameCollision gameCollision = args as IGameCollision;
+
 		if (worldTouches != null)
 		{
 			IWorldTouch firstTouch = worldTouches[0];
@@ -193,17 +195,22 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 			if (currentFingerId == firstTouch.FingerId &&
 			    (targetLayerMask & terrainLayerMask) == terrainLayerMask)
 			{
-				destination = firstTouch.Point;
-				if (Status != CharacterActionStatus.Started)
-					Status = CharacterActionStatus.Started;
-				if ((Status & CharacterActionStatus.Cancelled) != CharacterActionStatus.Cancelled)
-					moving = true;
-				else
-				{
-					Status = CharacterActionStatus.Ended;
-					moving = false;
-					Status = CharacterActionStatus.Inactive;
-				}
+				StartMove(firstTouch.Point);
+			}
+		}
+		else if (args is Vector3)
+		{
+			StartMove((Vector3)args);
+		}
+		else if (gameCollision != null && gameCollision.Source == Source)
+		{
+			int sourceLayerMask = 1 << Source.layer;
+			int targetLayerMask = 1 << gameCollision.TargetGameObject.layer;
+			if (sourceLayerMask == targetLayerMask)
+			{
+				Status = CharacterActionStatus.Ended;
+				moving = false;
+				Status = CharacterActionStatus.Inactive;
 			}
 		}
 		else if (characterAction != null && characterAction != this && characterAction.Source == Source &&
@@ -216,4 +223,18 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 	}
 
 	#endregion
+
+	private void StartMove(Vector3 movePoint)
+	{
+		destination = movePoint;
+		if (Status != CharacterActionStatus.Started)
+			Status = CharacterActionStatus.Started;
+		if ((Status & CharacterActionStatus.Cancelled) != CharacterActionStatus.Cancelled)
+			moving = true;
+		else {
+			Status = CharacterActionStatus.Ended;
+			moving = false;
+			Status = CharacterActionStatus.Inactive;
+		}
+	}
 }

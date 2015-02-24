@@ -273,7 +273,7 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction,
 	{
 		List<IGameTouch> tapData = args as List<IGameTouch>;
 		ICharacterAction characterAction = args as ICharacterAction;
-		if (eventName.Equals(ReceivedEvents[0]) && tapData != null)
+		if (tapData != null)
 		{
 			IGameRaycastHit tapRelease = tapData[tapData.Count-1] as IGameRaycastHit;
 			if (tapRelease != null && tapRelease.Collider != null)
@@ -284,19 +284,26 @@ public class CharacterAttackAction : EventTransceiverBehavior, ICharacterAction,
 				if (!target.Equals(Source) && (targetLayerMask & sourceLayerMask) == sourceLayerMask &&
 				    (Status & (CharacterActionStatus.Started | CharacterActionStatus.Active | CharacterActionStatus.Windup)) == CharacterActionStatus.None)
 				{
-					Status = CharacterActionStatus.Started;
-					if ((Status & CharacterActionStatus.Cancelled) != CharacterActionStatus.Cancelled)
+					float distance = Vector3.Distance(Source.transform.position + originOffset, target.transform.position);
+					if (distance <= FinalRange)
 					{
-						Targets.Clear();
-						Targets.Add(target);
-						attacking = true;
+						Status = CharacterActionStatus.Started;
+						if ((Status & CharacterActionStatus.Cancelled) != CharacterActionStatus.Cancelled)
+						{
+							Targets.Clear();
+							Targets.Add(target);
+							attacking = true;
+						}
+						else
+						{
+							attacking = false;
+							Targets.Clear();
+							target = null;
+							Status = CharacterActionStatus.Inactive;
+						}
 					}
 					else
-					{
-						attacking = true;
-						target = null;
-						Status = CharacterActionStatus.Inactive;
-					}
+						CallEvent(3, target.transform.position);
 				}
 			}
 		}
