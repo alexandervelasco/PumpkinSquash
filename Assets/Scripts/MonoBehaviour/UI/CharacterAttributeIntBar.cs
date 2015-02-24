@@ -7,6 +7,7 @@ using PathologicalGames;
 [RequireComponent(typeof(TransformConstraint))]
 public class CharacterAttributeIntBar : EventReceiverBehavior, IGameObjectSource {
 
+	//serialized data
 	public GameObject source = null;
 	public ModifiableID attributeID = ModifiableID.None;
 	public int minimumValue = 0;

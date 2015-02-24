@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
-public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAction {
+public class CharacterTimedSuicideBombAction : EventTransceiverBehavior, ICharacterAction {
 
 	//serialized data
 	public GameObject source = null;
 	public CharacterActionID id;
 	public ModifiableID sourceAttributeID = ModifiableID.None, randomValueAttributeID = ModifiableID.None, targetAttributeID = ModifiableID.None;
+	public CharacterActionID timeModifierActionID = CharacterActionID.None;
 	public int defaultMinimumAttributeAmount = 0, defaultMaximumAttributeAmount = 0;
 	public float defaultMinimumDelayTime = 0, defaultMaximumDelayTime = 0;
 	public float effectRadius = 0;
 	
 	private CharacterActionStatus status = CharacterActionStatus.Inactive;
-	private float delayTime = 0;
+	private IModifiable<float> delayTime = null;
 	private IModifiable<int> sourceAttribute = null;
 	private IModifiable<int> randomValueAttribute = null;
 	private IModifiable<int> minimumAttributeAmount = null;
@@ -22,6 +23,7 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 	private IModifiable<float> minimumDelayTime = null;
 	private IModifiable<float> maximumDelayTime = null;
 	private TypedValue32<ModifiableType, int> startAttributeAmount = 0;
+	private Guid modifierID = Guid.NewGuid();
 
 	#region ICharacterAction implementation
 	public U GetProperty<T, U> (T propertyId) where T : System.IConvertible
@@ -94,7 +96,8 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 		maximumDelayTime.ID = ModifiableID.ModifiableRandomMaximum;
 		CallEvent(1, minimumDelayTime, this);
 		CallEvent(1, maximumDelayTime, this);
-		delayTime = minimumDelayTime.FinalValue + ((maximumDelayTime.FinalValue - minimumDelayTime.FinalValue) * (float)r.NextDouble());
+		delayTime = new Modifiable<float>(minimumDelayTime.FinalValue + ((maximumDelayTime.FinalValue - minimumDelayTime.FinalValue) * (float)r.NextDouble()));
+		delayTime.ID = ModifiableID.DelayTime;
 		Status = CharacterActionStatus.Started;
 	}
 	
@@ -104,8 +107,10 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 			Status = CharacterActionStatus.Windup;
 		if ((Status & CharacterActionStatus.Windup) == CharacterActionStatus.Windup)
 		{
-			delayTime -= Time.deltaTime;
-			if (delayTime <= 0) 
+			CallEvent(1, delayTime, this);
+			CallEvent(2, delayTime, this);
+			delayTime.BaseValue = new TypedValue32<ModifiableType, float>(ModifiableType.None, delayTime.FinalValue.Value - Time.deltaTime);
+			if (delayTime.FinalValue.Value <= 0) 
 			{
 				Status = CharacterActionStatus.Active;
 				TypedValue32<ModifiableType, int> finalAttributeAmount = sourceAttribute.FinalValue;
@@ -131,8 +136,29 @@ public class CharacterTimedSuicideBombAction : EventCallerBehavior, ICharacterAc
 				sourceAttribute.BaseValue = int.MinValue;
 				Status = CharacterActionStatus.Inactive;
 			}
-			else
-				CallEvent(0, this);
 		}
+	}
+
+	#region implemented abstract members of EventTransceiverBehavior
+
+	public override void ReceiveEvent (string eventName, object args, object sender)
+	{
+		IModifiable<float> modifiable = args as IModifiable<float>;
+		ICharacterAction action = sender as ICharacterAction;
+		ITargeted<GameObject> targets = sender as ITargeted<GameObject>;
+		if (modifiable != null && action != null && targets != null &&
+		    action.ID == timeModifierActionID && (action.Status & CharacterActionStatus.Active) == CharacterActionStatus.Active &&
+		    targets.Targets.Contains(Source))
+		{
+			//modifiable.Modifiers.SetModifier(2, modifierID, MultiplyByDelayTime);
+		}
+	}
+
+	#endregion
+
+	private TypedValue32<ModifiableType, float> MultiplyByDelayTime(TypedValue32<ModifiableType, float> current)
+	{
+		float timeMultiplier = 2.0f - (delayTime.FinalValue.Value / maximumDelayTime.FinalValue.Value);
+		return new TypedValue32<ModifiableType, float>(current.Type, current.Value * timeMultiplier);
 	}
 }

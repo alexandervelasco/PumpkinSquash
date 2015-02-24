@@ -8,7 +8,8 @@ public enum ModifiableID
 	AttributeClampMinimum,
 	Damage,
 	ModifiableRandomMaximum,
-	ModifiableRandomMinimum
+	ModifiableRandomMinimum,
+	DelayTime
 }
 
 [Flags]
