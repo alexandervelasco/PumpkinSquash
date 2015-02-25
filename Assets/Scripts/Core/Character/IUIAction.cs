@@ -6,7 +6,8 @@ public enum UIActionID
 {
 	None,
 	WorldReset,
-	WorldPause
+	WorldPause,
+	HelpOverlay
 }
 
 [Flags]

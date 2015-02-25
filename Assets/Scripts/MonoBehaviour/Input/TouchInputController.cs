@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class TouchInputController : EventCallerBehavior {
 
@@ -12,10 +12,11 @@ public class TouchInputController : EventCallerBehavior {
 	public void Update () {
 		if (Input.touchCount > 0)
 		{
-			GameTouch[] gameTouches = new GameTouch[Input.touchCount];
+			List<GameTouch> gameTouches = new List<GameTouch>();
 			for (int i = 0; i < Input.touchCount; i++)
-				gameTouches[i] = new GameTouch(Input.touches[i]);
+				gameTouches.Add (new GameTouch(Input.touches[i]));
 			CallEvent(0, gameTouches);
+			CallEvent(1, gameTouches.ToArray());
 		}
 	}
 }

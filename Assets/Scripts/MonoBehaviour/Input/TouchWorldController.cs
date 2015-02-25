@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class TouchWorldController : EventTransceiverBehavior {
 
@@ -23,7 +23,7 @@ public class TouchWorldController : EventTransceiverBehavior {
 		IGameTouch[] gameTouches = args as IGameTouch[];
 		if (gameTouches != null && referenceCamera != null) 
 		{
-			IWorldTouch[] worldTouches = new WorldTouch[gameTouches.Length];
+			List<IWorldTouch> worldTouches = new List<IWorldTouch>();
 			for (int i = 0; i < gameTouches.Length; i++)
 			{
 				IGameTouch gameTouch = gameTouches[i];
@@ -41,10 +41,10 @@ public class TouchWorldController : EventTransceiverBehavior {
 				}
 				else
 					worldTouch = gameTouch as IWorldTouch;
-				worldTouches[i] = worldTouch;
+				worldTouches.Add(worldTouch);
 			}
-
 			CallEvent(0, worldTouches);
+			CallEvent(1, worldTouches.ToArray());
 		}
 	}
 

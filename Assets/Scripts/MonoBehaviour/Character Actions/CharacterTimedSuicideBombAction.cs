@@ -13,6 +13,7 @@ public class CharacterTimedSuicideBombAction : EventTransceiverBehavior, ICharac
 	public int defaultMinimumAttributeAmount = 0, defaultMaximumAttributeAmount = 0;
 	public float defaultMinimumDelayTime = 0, defaultMaximumDelayTime = 0;
 	public float effectRadius = 0;
+	public float maximumAdditionalAttributeOnKillMultiplier = 0;
 	
 	private CharacterActionStatus status = CharacterActionStatus.Inactive;
 	private IModifiable<float> delayTime = null;
@@ -23,7 +24,7 @@ public class CharacterTimedSuicideBombAction : EventTransceiverBehavior, ICharac
 	private IModifiable<float> minimumDelayTime = null;
 	private IModifiable<float> maximumDelayTime = null;
 	private TypedValue32<ModifiableType, int> startAttributeAmount = 0;
-	private Guid modifierID = Guid.NewGuid();
+	private Guid modifierID = Guid.Empty;
 
 	#region ICharacterAction implementation
 	public U GetProperty<T, U> (T propertyId) where T : System.IConvertible
@@ -99,6 +100,7 @@ public class CharacterTimedSuicideBombAction : EventTransceiverBehavior, ICharac
 		delayTime = new Modifiable<float>(minimumDelayTime.FinalValue + ((maximumDelayTime.FinalValue - minimumDelayTime.FinalValue) * (float)r.NextDouble()));
 		delayTime.ID = ModifiableID.DelayTime;
 		Status = CharacterActionStatus.Started;
+		modifierID = Guid.NewGuid();
 	}
 	
 	// Update is called once per frame
@@ -150,7 +152,7 @@ public class CharacterTimedSuicideBombAction : EventTransceiverBehavior, ICharac
 		    action.ID == timeModifierActionID && (action.Status & CharacterActionStatus.Active) == CharacterActionStatus.Active &&
 		    targets.Targets.Contains(Source))
 		{
-			//modifiable.Modifiers.SetModifier(2, modifierID, MultiplyByDelayTime);
+			modifiable.Modifiers.SetModifier(2, modifierID, MultiplyByDelayTime, true);
 		}
 	}
 
@@ -158,7 +160,7 @@ public class CharacterTimedSuicideBombAction : EventTransceiverBehavior, ICharac
 
 	private TypedValue32<ModifiableType, float> MultiplyByDelayTime(TypedValue32<ModifiableType, float> current)
 	{
-		float timeMultiplier = 2.0f - (delayTime.FinalValue.Value / maximumDelayTime.FinalValue.Value);
+		float timeMultiplier = maximumAdditionalAttributeOnKillMultiplier - (delayTime.FinalValue.Value / maximumDelayTime.FinalValue.Value);
 		return new TypedValue32<ModifiableType, float>(current.Type, current.Value * timeMultiplier);
 	}
 }

@@ -132,7 +132,10 @@ public class CharacterAttributeIntOnKillAction : EventTransceiverBehavior, IChar
 									.OfType<CharacterAttributeIntClampModifier>()
 										.FirstOrDefault(t => t.ID == ModifiableID.AttributeClampMaximum && t.TargetModifiableID == targetAttributeID);
 								if (maximumAttributeModifier != null)
-									totalAttribute = totalAttribute + ((float)maximumAttributeModifier.FinalValue.Value * FinalAttributeMultiplier);
+								{
+									float finalAttributeMultiplier = FinalAttributeMultiplier;
+									totalAttribute = totalAttribute + ((float)maximumAttributeModifier.FinalValue.Value * finalAttributeMultiplier);
+								}
 							}
 							sourceAttribute.BaseValue += (int)totalAttribute;
 						}
