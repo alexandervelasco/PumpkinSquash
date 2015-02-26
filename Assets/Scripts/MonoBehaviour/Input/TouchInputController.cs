@@ -16,7 +16,8 @@ public class TouchInputController : EventCallerBehavior {
 			for (int i = 0; i < Input.touchCount; i++)
 				gameTouches.Add (new GameTouch(Input.touches[i]));
 			CallEvent(0, gameTouches);
-			CallEvent(1, gameTouches.ToArray());
+			if (gameTouches.Count > 0)
+				CallEvent(1, gameTouches.ToArray());
 		}
 	}
 }

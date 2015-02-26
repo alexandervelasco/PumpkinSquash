@@ -55,9 +55,9 @@ public class TapGestureController : EventTransceiverBehavior {
 				{
 					isStationary[fingerId] = false;
 				}
-				else if (currentTouch.Phase == TouchPhase.Ended &&
-				         isStationary[fingerId] &&
-				         totalTimes[fingerId] <= tapSensitivity)
+				else if (currentTouch.Phase == TouchPhase.Ended && tapGestureData.ContainsKey(fingerId) &&
+				         isStationary.ContainsKey(fingerId) && isStationary[fingerId] &&
+				         totalTimes.ContainsKey(fingerId) && totalTimes[fingerId] <= tapSensitivity)
 				{					
 					tapGestureData[fingerId].Add(currentTouch);
 					CallEvent(0, tapGestureData[fingerId]);

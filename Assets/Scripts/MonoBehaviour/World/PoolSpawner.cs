@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using PathologicalGames;
 
 public class PoolSpawner : EventCallerBehavior {
@@ -29,21 +31,27 @@ public class PoolSpawner : EventCallerBehavior {
 		{
 			if (spawnPool != null && spawnPool.Count < maximumSpawnAmount)
 			{
-				ThreadSafeRandom r = new ThreadSafeRandom();
-				Vector3 randomPosition = Vector3.zero;
-				Transform spawn = spawnPool.Spawn(spawnedPrefab);
-				bool nearbyInteractables = false;
-				do
-				{
-					randomPosition = (new Vector3(maximumSpawnDistance.x * (float)r.NextDouble(),
-					                              maximumSpawnDistance.y * (float)r.NextDouble(),
-					                              maximumSpawnDistance.z * (float)r.NextDouble())) + spawnOffset;
-					nearbyInteractables = Physics.CheckSphere(randomPosition, minimumSpawnGapRadius, 1 << spawn.gameObject.layer);
-				} while (nearbyInteractables);
-				spawn.position = randomPosition;
-				spawn.BroadcastMessage("Start");
+				StartCoroutine(SpawnInRandomPosition(spawnedPrefab));
 			}
 			spawnTimer = spawnRate;
 		}
+	}
+
+	private IEnumerator SpawnInRandomPosition (GameObject spawnedPrefab)
+	{
+		ThreadSafeRandom r = new ThreadSafeRandom ();
+		Vector3 randomPosition = Vector3.zero;
+		bool hasNearbyInteractables = false;
+		do {
+			randomPosition = (new Vector3 (maximumSpawnDistance.x * (float)r.NextDouble (), maximumSpawnDistance.y * (float)r.NextDouble (), maximumSpawnDistance.z * (float)r.NextDouble ())) + spawnOffset;
+			IEnumerable<Transform> nearbyInteractables = spawnPool.Where(
+				t => Vector3.Distance(randomPosition, t.position) <= minimumSpawnGapRadius && spawnedPrefab.layer == t.gameObject.layer);
+			hasNearbyInteractables = nearbyInteractables.Count() > 0;
+			yield return null;
+		}
+		while (hasNearbyInteractables);
+		Transform spawn = spawnPool.Spawn(spawnedPrefab);
+		spawn.position = randomPosition;
+		spawn.BroadcastMessage("Start");
 	}
 }

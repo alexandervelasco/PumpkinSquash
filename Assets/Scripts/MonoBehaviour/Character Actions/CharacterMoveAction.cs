@@ -180,22 +180,25 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 		ICharacterAction characterAction = args as ICharacterAction;
 		IGameCollision gameCollision = args as IGameCollision;
 
-		if (worldTouches != null)
+		if (worldTouches != null && worldTouches.Length > 0)
 		{
 			IWorldTouch firstTouch = worldTouches[0];
-			int targetLayerMask = 1 << firstTouch.Collider.gameObject.layer;
-			int terrainLayerMask = 1 << LayerMask.NameToLayer(terrainLayerName);
-			if (firstTouch.Phase == TouchPhase.Began)
+			if (firstTouch.Collider != null)
 			{
-				currentFingerId = firstTouch.FingerId;
-			}
-			else if (firstTouch.Phase == TouchPhase.Ended &&
-			         currentFingerId == firstTouch.FingerId)
-				currentFingerId = -1;
-			if (currentFingerId == firstTouch.FingerId &&
-			    (targetLayerMask & terrainLayerMask) == terrainLayerMask)
-			{
-				StartMove(firstTouch.Point);
+				int targetLayerMask = 1 << firstTouch.Collider.gameObject.layer;
+				int terrainLayerMask = 1 << LayerMask.NameToLayer(terrainLayerName);
+				if (firstTouch.Phase == TouchPhase.Began)
+				{
+					currentFingerId = firstTouch.FingerId;
+				}
+				else if (firstTouch.Phase == TouchPhase.Ended &&
+				         currentFingerId == firstTouch.FingerId)
+					currentFingerId = -1;
+				if (currentFingerId == firstTouch.FingerId &&
+				    (targetLayerMask & terrainLayerMask) == terrainLayerMask)
+				{
+					StartMove(firstTouch.Point);
+				}
 			}
 		}
 		else if (args is Vector3)

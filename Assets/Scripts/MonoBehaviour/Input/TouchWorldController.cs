@@ -44,7 +44,8 @@ public class TouchWorldController : EventTransceiverBehavior {
 				worldTouches.Add(worldTouch);
 			}
 			CallEvent(0, worldTouches);
-			CallEvent(1, worldTouches.ToArray());
+			if (worldTouches.Count > 0)
+				CallEvent(1, worldTouches.ToArray());
 		}
 	}
 

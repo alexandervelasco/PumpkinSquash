@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections.Generic;
 
 public class TestBehavior : EventReceiverBehavior {
+
+	public UnityEvent testEvent;
 
 	// Use this for initialization
 	public void Start () {

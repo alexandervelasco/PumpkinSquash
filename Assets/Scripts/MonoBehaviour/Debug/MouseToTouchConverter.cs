@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class MouseToTouchConverter : EventCallerBehavior {
 
@@ -39,8 +39,10 @@ public class MouseToTouchConverter : EventCallerBehavior {
 			{
 				mouseTouch.Phase = TouchPhase.Ended;
 			}
-
-			CallEvent(0, new GameTouch[]{mouseTouch});
+			List<IGameTouch> gameTouches = new List<IGameTouch>{mouseTouch};
+			CallEvent(0, gameTouches);
+			if (gameTouches.Count > 0)
+				CallEvent(1, gameTouches.ToArray());
 		}
 
 		previousMousePosition = Input.mousePosition;

@@ -20,7 +20,7 @@ public class TouchGestureController : EventTransceiverBehavior {
 	public override void ReceiveEvent (string eventName, object args, object sender)
 	{
 		IGameTouch[] gameTouches = args as IGameTouch[];
-		if (gameTouches != null) 
+		if (gameTouches != null && gameTouches.Length > 0) 
 		{
 			bool allTouchesStarted = true;
 			foreach (IGameTouch gameTouch in gameTouches)
