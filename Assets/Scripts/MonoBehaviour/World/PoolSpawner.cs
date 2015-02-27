@@ -52,6 +52,5 @@ public class PoolSpawner : EventCallerBehavior {
 		while (hasNearbyInteractables);
 		Transform spawn = spawnPool.Spawn(spawnedPrefab);
 		spawn.position = randomPosition;
-		spawn.BroadcastMessage("Start");
 	}
 }

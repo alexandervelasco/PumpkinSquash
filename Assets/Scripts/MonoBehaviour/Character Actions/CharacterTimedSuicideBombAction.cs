@@ -10,6 +10,7 @@ public class CharacterTimedSuicideBombAction : EventTransceiverBehavior, ICharac
 	public CharacterActionID id;
 	public ModifiableID sourceAttributeID = ModifiableID.None, randomValueAttributeID = ModifiableID.None, targetAttributeID = ModifiableID.None;
 	public CharacterActionID timeModifierActionID = CharacterActionID.None;
+	public int baseDamage = 0;
 	public int defaultMinimumAttributeAmount = 0, defaultMaximumAttributeAmount = 0;
 	public float defaultMinimumDelayTime = 0, defaultMaximumDelayTime = 0;
 	public float effectRadius = 0;
@@ -118,7 +119,7 @@ public class CharacterTimedSuicideBombAction : EventTransceiverBehavior, ICharac
 				TypedValue32<ModifiableType, int> finalAttributeAmount = sourceAttribute.FinalValue;
 				if (finalAttributeAmount.Value > 0)
 				{
-					IModifiable<int> damage = new Modifiable<int> (startAttributeAmount.Value - finalAttributeAmount.Value);
+					IModifiable<int> damage = new Modifiable<int> (baseDamage + startAttributeAmount.Value - finalAttributeAmount.Value);
 					damage.ID = ModifiableID.Damage;
 					CallEvent (1, damage, this);
 					Collider[] effectHit = Physics.OverlapSphere (source.transform.position, effectRadius);
