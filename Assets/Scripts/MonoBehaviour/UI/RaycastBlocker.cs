@@ -3,8 +3,6 @@ using System.Collections;
 
 public class RaycastBlocker : EventReceiverBehavior {
 
-	//serialized data
-
 	// Use this for initialization
 	void Start () {
 	}

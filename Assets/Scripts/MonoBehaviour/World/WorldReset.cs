@@ -4,6 +4,7 @@ using System.Linq;
 
 public class WorldReset : EventTransceiverBehavior, ITargeted<GameObject> {
 
+	//serialized data
 	public List<GameObject> targets = null;
 	public UIActionID actionID = UIActionID.WorldReset;
 
