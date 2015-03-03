@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using System.Collections.Generic;
 using PathologicalGames;
 
-[RequireComponent(typeof(TransformConstraint))]
+[RequireComponent(typeof(RectTransform))]
 public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<GameObject> {
 
 	//serialized data
@@ -11,15 +11,16 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 	public UIActionID toggleActionID = UIActionID.HelpOverlay;
 	public CharacterActionID resetActionID = CharacterActionID.None;
 	public string tapRepeatAnimationName = string.Empty;
+	public string renderAnimationName = string.Empty;
 	public string unitPoolName = string.Empty;
-	public Camera worldCamera = null;
+	public Camera pointerCamera = null;
 
 	private bool render = false;
 	private List<GameObject> targets = null;
-	List<Renderer> renderers = null;
 	Animator animator = null;
 	private SpawnPool unitPool = null;
-	private TransformConstraint transformConstraint = null;
+	private RectTransform rectTransform = null;
+	private RectTransform canvasRectTransform = null;
 
 	#region IGameObjectSource implementation
 
@@ -50,24 +51,23 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 
 	// Use this for initialization
 	void Start () {
+		rectTransform = GetComponent<RectTransform>();
 		if (source == null)
 			source = gameObject;
 		targets = new List<GameObject>();
-		renderers = new List<Renderer>();
-		renderers.AddRange(GetComponents<Renderer>());
-		renderers.AddRange(GetComponentsInChildren<Renderer>());
-		foreach (Renderer renderer in renderers)
-			renderer.enabled = render;
 		animator = GetComponent<Animator>();
 		if (animator == null)
 			animator = GetComponentInChildren<Animator>();
 		unitPool = PoolManager.Pools[unitPoolName];
-		transformConstraint = GetComponent<TransformConstraint>();
+		animator.SetBool(renderAnimationName, render);
+		Canvas canvas = GetComponentInParent<Canvas>();
+		if (canvas != null)
+			canvasRectTransform = canvas.GetComponent<RectTransform>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (render)
+		if (render && canvasRectTransform != null)
 		{
 			if (Targets.Count == 0)
 			{
@@ -78,13 +78,12 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 			if (Targets.Count > 0)
 			{
 				Transform targetTransform = Targets[0].transform;
-				if (worldCamera != null)
-				{
-					Vector3 viewportPoint = worldCamera.WorldToViewportPoint(targetTransform.position);
-					Vector2 viewportXY = new Vector2(viewportPoint.x, viewportPoint.y);
-				}
+				Vector2 screenPosition = GetRectTransformPosition(targetTransform, canvasRectTransform, pointerCamera);
+				rectTransform.anchoredPosition = screenPosition;
 			}
 		}
+		else
+			Targets.Clear();
 	}
 
 	#region implemented abstract members of EventReceiverBehavior
@@ -96,10 +95,10 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 		if (uiAction != null && uiAction.ID == toggleActionID && (uiAction.Status & UIActionStatus.Clicked) == UIActionStatus.Clicked)
 		{
 			render = !render;
-			foreach (Renderer renderer in renderers)
-				renderer.enabled = render;
+			animator.SetBool(renderAnimationName, render);
 		}
-		else if (characterAction != null && Targets.Contains(characterAction.Source))
+		else if (characterAction != null && characterAction.ID == resetActionID && 
+		         Targets.Contains(characterAction.Source) && (characterAction.Status & CharacterActionStatus.Active) == CharacterActionStatus.Active)
 			Targets.Clear();
 	}
 
@@ -120,5 +119,20 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 		}
 
 		return result;
+	}
+
+	private Vector2 GetRectTransformPosition(Transform transform, RectTransform rectTransform, Camera camera)
+	{
+		Vector2 relativePosition = Vector2.zero;
+		Vector3 screenPoint = camera.WorldToScreenPoint(transform.position);
+		float rectWidth = rectTransform.rect.width;
+		float rectHeight = rectTransform.rect.height;
+		float screenWidth = (rectTransform.anchoredPosition.x / rectTransform.pivot.x);
+		float screenHeight = (rectTransform.anchoredPosition.y / rectTransform.pivot.y);
+		float xPercentage = screenPoint.x / screenWidth;
+		float yPercentage = screenPoint.y / screenHeight;
+		Vector2 absolutePosition = new Vector2 (rectWidth * xPercentage, yPercentage * rectHeight);
+		relativePosition = absolutePosition + rectTransform.rect.position; 
+		return relativePosition;    
 	}
 }
