@@ -326,6 +326,7 @@ GameObject:
   - 114: {fileID: 135100523}
   - 114: {fileID: 135100522}
   - 114: {fileID: 135100528}
+  - 114: {fileID: 135100530}
   - 143: {fileID: 135100521}
   - 114: {fileID: 135100524}
   - 114: {fileID: 135100529}
@@ -397,10 +398,9 @@ MonoBehaviour:
   registeredEvents:
   - EVENT_CHARACTERACTION
   source: {fileID: 0}
-  characterActionIDs: 0300000006000000
+  characterActionIDs: 03000000
   triggerAnimationNames:
   - Death
-  - Attack
   triggerStates: 02000000
 --- !u!114 &135100523
 MonoBehaviour:
@@ -526,6 +526,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   calledEvents:
   - EVENT_GAMECOLLISION
+--- !u!114 &135100530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 135100518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db899762f53b6ba4697ceaf77cdc2c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents:
+  - EVENT_CHARACTERACTION
+  source: {fileID: 0}
+  characterActionIDs: 06000000
+  triggerAnimationNames:
+  - Attack
+  triggerStates: 20000000
 --- !u!1 &141447562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1281,6 +1299,7 @@ GameObject:
   - 114: {fileID: 344858079}
   - 114: {fileID: 344858078}
   - 114: {fileID: 344858081}
+  - 114: {fileID: 344858082}
   m_Layer: 5
   m_Name: Help Overlay
   m_TagString: Untagged
@@ -1388,6 +1407,19 @@ MonoBehaviour:
   - EVENT_UIACTION
   source: {fileID: 0}
   id: 3
+--- !u!114 &344858082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 344858076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff930ac7f2a94634e99ce7184f6f0d1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents:
+  - EVENT_TOUCHSET
 --- !u!1 &414892926
 GameObject:
   m_ObjectHideFlags: 0
@@ -1797,7 +1829,7 @@ Canvas:
   serializedVersion: 2
   m_RenderMode: 0
   m_Camera: {fileID: 1005808063}
-  m_PlaneDistance: 10
+  m_PlaneDistance: 1
   m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -2082,8 +2114,8 @@ RectTransform:
   m_RootOrder: 4
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: .5, y: 0}
-  m_SizeDelta: {x: 2, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!222 &898779434
 CanvasRenderer:
@@ -2110,8 +2142,11 @@ MonoBehaviour:
   resetActionID: 3
   tapRepeatAnimationName: Repeat
   renderAnimationName: Render
+  arrowAnimationName: Arrow
   unitPoolName: unitPool
   pointerCamera: {fileID: 1005808063}
+  pointerSprite: {fileID: 21300000, guid: d6539b0d4db0a8140aa34046da907dc1, type: 3}
+  arrowSprite: {fileID: 21300000, guid: 6582fd4bedf21214db21093c2472a757, type: 3}
 --- !u!1 &918766110
 GameObject:
   m_ObjectHideFlags: 0
@@ -2502,7 +2537,7 @@ Camera:
   far clip plane: 1000
   field of view: 70
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
@@ -2650,6 +2685,7 @@ GameObject:
   - 114: {fileID: 1108469654}
   - 114: {fileID: 1108469653}
   - 114: {fileID: 1108469656}
+  - 114: {fileID: 1108469657}
   m_Layer: 5
   m_Name: Pause
   m_TagString: Untagged
@@ -2757,6 +2793,19 @@ MonoBehaviour:
   - EVENT_UIACTION
   source: {fileID: 0}
   id: 2
+--- !u!114 &1108469657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1108469651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff930ac7f2a94634e99ce7184f6f0d1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents:
+  - EVENT_TOUCHSET
 --- !u!1 &1120428285
 GameObject:
   m_ObjectHideFlags: 0
@@ -3570,7 +3619,6 @@ GameObject:
   - 4: {fileID: 1617188407}
   - 114: {fileID: 1617188406}
   - 114: {fileID: 1617188404}
-  - 114: {fileID: 1617188405}
   m_Layer: 0
   m_Name: World UI Events
   m_TagString: Untagged
@@ -3590,19 +3638,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AllowActivationOnStandalone: 1
---- !u!114 &1617188405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1617188403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4f2c4f832a43e441beae6a634c65aef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  registeredEvents:
-  - EVENT_WORLDTOUCHSET
 --- !u!114 &1617188406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3932,6 +3967,7 @@ GameObject:
   - 114: {fileID: 1741580349}
   - 114: {fileID: 1741580348}
   - 114: {fileID: 1741580351}
+  - 114: {fileID: 1741580352}
   m_Layer: 5
   m_Name: World Reset
   m_TagString: Untagged
@@ -4039,6 +4075,19 @@ MonoBehaviour:
   - EVENT_UIACTION
   source: {fileID: 0}
   id: 1
+--- !u!114 &1741580352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1741580346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff930ac7f2a94634e99ce7184f6f0d1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents:
+  - EVENT_TOUCHSET
 --- !u!1 &1766800644
 GameObject:
   m_ObjectHideFlags: 0
@@ -4119,7 +4168,7 @@ Camera:
   far clip plane: 1000
   field of view: 70
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -4227,6 +4276,7 @@ GameObject:
   - 222: {fileID: 1900733601}
   - 114: {fileID: 1900733600}
   - 114: {fileID: 1900733602}
+  - 114: {fileID: 1900733603}
   m_Layer: 5
   m_Name: Raycast Blocker
   m_TagString: Untagged
@@ -4291,6 +4341,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registeredEvents:
   - EVENT_WORLDPAUSE
+--- !u!114 &1900733603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1900733598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff930ac7f2a94634e99ce7184f6f0d1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents:
+  - EVENT_TOUCHSET
 --- !u!1 &1916218828
 GameObject:
   m_ObjectHideFlags: 0

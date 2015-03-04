@@ -84,7 +84,7 @@ public class CharacterDeathAction : EventTransceiverBehavior, ICharacterAction {
 				Status = CharacterActionStatus.Ended;
 				Status = CharacterActionStatus.Inactive;
 			}
-		} else if (characterAction != null && characterAction.Source == Source && characterAction != this && (Status & CharacterActionStatus.Active) == CharacterActionStatus.Active)
+		} else if (characterAction != null && characterAction.Source == Source && characterAction != this && (Status & (CharacterActionStatus.Started | CharacterActionStatus.Active)) != CharacterActionStatus.None)
 			characterAction.Status = CharacterActionStatus.Cancelled;
 	}
 

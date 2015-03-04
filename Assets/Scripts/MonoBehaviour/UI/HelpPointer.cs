@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using PathologicalGames;
 
@@ -12,8 +13,11 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 	public CharacterActionID resetActionID = CharacterActionID.None;
 	public string tapRepeatAnimationName = string.Empty;
 	public string renderAnimationName = string.Empty;
+	public string arrowAnimationName = string.Empty;
 	public string unitPoolName = string.Empty;
 	public Camera pointerCamera = null;
+	public Sprite pointerSprite = null;
+	public Sprite arrowSprite = null;
 
 	private bool render = false;
 	private List<GameObject> targets = null;
@@ -21,6 +25,7 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 	private SpawnPool unitPool = null;
 	private RectTransform rectTransform = null;
 	private RectTransform canvasRectTransform = null;
+	private Image image = null;
 
 	#region IGameObjectSource implementation
 
@@ -56,6 +61,7 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 			source = gameObject;
 		targets = new List<GameObject>();
 		animator = GetComponent<Animator>();
+		image = GetComponentInChildren<Image>();
 		if (animator == null)
 			animator = GetComponentInChildren<Animator>();
 		unitPool = PoolManager.Pools[unitPoolName];
@@ -79,7 +85,25 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 			{
 				Transform targetTransform = Targets[0].transform;
 				Vector2 screenPosition = GetRectTransformPosition(targetTransform, canvasRectTransform, pointerCamera);
-				rectTransform.anchoredPosition = screenPosition;
+				rectTransform.anchoredPosition = ClampToRectTransform(screenPosition, canvasRectTransform);
+				if (canvasRectTransform.rect.Contains(screenPosition))
+				{
+					animator.SetBool(arrowAnimationName, false);
+					animator.SetBool(tapRepeatAnimationName, true);
+					image.sprite = pointerSprite;
+					rectTransform.rotation = Quaternion.identity;
+				}
+				else
+				{
+					animator.SetBool(tapRepeatAnimationName, false);
+					animator.SetBool(arrowAnimationName, true);
+					image.sprite = arrowSprite;
+					float rotationDegrees = Vector2.Angle(Vector2.right, screenPosition.normalized);
+					Vector3 rotationDirection = Vector3.Cross(Vector2.right, screenPosition.normalized);
+					if (rotationDirection.z < 0)
+						rotationDegrees = 360.0f - rotationDegrees;
+					rectTransform.rotation = Quaternion.AngleAxis(rotationDegrees, Vector3.forward);
+				}
 			}
 		}
 		else
@@ -127,12 +151,18 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 		Vector3 screenPoint = camera.WorldToScreenPoint(transform.position);
 		float rectWidth = rectTransform.rect.width;
 		float rectHeight = rectTransform.rect.height;
-		float screenWidth = (rectTransform.anchoredPosition.x / rectTransform.pivot.x);
-		float screenHeight = (rectTransform.anchoredPosition.y / rectTransform.pivot.y);
-		float xPercentage = screenPoint.x / screenWidth;
-		float yPercentage = screenPoint.y / screenHeight;
+		Vector2 scaledSize = rectTransform.offsetMin + rectTransform.offsetMax;
+		float xPercentage = screenPoint.x / scaledSize.x;
+		float yPercentage = screenPoint.y / scaledSize.y;
 		Vector2 absolutePosition = new Vector2 (rectWidth * xPercentage, yPercentage * rectHeight);
 		relativePosition = absolutePosition + rectTransform.rect.position; 
 		return relativePosition;    
+	}
+
+	private Vector2 ClampToRectTransform(Vector2 point, RectTransform rectTransform)
+	{
+		float xClamp = Mathf.Clamp(point.x, rectTransform.rect.x, rectTransform.rect.x + rectTransform.rect.width);
+		float yClamp = Mathf.Clamp(point.y, rectTransform.rect.y, rectTransform.rect.y + rectTransform.rect.height);
+		return new Vector2(xClamp, yClamp);
 	}
 }

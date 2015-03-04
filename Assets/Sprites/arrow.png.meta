@@ -1,27 +1,11 @@
 fileFormatVersion: 2
-guid: d6539b0d4db0a8140aa34046da907dc1
+guid: 6582fd4bedf21214db21093c2472a757
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: pointer_0
-    21300002: pointer_1
-    21300004: pointer_2
-    21300006: pointer_3
-    21300008: pointer_4
-    21300010: pointer_5
-    21300012: pointer_6
-    21300014: pointer_7
-    21300016: pointer_8
-    21300018: pointer_9
-    21300020: pointer_10
-    21300022: pointer_11
-    21300024: pointer_12
-    21300026: pointer_13
-    21300028: pointer_14
-    21300030: pointer_15
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -41,13 +25,13 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: 1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -58,16 +42,6 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites:
-    - name: pointer_0
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 96
-        width: 24
-        height: 31
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+    sprites: []
   spritePackingTag: 
   userData: 
