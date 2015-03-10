@@ -148,13 +148,10 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 	private Vector2 GetRectTransformPosition(Transform transform, RectTransform rectTransform, Camera camera)
 	{
 		Vector2 relativePosition = Vector2.zero;
-		Vector3 screenPoint = camera.WorldToScreenPoint(transform.position);
+		Vector3 viewportPoint = camera.WorldToViewportPoint(transform.position);
 		float rectWidth = rectTransform.rect.width;
 		float rectHeight = rectTransform.rect.height;
-		Vector2 scaledSize = rectTransform.offsetMin + rectTransform.offsetMax;
-		float xPercentage = screenPoint.x / scaledSize.x;
-		float yPercentage = screenPoint.y / scaledSize.y;
-		Vector2 absolutePosition = new Vector2 (rectWidth * xPercentage, yPercentage * rectHeight);
+		Vector2 absolutePosition = new Vector2 (rectWidth * viewportPoint.x, rectHeight * viewportPoint.y);
 		relativePosition = absolutePosition + rectTransform.rect.position; 
 		return relativePosition;    
 	}
