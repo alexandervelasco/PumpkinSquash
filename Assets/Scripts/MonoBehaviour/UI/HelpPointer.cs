@@ -149,6 +149,8 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 	{
 		Vector2 relativePosition = Vector2.zero;
 		Vector3 viewportPoint = camera.WorldToViewportPoint(transform.position);
+		if (viewportPoint.z < 0.0f)
+			viewportPoint *= -1;
 		float rectWidth = rectTransform.rect.width;
 		float rectHeight = rectTransform.rect.height;
 		Vector2 absolutePosition = new Vector2 (rectWidth * viewportPoint.x, rectHeight * viewportPoint.y);
