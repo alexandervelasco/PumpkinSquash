@@ -15,11 +15,11 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 	public string renderAnimationName = string.Empty;
 	public string arrowAnimationName = string.Empty;
 	public string unitPoolName = string.Empty;
-	public Camera pointerCamera = null;
 	public Sprite pointerSprite = null;
 	public Sprite arrowSprite = null;
 
 	private bool render = false;
+	private Camera pointerCamera = null;
 	private List<GameObject> targets = null;
 	Animator animator = null;
 	private SpawnPool unitPool = null;
@@ -68,7 +68,10 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 		animator.SetBool(renderAnimationName, render);
 		Canvas canvas = GetComponentInParent<Canvas>();
 		if (canvas != null)
+		{
 			canvasRectTransform = canvas.GetComponent<RectTransform>();
+			pointerCamera = canvas.worldCamera;
+		}
 	}
 	
 	// Update is called once per frame
@@ -91,7 +94,7 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 					animator.SetBool(arrowAnimationName, false);
 					animator.SetBool(tapRepeatAnimationName, true);
 					image.sprite = pointerSprite;
-					rectTransform.rotation = Quaternion.identity;
+					rectTransform.localRotation = Quaternion.identity;
 				}
 				else
 				{
@@ -102,7 +105,7 @@ public class HelpPointer : EventReceiverBehavior, IGameObjectSource, ITargeted<G
 					Vector3 rotationDirection = Vector3.Cross(Vector2.right, screenPosition.normalized);
 					if (rotationDirection.z < 0)
 						rotationDegrees = 360.0f - rotationDegrees;
-					rectTransform.rotation = Quaternion.AngleAxis(rotationDegrees, Vector3.forward);
+					rectTransform.localRotation = Quaternion.AngleAxis(rotationDegrees, Vector3.forward);
 				}
 			}
 		}
