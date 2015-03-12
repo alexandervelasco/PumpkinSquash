@@ -1299,7 +1299,7 @@ GameObject:
   - 114: {fileID: 344858079}
   - 114: {fileID: 344858078}
   - 114: {fileID: 344858081}
-  - 114: {fileID: 344858082}
+  - 65: {fileID: 344858082}
   m_Layer: 5
   m_Name: Help Overlay
   m_TagString: Untagged
@@ -1407,19 +1407,18 @@ MonoBehaviour:
   - EVENT_UIACTION
   source: {fileID: 0}
   id: 3
---- !u!114 &344858082
-MonoBehaviour:
+--- !u!65 &344858082
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 344858076}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff930ac7f2a94634e99ce7184f6f0d1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  registeredEvents:
-  - EVENT_TOUCHSET
+  serializedVersion: 2
+  m_Size: {x: 50, y: 30, z: 1}
+  m_Center: {x: 0, y: 0, z: 1}
 --- !u!1 &414892926
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,7 +1492,21 @@ MonoBehaviour:
   dontReparent: 0
   _dontDestroyOnLoad: 1
   logMessages: 0
-  _perPrefabPoolOptions: []
+  _perPrefabPoolOptions:
+  - prefab: {fileID: 400000, guid: 3d84922c38d7c444782fb1a791d97b21, type: 2}
+    preloadAmount: 50
+    preloadTime: 0
+    preloadFrames: 2
+    preloadDelay: 0
+    limitInstances: 0
+    limitAmount: 100
+    limitFIFO: 0
+    cullDespawned: 0
+    cullAbove: 50
+    cullDelay: 60
+    cullMaxPerPass: 5
+    _logMessages: 0
+    spawnPool: {fileID: 0}
   maxParticleDespawnTime: 300
 --- !u!1 &419604432
 GameObject:
@@ -2253,7 +2266,6 @@ GameObject:
   - 114: {fileID: 940656354}
   - 114: {fileID: 940656355}
   - 114: {fileID: 940656356}
-  - 114: {fileID: 940656357}
   - 114: {fileID: 940656358}
   - 114: {fileID: 940656360}
   - 114: {fileID: 940656359}
@@ -2327,26 +2339,6 @@ MonoBehaviour:
   - EVENT_GESTURETAP
   tapSensitivity: .300000012
   tapMovementTolerance: 10
---- !u!114 &940656357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 940656352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ff86a8deac0adf448001d84f331562b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  calledEvents:
-  - EVENT_SPAWN
-  spawnPoolName: unitPool
-  spawnedPrefab: {fileID: 103316, guid: 72f8a1f61d9771c4f995fe9ba7fd60d5, type: 2}
-  spawnRate: .25
-  maximumSpawnAmount: 50
-  spawnOffset: {x: -45, y: 1, z: -45}
-  maximumSpawnDistance: {x: 90, y: 0, z: 90}
-  minimumSpawnGapRadius: 2
 --- !u!114 &940656358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2684,7 +2676,7 @@ GameObject:
   - 114: {fileID: 1108469654}
   - 114: {fileID: 1108469653}
   - 114: {fileID: 1108469656}
-  - 114: {fileID: 1108469657}
+  - 65: {fileID: 1108469657}
   m_Layer: 5
   m_Name: Pause
   m_TagString: Untagged
@@ -2792,19 +2784,18 @@ MonoBehaviour:
   - EVENT_UIACTION
   source: {fileID: 0}
   id: 2
---- !u!114 &1108469657
-MonoBehaviour:
+--- !u!65 &1108469657
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1108469651}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff930ac7f2a94634e99ce7184f6f0d1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  registeredEvents:
-  - EVENT_TOUCHSET
+  serializedVersion: 2
+  m_Size: {x: 50, y: 30, z: 1}
+  m_Center: {x: 0, y: 0, z: 1}
 --- !u!1 &1120428285
 GameObject:
   m_ObjectHideFlags: 0
@@ -3966,7 +3957,7 @@ GameObject:
   - 114: {fileID: 1741580349}
   - 114: {fileID: 1741580348}
   - 114: {fileID: 1741580351}
-  - 114: {fileID: 1741580352}
+  - 65: {fileID: 1741580352}
   m_Layer: 5
   m_Name: World Reset
   m_TagString: Untagged
@@ -4074,19 +4065,100 @@ MonoBehaviour:
   - EVENT_UIACTION
   source: {fileID: 0}
   id: 1
---- !u!114 &1741580352
-MonoBehaviour:
+--- !u!65 &1741580352
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1741580346}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 50, y: 30, z: 1}
+  m_Center: {x: 0, y: 0, z: 1}
+--- !u!1 &1753266126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1753266129}
+  - 114: {fileID: 1753266128}
+  - 114: {fileID: 1753266127}
+  m_Layer: 0
+  m_Name: Enemy Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1753266127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1753266126}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff930ac7f2a94634e99ce7184f6f0d1d, type: 3}
+  m_Script: {fileID: 11500000, guid: ccddbd67657e8a945a7ff62bd8092f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  registeredEvents:
-  - EVENT_TOUCHSET
+  registeredEvents: []
+  calledEvents: []
+  repeat: 1
+  time: .25
+  triggerOnStart: 1
+  onTime:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1753266128}
+        m_MethodName: StartSpawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &1753266128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1753266126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff86a8deac0adf448001d84f331562b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents: []
+  calledEvents:
+  - EVENT_SPAWN
+  spawnPoolName: unitPool
+  spawnedPrefab: {fileID: 103316, guid: 72f8a1f61d9771c4f995fe9ba7fd60d5, type: 2}
+  maximumSpawnAmount: 50
+  spawnOffset: {x: -45, y: 1, z: -45}
+  maximumSpawnDistance: {x: 90, y: 0, z: 90}
+  minimumSpawnGapRadius: 2
+--- !u!4 &1753266129
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1753266126}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
 --- !u!1 &1766800644
 GameObject:
   m_ObjectHideFlags: 0
@@ -4275,7 +4347,7 @@ GameObject:
   - 222: {fileID: 1900733601}
   - 114: {fileID: 1900733600}
   - 114: {fileID: 1900733602}
-  - 114: {fileID: 1900733603}
+  - 65: {fileID: 1900733603}
   m_Layer: 5
   m_Name: Raycast Blocker
   m_TagString: Untagged
@@ -4342,19 +4414,18 @@ MonoBehaviour:
   - EVENT_WORLDPAUSE
   moveHeight: 9999
   hideHeight: 0
---- !u!114 &1900733603
-MonoBehaviour:
+--- !u!65 &1900733603
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1900733598}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff930ac7f2a94634e99ce7184f6f0d1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  registeredEvents:
-  - EVENT_TOUCHSET
+  serializedVersion: 2
+  m_Size: {x: 225, y: 400, z: 1}
+  m_Center: {x: 0, y: 0, z: 1}
 --- !u!1 &1916218828
 GameObject:
   m_ObjectHideFlags: 0
@@ -4516,98 +4587,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
---- !u!1 &1971709717
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1971709720}
-  - 114: {fileID: 1971709719}
-  - 114: {fileID: 1971709718}
-  m_Layer: 0
-  m_Name: Reporter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1971709718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1971709717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6767a180de870304caa2013b2772dd62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1971709719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1971709717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 600c02144c4813244abd262cbcbe8825, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  show: 0
-  UserData: 
-  fps: 0
-  fpsText: 
-  images:
-    clearImage: {fileID: 2800000, guid: 112c6fcf56e349449ab2e6ad76b67816, type: 3}
-    collapseImage: {fileID: 2800000, guid: 4623f326a884a2546ab39078bf7822c3, type: 3}
-    clearOnNewSceneImage: {fileID: 2800000, guid: 3a6bc61a8319b1949ab9f1f2db1302b4,
-      type: 3}
-    showTimeImage: {fileID: 2800000, guid: 782e03669fa4a614e89ef56252134250, type: 3}
-    showSceneImage: {fileID: 2800000, guid: ff4dfb29f203a174ab8e4c498afe908a, type: 3}
-    userImage: {fileID: 2800000, guid: 2bcdc012e7356f1449ce7d3a31dc458c, type: 3}
-    showMemoryImage: {fileID: 2800000, guid: f447d62f2dacf9843be7cbf168a3a9d0, type: 3}
-    softwareImage: {fileID: 2800000, guid: 6c91fc88ee6c791468318d85febfb48d, type: 3}
-    dateImage: {fileID: 2800000, guid: a7561cd0a9f62a84e99bff1abce2a222, type: 3}
-    showFpsImage: {fileID: 2800000, guid: 90b2f48155dc0e74f8e428561ac79da5, type: 3}
-    showGraphImage: {fileID: 0}
-    graphImage: {fileID: 2800000, guid: 903d664043815ca4a9cc1f548bdd4b21, type: 3}
-    infoImage: {fileID: 2800000, guid: 2954bef266e6d794aba08ceacc887a0f, type: 3}
-    searchImage: {fileID: 2800000, guid: bfef37b5a26d2264798616d960451329, type: 3}
-    closeImage: {fileID: 2800000, guid: b65e9be99974bc94eab5d6698811d0b8, type: 3}
-    buildFromImage: {fileID: 2800000, guid: 8702be598dd9f504ca33be2afee2ca33, type: 3}
-    systemInfoImage: {fileID: 2800000, guid: e9011b1dc9256ad4d9c19a31c595f95f, type: 3}
-    graphicsInfoImage: {fileID: 2800000, guid: 999d31716332cc04eb4abc9c9270b0ca, type: 3}
-    backImage: {fileID: 2800000, guid: a0632a18e7c665641b94fea66506ab50, type: 3}
-    cameraImage: {fileID: 0}
-    logImage: {fileID: 2800000, guid: e876b803a4dd5c5488078071d15aa9c0, type: 3}
-    warningImage: {fileID: 2800000, guid: 1066be8e7b994b94c8a182b8dbe30705, type: 3}
-    errorImage: {fileID: 2800000, guid: 7640ebf8b3a92124d821d3b4b8b3fd7e, type: 3}
-    barImage: {fileID: 2800000, guid: 8128d4f4c0193e34586f9631ef7d4787, type: 3}
-    button_activeImage: {fileID: 2800000, guid: 2580a2e903691e44282e56ed6e0ff37a,
-      type: 3}
-    even_logImage: {fileID: 2800000, guid: d27aad55b568c6544b0b95a95da44bc7, type: 3}
-    odd_logImage: {fileID: 2800000, guid: 8ffbb44a2c3adae45913474e4fd487f5, type: 3}
-    selectedImage: {fileID: 2800000, guid: 17117a429b08e7e43b0b6c8421de69fe, type: 3}
-    reporterScrollerSkin: {fileID: 11400000, guid: 1cc68832d00d3284a9324a4dc05be753,
-      type: 2}
-  size: {x: 32, y: 32}
-  maxSize: 20
-  numOfCircleToShow: 1
-  Initialized: 0
---- !u!4 &1971709720
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1971709717}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 16
 --- !u!1 &2010911235
 GameObject:
   m_ObjectHideFlags: 1
