@@ -189,6 +189,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 443980}
   - 114: {fileID: 11443980}
+  - 114: {fileID: 11464172}
+  - 114: {fileID: 11475312}
+  - 114: {fileID: 11453262}
   m_Layer: 0
   m_Name: Suicide Bomb
   m_TagString: Untagged
@@ -354,7 +357,7 @@ MonoBehaviour:
   - EVENT_CHARACTERACTION
   calledEvents:
   - EVENT_DESPAWN
-  spawnPoolName: unitPool
+  spawnPoolName: enemyPool
   characterActionID: 3
 --- !u!114 &11428664
 MonoBehaviour:
@@ -800,6 +803,85 @@ MonoBehaviour:
   defaultMaximumDelayTime: 12
   effectRadius: 2
   maximumAdditionalAttributeOnKillMultiplier: 3
+--- !u!114 &11453262
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 143980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4893b0476fbb6de48a6021e674b6e62b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents: []
+  calledEvents: []
+  spawnPoolName: effectPool
+  spawnedPrefab: {fileID: 123194, guid: fab10ea0a7698a4478205e0f5124a4b6, type: 2}
+--- !u!114 &11464172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 143980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae08f832c15d52e4e89bed53962b3ee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents:
+  - EVENT_CHARACTERACTION
+  characterActionIDs: 04000000
+  characterActionStatuses: 04000000
+  onCharacterAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11475312}
+        m_MethodName: CalculateRelativePosition
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  source: {fileID: 103316}
+  matchSource: 1
+--- !u!114 &11475312
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 143980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdcab7da2c678514abcc2c525715c577, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 103316}
+  positionOffset: {x: 0, y: -1, z: 0}
+  onPositionPick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11453262}
+        m_MethodName: Spawn
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: GetRelativePosition+UnityEvent_GetRelativePosition_Vector3, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!136 &13603324
 CapsuleCollider:
   m_ObjectHideFlags: 1

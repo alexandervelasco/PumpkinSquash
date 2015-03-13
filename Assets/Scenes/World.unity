@@ -1418,7 +1418,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 50, y: 30, z: 1}
-  m_Center: {x: 0, y: 0, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &414892926
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,8 +1493,36 @@ MonoBehaviour:
   _dontDestroyOnLoad: 1
   logMessages: 0
   _perPrefabPoolOptions:
-  - prefab: {fileID: 400000, guid: 3d84922c38d7c444782fb1a791d97b21, type: 2}
+  - prefab: {fileID: 423194, guid: fab10ea0a7698a4478205e0f5124a4b6, type: 2}
+    preloadAmount: 100
+    preloadTime: 0
+    preloadFrames: 2
+    preloadDelay: 0
+    limitInstances: 0
+    limitAmount: 100
+    limitFIFO: 0
+    cullDespawned: 0
+    cullAbove: 50
+    cullDelay: 60
+    cullMaxPerPass: 5
+    _logMessages: 0
+    spawnPool: {fileID: 0}
+  - prefab: {fileID: 474172, guid: 3f095ce5483e2594bab13b551c50ded3, type: 2}
     preloadAmount: 50
+    preloadTime: 0
+    preloadFrames: 2
+    preloadDelay: 0
+    limitInstances: 0
+    limitAmount: 100
+    limitFIFO: 0
+    cullDespawned: 0
+    cullAbove: 50
+    cullDelay: 60
+    cullMaxPerPass: 5
+    _logMessages: 0
+    spawnPool: {fileID: 0}
+  - prefab: {fileID: 456852, guid: 83ee7a1bb8e696c42bcc72cba7cb3a31, type: 2}
+    preloadAmount: 100
     preloadTime: 0
     preloadFrames: 2
     preloadDelay: 0
@@ -2156,7 +2184,7 @@ MonoBehaviour:
   tapRepeatAnimationName: Repeat
   renderAnimationName: Render
   arrowAnimationName: Arrow
-  unitPoolName: unitPool
+  unitPoolName: enemyPool
   pointerSprite: {fileID: 21300000, guid: d6539b0d4db0a8140aa34046da907dc1, type: 3}
   arrowSprite: {fileID: 21300000, guid: 6582fd4bedf21214db21093c2472a757, type: 3}
 --- !u!1 &918766110
@@ -3492,7 +3520,7 @@ GameObject:
   - 4: {fileID: 1585843686}
   - 114: {fileID: 1585843685}
   m_Layer: 0
-  m_Name: Unit Pool
+  m_Name: Enemy Pool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3509,7 +3537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59dfbc0f4f3a98b4ebf4ad40fc3f43aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolName: unitPool
+  poolName: enemyPool
   matchPoolScale: 0
   matchPoolLayer: 0
   dontReparent: 0
@@ -3540,7 +3568,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1753266129}
   m_Father: {fileID: 0}
   m_RootOrder: 14
 --- !u!1 &1613828278
@@ -3873,6 +3902,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1691267942}
   - 114: {fileID: 1691267943}
+  - 114: {fileID: 1691267944}
+  - 114: {fileID: 1691267946}
+  - 114: {fileID: 1691267945}
   m_Layer: 0
   m_Name: Character Attack
   m_TagString: Untagged
@@ -3918,6 +3950,85 @@ MonoBehaviour:
   id: 6
   targetAttributeID: 1
   originOffset: {x: 0, y: 1, z: 0}
+--- !u!114 &1691267944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1691267941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae08f832c15d52e4e89bed53962b3ee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents:
+  - EVENT_CHARACTERACTION
+  characterActionIDs: 06000000
+  characterActionStatuses: 04000000
+  onCharacterAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1691267946}
+        m_MethodName: CalculateRelativePosition
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  source: {fileID: 135100518}
+  matchSource: 1
+--- !u!114 &1691267945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1691267941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4893b0476fbb6de48a6021e674b6e62b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents: []
+  calledEvents: []
+  spawnPoolName: effectPool
+  spawnedPrefab: {fileID: 174172, guid: 3f095ce5483e2594bab13b551c50ded3, type: 2}
+--- !u!114 &1691267946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1691267941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdcab7da2c678514abcc2c525715c577, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 1067137493}
+  positionOffset: {x: 0, y: 0, z: 0}
+  onPositionPick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1691267945}
+        m_MethodName: Spawn
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: RelativePositionPicker+UnityEvent_RelativePositionPicker_Vector3,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &1741360875
 GameObject:
   m_ObjectHideFlags: 0
@@ -4072,7 +4183,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1741580346}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 50, y: 30, z: 1}
@@ -4085,8 +4196,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1753266129}
-  - 114: {fileID: 1753266128}
   - 114: {fileID: 1753266127}
+  - 114: {fileID: 1753266128}
+  - 114: {fileID: 1753266130}
   m_Layer: 0
   m_Name: Enemy Spawner
   m_TagString: Untagged
@@ -4114,7 +4226,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1753266128}
-        m_MethodName: StartSpawn
+        m_MethodName: PickRandomPosition
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4138,15 +4250,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff86a8deac0adf448001d84f331562b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  registeredEvents: []
-  calledEvents:
-  - EVENT_SPAWN
-  spawnPoolName: unitPool
-  spawnedPrefab: {fileID: 103316, guid: 72f8a1f61d9771c4f995fe9ba7fd60d5, type: 2}
-  maximumSpawnAmount: 50
-  spawnOffset: {x: -45, y: 1, z: -45}
-  maximumSpawnDistance: {x: 90, y: 0, z: 90}
-  minimumSpawnGapRadius: 2
+  minimumSpawnPosition: {x: -45, y: 2, z: -45}
+  maximumSpawnPosition: {x: 45, y: 2, z: 45}
+  minimumSpawnGapDistance: 3
+  avoidanceLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  onPositionPick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1753266130}
+        m_MethodName: Spawn
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: RandomPositionPicker+UnityEvent_RandomPositionPicker_Vector3, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!4 &1753266129
 Transform:
   m_ObjectHideFlags: 0
@@ -4157,8 +4283,24 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_Father: {fileID: 1585843686}
+  m_RootOrder: 0
+--- !u!114 &1753266130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1753266126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4893b0476fbb6de48a6021e674b6e62b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents: []
+  calledEvents:
+  - EVENT_SPAWN
+  spawnPoolName: enemyPool
+  spawnedPrefab: {fileID: 103316, guid: 72f8a1f61d9771c4f995fe9ba7fd60d5, type: 2}
 --- !u!1 &1766800644
 GameObject:
   m_ObjectHideFlags: 0
@@ -4425,7 +4567,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 225, y: 400, z: 1}
-  m_Center: {x: 0, y: 0, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1916218828
 GameObject:
   m_ObjectHideFlags: 0
