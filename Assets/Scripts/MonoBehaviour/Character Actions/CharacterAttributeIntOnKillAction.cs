@@ -118,9 +118,9 @@ public class CharacterAttributeIntOnKillAction : EventTransceiverBehavior, IChar
 					Status = CharacterActionStatus.Started;
 					if ((Status & CharacterActionStatus.Cancelled) != CharacterActionStatus.Cancelled)
 					{
-						Status = CharacterActionStatus.Active;
 						Targets.Clear();
 						Targets.AddRange(triggerTargets.Targets);
+						Status = CharacterActionStatus.Active;
 						CharacterAttributeInt[] sourceAttributesInt = source.GetComponents<CharacterAttributeInt>();
 						CharacterAttributeInt sourceAttribute = sourceAttributesInt.FirstOrDefault(attribute => attribute.ID == sourceAttributeID);
 						if (sourceAttribute != null)

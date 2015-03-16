@@ -9,14 +9,14 @@ using PathologicalGames;
 public class RandomPositionPicker : MonoBehaviour {
 
 	[Serializable]
-	public class UnityEvent_RandomPositionPicker_Vector3 : UnityEvent<Vector3> {}
+	public class UnityEvent_RandomPositionPicker_1 : UnityEvent<Vector3> {}
 
 	//serialized data
 	public Vector3 minimumSpawnPosition = Vector3.zero;
 	public Vector3 maximumSpawnPosition = Vector3.zero;
 	public float minimumSpawnGapDistance = 0;
 	public LayerMask avoidanceLayers;
-	public UnityEvent_RandomPositionPicker_Vector3 onPositionPick;
+	public UnityEvent_RandomPositionPicker_1 onPositionPick;
 
 	// Use this for initialization
 	public void Start () {

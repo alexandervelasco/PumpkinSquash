@@ -6,12 +6,12 @@ using UnityEngine.Events;
 public class RelativePositionPicker : MonoBehaviour, IGameObjectSource {
 
 	[Serializable]
-	public class UnityEvent_RelativePositionPicker_Vector3 : UnityEvent<Vector3> {}
+	public class UnityEvent_RelativePositionPicker_1 : UnityEvent<Vector3> {}
 
 	//serialized data
 	public GameObject source = null;
 	public Vector3 positionOffset = Vector3.zero;
-	public UnityEvent_RelativePositionPicker_Vector3 onPositionPick;
+	public UnityEvent_RelativePositionPicker_1 onPositionPick;
 
 	#region IGameObjectSource implementation
 	public GameObject Source {
@@ -39,5 +39,25 @@ public class RelativePositionPicker : MonoBehaviour, IGameObjectSource {
 	public void CalculateRelativePosition()
 	{
 		onPositionPick.Invoke(Source.transform.position + positionOffset);
+	}
+
+	public void CalculateRelativePosition(GameObject positionSource)
+	{
+		onPositionPick.Invoke(positionSource.transform.position + positionOffset);
+	}
+
+	public void CalculateRelativePosition(GameObject positionSource, Vector3 offset)
+	{
+		onPositionPick.Invoke(positionSource.transform.position + offset);
+	}
+
+	public void CalculateRelativePosition(Vector3 position)
+	{
+		onPositionPick.Invoke(position + positionOffset);
+	}
+	
+	public void CalculateRelativePosition(Vector3 position, Vector3 offset)
+	{
+		onPositionPick.Invoke(position + offset);
 	}
 }

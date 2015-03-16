@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
+using System;
 
 public class CharacterActionEventRelay : EventReceiverBehavior, IGameObjectSource {
+
+	[Serializable]
+	public class UnityEvent_CharacterActionEventRelay_1 : UnityEvent<ICharacterAction> {}
 
 	//serialized data
 	public List<CharacterActionID> characterActionIDs = null;
 	public List<CharacterActionStatus> characterActionStatuses = null;
-	public UnityEvent onCharacterAction;
+	public UnityEvent_CharacterActionEventRelay_1 onCharacterAction;
 	public GameObject source = null;
 	public bool matchSource = true;
 
@@ -42,7 +46,7 @@ public class CharacterActionEventRelay : EventReceiverBehavior, IGameObjectSourc
 		ICharacterAction action = args as ICharacterAction;
 		if (action != null && characterActionIDs.Contains(action.ID) && characterActionStatuses.Contains(action.Status) &&
 		    (!matchSource || action.Source == Source))
-			onCharacterAction.Invoke();
+			onCharacterAction.Invoke(action);
 	}
 
 	#endregion
