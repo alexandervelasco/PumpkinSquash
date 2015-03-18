@@ -165,6 +165,10 @@ Prefab:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
   m_RootGameObject: {fileID: 135100518}
@@ -335,7 +339,7 @@ GameObject:
   - 114: {fileID: 135100527}
   m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1979,7 +1983,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
 --- !u!1 &666411579
 GameObject:
   m_ObjectHideFlags: 0
@@ -3648,7 +3652,49 @@ MonoBehaviour:
   logMessages: 0
   _perPrefabPoolOptions:
   - prefab: {fileID: 403320, guid: 72f8a1f61d9771c4f995fe9ba7fd60d5, type: 2}
-    preloadAmount: 50
+    preloadAmount: 30
+    preloadTime: 0
+    preloadFrames: 2
+    preloadDelay: 0
+    limitInstances: 0
+    limitAmount: 100
+    limitFIFO: 0
+    cullDespawned: 0
+    cullAbove: 50
+    cullDelay: 60
+    cullMaxPerPass: 5
+    _logMessages: 0
+    spawnPool: {fileID: 0}
+  - prefab: {fileID: 428504, guid: ffd4a6cf951f29e47936100229c35918, type: 2}
+    preloadAmount: 30
+    preloadTime: 0
+    preloadFrames: 2
+    preloadDelay: 0
+    limitInstances: 0
+    limitAmount: 100
+    limitFIFO: 0
+    cullDespawned: 0
+    cullAbove: 50
+    cullDelay: 60
+    cullMaxPerPass: 5
+    _logMessages: 0
+    spawnPool: {fileID: 0}
+  - prefab: {fileID: 489766, guid: fb9385c124d38c340aa0cb2e95aa8d88, type: 2}
+    preloadAmount: 30
+    preloadTime: 0
+    preloadFrames: 2
+    preloadDelay: 0
+    limitInstances: 0
+    limitAmount: 100
+    limitFIFO: 0
+    cullDespawned: 0
+    cullAbove: 50
+    cullDelay: 60
+    cullMaxPerPass: 5
+    _logMessages: 0
+    spawnPool: {fileID: 0}
+  - prefab: {fileID: 495654, guid: 6f58a2ebf331cf34386512c307157943, type: 2}
+    preloadAmount: 30
     preloadTime: 0
     preloadFrames: 2
     preloadDelay: 0
@@ -4300,6 +4346,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 1753266129}
   - 114: {fileID: 1753266127}
+  - 114: {fileID: 1753266131}
+  - 114: {fileID: 1753266132}
   - 114: {fileID: 1753266128}
   - 114: {fileID: 1753266130}
   m_Layer: 0
@@ -4328,8 +4376,8 @@ MonoBehaviour:
   onTime:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1753266128}
-        m_MethodName: PickRandomPosition
+      - m_Target: {fileID: 1753266131}
+        m_MethodName: StartSequence
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4403,7 +4451,80 @@ MonoBehaviour:
   calledEvents:
   - EVENT_SPAWN
   spawnPoolName: enemyPool
-  spawnedPrefab: {fileID: 103316, guid: 72f8a1f61d9771c4f995fe9ba7fd60d5, type: 2}
+  spawnedPrefab: {fileID: 0}
+--- !u!114 &1753266131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1753266126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82a8f2e6f5cc0a346ba29e97398916ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventSequence:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1753266132}
+        m_MethodName: PickRandomGameObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1753266128}
+        m_MethodName: PickRandomPosition
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &1753266132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1753266126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee229dc86ff440459bcad314b1d2b3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjects:
+  - {fileID: 103316, guid: 72f8a1f61d9771c4f995fe9ba7fd60d5, type: 2}
+  - {fileID: 128516, guid: ffd4a6cf951f29e47936100229c35918, type: 2}
+  - {fileID: 189754, guid: fb9385c124d38c340aa0cb2e95aa8d88, type: 2}
+  - {fileID: 195642, guid: 6f58a2ebf331cf34386512c307157943, type: 2}
+  onGameObjectPick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1753266130}
+        m_MethodName: set_SpawnedPrefab
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: RandomGameObjectPicker+UnityEvent_RandomGameObjectPicker_1, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &1766800644
 GameObject:
   m_ObjectHideFlags: 0

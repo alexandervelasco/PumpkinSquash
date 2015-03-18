@@ -10,6 +10,12 @@ public class PoolSpawner : EventTransceiverBehavior {
 
 	private SpawnPool spawnPool = null;
 
+	public GameObject SpawnedPrefab {
+		set {
+			spawnedPrefab = value;
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
 		if (!string.IsNullOrEmpty(spawnPoolName))

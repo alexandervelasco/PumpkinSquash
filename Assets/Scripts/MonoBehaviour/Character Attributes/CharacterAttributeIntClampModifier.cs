@@ -14,6 +14,7 @@ public class CharacterAttributeIntClampModifier : EventTransceiverBehavior, IMod
 	private ISingleOperandModifier<TypedValue32<ModifiableType, int>> modifiers = null;
 	private TypedValue32<ModifiableType, int> baseValue = 0;
 	private Guid modifierID = Guid.NewGuid();
+	private bool startCalled = false;
 
 	#region IModifiable implementation
 	public ModifiableID ID {
@@ -61,6 +62,7 @@ public class CharacterAttributeIntClampModifier : EventTransceiverBehavior, IMod
 	void Start () {
 		this.modifiers = new GetterModifier<TypedValue32<ModifiableType, int>>();
 		this.BaseValue = defaultValue;	
+		startCalled = true;
 	}
 	
 	// Update is called once per frame
@@ -77,6 +79,8 @@ public class CharacterAttributeIntClampModifier : EventTransceiverBehavior, IMod
 		if (modifiable != null && senderBehavior != null &&
 			modifiable.ID == targetModifiableID && senderBehavior.gameObject.Equals(this.gameObject))
 		{
+			if (!startCalled)
+				Start();
 			if (clampBaseValue)
 			{
 				TypedValue32<ModifiableType, int> clampValue = FinalValue;
