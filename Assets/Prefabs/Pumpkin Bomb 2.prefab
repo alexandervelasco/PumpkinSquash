@@ -695,7 +695,7 @@ MonoBehaviour:
   registeredEvents: []
   calledEvents: []
   spawnPoolName: effectPool
-  spawnedPrefab: {fileID: 123194, guid: fab10ea0a7698a4478205e0f5124a4b6, type: 2}
+  spawnedPrefab: {fileID: 168990, guid: 9dd7807acc776184c9d712814335b0ee, type: 2}
 --- !u!114 &11428510
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -708,7 +708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 128516}
-  positionOffset: {x: 0, y: -1, z: 0}
+  positionOffset: {x: 0, y: 0, z: 0}
   onPositionPick:
     m_PersistentCalls:
       m_Calls:
@@ -977,7 +977,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 128516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35bb3e10bf51ace44924b95abf07171a, type: 3}
+  m_Script: {fileID: 11500000, guid: c6201fdb3b93e9b43a38b69ecf792ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   broadcast: 1

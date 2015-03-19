@@ -101,6 +101,7 @@ GameObject:
   - 198: {fileID: 19856852}
   - 199: {fileID: 19956852}
   - 114: {fileID: 11456842}
+  - 114: {fileID: 11483020}
   m_Layer: 0
   m_Name: Magic Poof
   m_TagString: FxTemporaire
@@ -258,6 +259,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnlyDeactivate: 0
+--- !u!114 &11483020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 156852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6201fdb3b93e9b43a38b69ecf792ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  broadcast: 1
 --- !u!198 &19856842
 ParticleSystem:
   m_ObjectHideFlags: 1

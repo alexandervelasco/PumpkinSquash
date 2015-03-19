@@ -11,6 +11,7 @@ GameObject:
   - 198: {fileID: 19874172}
   - 199: {fileID: 19974172}
   - 114: {fileID: 11474172}
+  - 114: {fileID: 11477960}
   m_Layer: 0
   m_Name: Hit
   m_TagString: FxTemporaire
@@ -43,6 +44,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoolName: effectPool
   checkInterval: .25
+--- !u!114 &11477960
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 174172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6201fdb3b93e9b43a38b69ecf792ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  broadcast: 1
 --- !u!198 &19874172
 ParticleSystem:
   m_ObjectHideFlags: 1

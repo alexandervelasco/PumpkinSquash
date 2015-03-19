@@ -353,13 +353,13 @@ Transition:
   m_Name: Run End to Idle
   m_SrcState: {fileID: 110284890}
   m_DstState: {fileID: 110215764}
-  m_TransitionDuration: .145291567
-  m_TransitionOffset: .00706189917
+  m_TransitionDuration: .459022701
+  m_TransitionOffset: 0
   m_Conditions:
   - m_ConditionMode: 5
     m_ConditionEvent: Jump
     m_EventTreshold: 0
-    m_ExitTime: .827422857
+    m_ExitTime: .5
   m_Atomic: 0
   m_Solo: 0
   m_Mute: 0
@@ -581,7 +581,7 @@ Transition:
   m_Name: Jump End to Idle
   m_SrcState: {fileID: 110210988}
   m_DstState: {fileID: 110215764}
-  m_TransitionDuration: .882352829
+  m_TransitionDuration: 0
   m_TransitionOffset: .276778162
   m_Conditions:
   - m_ConditionMode: 5
@@ -817,7 +817,7 @@ Transition:
   m_Name: Idle to Jump Air
   m_SrcState: {fileID: 110215764}
   m_DstState: {fileID: 110258784}
-  m_TransitionDuration: .0482715927
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_Conditions:
   - m_ConditionMode: 1
@@ -897,7 +897,7 @@ Transition:
   m_Name: Idle to Run Loop
   m_SrcState: {fileID: 110215764}
   m_DstState: {fileID: 110248082}
-  m_TransitionDuration: .141252995
+  m_TransitionDuration: .00292276358
   m_TransitionOffset: 0
   m_Conditions:
   - m_ConditionMode: 1
@@ -1039,7 +1039,7 @@ State:
   m_Speed: 1
   m_CycleOffset: 0
   m_Motions:
-  - {fileID: 7400000, guid: c868166999bd12f4a984825701478f2b, type: 3}
+  - {fileID: 7400020, guid: ce448a8080b4e934b8473badd27be402, type: 3}
   m_ParentStateMachine: {fileID: 110700000}
   m_Position: {x: 396, y: -48, z: 0}
   m_IKOnFeet: 0
