@@ -317,7 +317,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189756}
-  m_LocalRotation: {x: -.424708188, y: .339851171, z: .175919905, w: .820473254}
+  m_LocalRotation: {x: -.48476851, y: 0, z: 0, w: .874642551}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -342,7 +342,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189758}
-  m_LocalRotation: {x: -.424708188, y: .339851171, z: .175919905, w: .820473254}
+  m_LocalRotation: {x: -.48476851, y: 0, z: 0, w: .874642551}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -467,7 +467,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: .876267731, b: .551470578, a: 1}
   m_Intensity: 1
-  m_Range: .375
+  m_Range: 3
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -685,6 +685,7 @@ MonoBehaviour:
   - EVENT_DESPAWN
   spawnPoolName: enemyPool
   characterActionID: 3
+  characterActionStatus: 4
 --- !u!114 &11489740
 MonoBehaviour:
   m_ObjectHideFlags: 1

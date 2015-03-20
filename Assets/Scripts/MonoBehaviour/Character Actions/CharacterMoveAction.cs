@@ -14,7 +14,7 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 	//serialized data
 	public GameObject source = null;
 	public float defaultSpeedUPS = 1.0f;
-	public string terrainLayerName = "Terrain";
+	public LayerMask movableLayers;
 	public float minimumDistance = 0.1f;
 	public CharacterActionID id;
 
@@ -186,7 +186,6 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 			if (firstTouch.Collider != null)
 			{
 				int targetLayerMask = 1 << firstTouch.Collider.gameObject.layer;
-				int terrainLayerMask = 1 << LayerMask.NameToLayer(terrainLayerName);
 				if (firstTouch.Phase == TouchPhase.Began)
 				{
 					currentFingerId = firstTouch.FingerId;
@@ -195,7 +194,7 @@ public class CharacterMoveAction : EventTransceiverBehavior, ICharacterAction {
 				         currentFingerId == firstTouch.FingerId)
 					currentFingerId = -1;
 				if (currentFingerId == firstTouch.FingerId &&
-				    (targetLayerMask & terrainLayerMask) == terrainLayerMask)
+				    (targetLayerMask & movableLayers) == targetLayerMask)
 				{
 					StartMove(firstTouch.Point);
 				}

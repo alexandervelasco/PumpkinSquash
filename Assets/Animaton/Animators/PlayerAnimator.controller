@@ -189,8 +189,8 @@ Transition:
   m_Name: Run End to Run Loop
   m_SrcState: {fileID: 110284890}
   m_DstState: {fileID: 110248082}
-  m_TransitionDuration: .327127457
-  m_TransitionOffset: .280851245
+  m_TransitionDuration: .0530045703
+  m_TransitionOffset: 0
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: Run

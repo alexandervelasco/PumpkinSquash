@@ -7,6 +7,7 @@ public class CharacterActionDespawner : EventTransceiverBehavior {
 	//serialized data
 	public string spawnPoolName = string.Empty;
 	public CharacterActionID characterActionID = CharacterActionID.None;
+	public CharacterActionStatus characterActionStatus = CharacterActionStatus.Active;
 
 	private SpawnPool spawnPool = null;
 	private Transform localTransform = null;
@@ -27,7 +28,8 @@ public class CharacterActionDespawner : EventTransceiverBehavior {
 	public override void ReceiveEvent (string eventName, object args, object sender)
 	{
 		ICharacterAction characterAction = args as ICharacterAction;
-		if (characterAction != null && characterAction.ID == characterActionID && characterAction.Source.transform == localTransform &&
+		if (characterAction != null && characterAction.ID == characterActionID && (characterAction.Status & characterActionStatus) == characterActionStatus &&
+		    characterAction.Source.transform == localTransform &&
 		    spawnPool != null && spawnPool.IsSpawned(localTransform)) 
 		{
 			CallEvent(0, this);

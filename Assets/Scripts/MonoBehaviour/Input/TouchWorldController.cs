@@ -5,6 +5,7 @@ public class TouchWorldController : EventTransceiverBehavior {
 
 	//serialized data
 	public Camera referenceCamera;
+	public LayerMask raycastLayers;
 
 	// Use this for initialization
 	void Start () {
@@ -34,7 +35,7 @@ public class TouchWorldController : EventTransceiverBehavior {
 					                                                       gameTouch.Position.y,
 					                                                       0));
 					RaycastHit hit;
-					if (Physics.Raycast(ray, out hit))
+					if (Physics.Raycast(ray, out hit, float.PositiveInfinity, raycastLayers))
 						worldTouch = new WorldTouch(gameTouch, hit);
 					else
 						worldTouch = new WorldTouch(gameTouch);
