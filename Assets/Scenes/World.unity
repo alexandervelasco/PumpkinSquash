@@ -1743,8 +1743,9 @@ GameObject:
   - 222: {fileID: 265068022}
   - 114: {fileID: 265068021}
   - 114: {fileID: 265068024}
+  - 114: {fileID: 265068025}
   m_Layer: 5
-  m_Name: Current Kills
+  m_Name: Current Kills Count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1764,13 +1765,13 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
-    m_FontStyle: 0
+    m_Font: {fileID: 12800000, guid: ebb42c5a957ee77419e37891811738d9, type: 3}
+    m_FontSize: 50
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -1812,6 +1813,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registeredEvents:
   - EVENT_GAMEDATASETCURRENT
+--- !u!114 &265068025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 265068020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: .501960814}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &272597488
 GameObject:
   m_ObjectHideFlags: 0
@@ -2142,8 +2157,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 330502559}
   - 114: {fileID: 330502560}
-  - 114: {fileID: 330502561}
-  - 114: {fileID: 330502558}
   m_Layer: 0
   m_Name: Debug
   m_TagString: Untagged
@@ -2151,18 +2164,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &330502558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 330502557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a14425594e2ac547a061ff4cd8c1958, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  registeredEvents: []
 --- !u!4 &330502559
 Transform:
   m_ObjectHideFlags: 0
@@ -2172,8 +2173,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .134599686, y: .91832608, z: -.382577777}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 940656353}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11
 --- !u!114 &330502560
@@ -2191,23 +2191,6 @@ MonoBehaviour:
   - EVENT_TOUCHSET
   - EVENT_TOUCH
   mouseButtonId: 0
---- !u!114 &330502561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 330502557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dff12e82aed006a40b1114d502f59080, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  registeredEvents: []
-  testEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
 --- !u!1 &331603885
 GameObject:
   m_ObjectHideFlags: 0
@@ -2963,9 +2946,9 @@ Light:
   m_Enabled: 1
   serializedVersion: 3
   m_Type: 2
-  m_Color: {r: .970588207, g: .858370125, b: .756487846, a: 1}
+  m_Color: {r: .926470578, g: .787218153, b: .660791516, a: 1}
   m_Intensity: 1
-  m_Range: 8
+  m_Range: 20
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -3550,8 +3533,9 @@ GameObject:
   - 224: {fileID: 606184433}
   - 222: {fileID: 606184432}
   - 114: {fileID: 606184431}
+  - 114: {fileID: 606184434}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Top Kills Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3571,18 +3555,18 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 10
+    m_Font: {fileID: 12800000, guid: ebb42c5a957ee77419e37891811738d9, type: 3}
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: TOP
+  m_Text: Top
 --- !u!222 &606184432
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3606,6 +3590,20 @@ RectTransform:
   m_AnchoredPosition: {x: 30, y: 0}
   m_SizeDelta: {x: 30, y: 0}
   m_Pivot: {x: .5, y: .5}
+--- !u!114 &606184434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 606184430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: .5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &606960163
 GameObject:
   m_ObjectHideFlags: 0
@@ -4365,8 +4363,9 @@ GameObject:
   - 222: {fileID: 868338723}
   - 114: {fileID: 868338722}
   - 114: {fileID: 868338724}
+  - 114: {fileID: 868338725}
   m_Layer: 5
-  m_Name: Top Kills
+  m_Name: Top Kills Count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4386,7 +4385,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 45, y: 0}
+  m_AnchoredPosition: {x: 70, y: 0}
   m_SizeDelta: {x: 50, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &868338722
@@ -4403,13 +4402,13 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 10
+    m_Font: {fileID: 12800000, guid: ebb42c5a957ee77419e37891811738d9, type: 3}
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
-    m_Alignment: 4
+    m_Alignment: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -4434,6 +4433,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   registeredEvents:
   - EVENT_GAMEDATASETHIGH
+--- !u!114 &868338725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 868338720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: .5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &878437930
 GameObject:
   m_ObjectHideFlags: 0
@@ -4893,13 +4906,13 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 940656352}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.134599686, y: -.91832608, z: .382577777}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 654083915}
   - {fileID: 1617188407}
-  m_Father: {fileID: 330502559}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
 --- !u!114 &940656354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9708,7 +9721,7 @@ MonoBehaviour:
   movableLayers:
     serializedVersion: 2
     m_Bits: 256
-  minimumDistance: .100000001
+  minimumDistance: .200000003
   id: 1
 --- !u!4 &1930766352
 Transform:
