@@ -28,6 +28,23 @@ public class GameDataTracker : EventTransceiverBehavior {
 	
 	}
 
+	void OnApplicationPause(bool pauseStatus)
+	{
+		if (pauseStatus)
+			GameDataManager.SaveHigh(fileName);
+	}
+
+	void OnApplicationFocus(bool focusStatus)
+	{
+		if (!focusStatus)
+			GameDataManager.SaveHigh(fileName);
+	}
+
+	void OnApplicationQuit()
+	{
+		GameDataManager.SaveHigh(fileName);
+	}
+
 	#region implemented abstract members of EventTransceiverBehavior
 
 	public override void ReceiveEvent (string eventName, object args, object sender)
