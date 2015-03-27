@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &172664
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 472664}
+  - 114: {fileID: 11472662}
+  - 114: {fileID: 11472664}
+  m_Layer: 0
+  m_Name: Source Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &195638
 GameObject:
   m_ObjectHideFlags: 1
@@ -42,6 +59,7 @@ GameObject:
   - 4: {fileID: 495654}
   - 54: {fileID: 5495664}
   - 136: {fileID: 13695664}
+  - 135: {fileID: 13543854}
   - 114: {fileID: 11495618}
   - 114: {fileID: 11495620}
   - 114: {fileID: 11495622}
@@ -103,8 +121,6 @@ GameObject:
   - 4: {fileID: 495658}
   - 114: {fileID: 11495642}
   - 114: {fileID: 11495644}
-  - 114: {fileID: 11495646}
-  - 114: {fileID: 11495648}
   m_Layer: 0
   m_Name: Suicide Bomb
   m_TagString: Untagged
@@ -227,6 +243,8 @@ GameObject:
   - 198: {fileID: 19895664}
   - 199: {fileID: 19995664}
   - 114: {fileID: 11495664}
+  - 82: {fileID: 8229812}
+  - 114: {fileID: 11423262}
   m_Layer: 0
   m_Name: Sparks
   m_TagString: Untagged
@@ -252,6 +270,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &472664
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172664}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 495658}
+  m_RootOrder: 0
 --- !u!4 &495650
 Transform:
   m_ObjectHideFlags: 1
@@ -316,7 +346,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -.449999988, y: -.949999988, z: -.949999988}
   m_LocalScale: {x: .5, y: .5, z: .5}
-  m_Children: []
+  m_Children:
+  - {fileID: 472664}
   m_Father: {fileID: 495654}
   m_RootOrder: 3
 --- !u!4 &495660
@@ -399,6 +430,64 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!82 &8229812
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195662}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: ab8c53c977c7c3e448c3ea14a3b9fd27, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: .100000001
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 10
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!108 &10895664
 Light:
   m_ObjectHideFlags: 1
@@ -448,6 +537,79 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &11423262
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb0a503be31ac2749b768c6bb2bdcfba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8229812}
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &11472662
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdcab7da2c678514abcc2c525715c577, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 195642}
+  positionOffset: {x: 0, y: 0, z: 0}
+  onPositionPick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11472664}
+        m_MethodName: Spawn
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: RelativePositionPicker+UnityEvent_RelativePositionPicker_1, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+--- !u!114 &11472664
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4893b0476fbb6de48a6021e674b6e62b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  registeredEvents: []
+  calledEvents: []
+  spawnPoolName: effectPool
+  spawnedPrefab: {fileID: 168990, guid: 9dd7807acc776184c9d712814335b0ee, type: 2}
 --- !u!114 &11495610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -868,7 +1030,7 @@ MonoBehaviour:
   onCharacterAction:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11495646}
+      - m_Target: {fileID: 11472662}
         m_MethodName: CalculateRelativePosition
         m_Mode: 1
         m_Arguments:
@@ -884,51 +1046,6 @@ MonoBehaviour:
       Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   source: {fileID: 195642}
   matchSource: 1
---- !u!114 &11495646
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 195648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdcab7da2c678514abcc2c525715c577, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  source: {fileID: 195642}
-  positionOffset: {x: 0, y: 0, z: 0}
-  onPositionPick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11495648}
-        m_MethodName: Spawn
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: RelativePositionPicker+UnityEvent_RelativePositionPicker_1, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &11495648
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 195648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4893b0476fbb6de48a6021e674b6e62b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  registeredEvents: []
-  calledEvents: []
-  spawnPoolName: effectPool
-  spawnedPrefab: {fileID: 168990, guid: 9dd7807acc776184c9d712814335b0ee, type: 2}
 --- !u!114 &11495650
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1120,6 +1237,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnlyDeactivate: 0
+--- !u!135 &13543854
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195642}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &13695664
 CapsuleCollider:
   m_ObjectHideFlags: 1

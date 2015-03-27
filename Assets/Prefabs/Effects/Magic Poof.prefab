@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoolName: effectPool
-  checkInterval: .25
+  checkInterval: 1
 --- !u!114 &11456844
 MonoBehaviour:
   m_ObjectHideFlags: 1
