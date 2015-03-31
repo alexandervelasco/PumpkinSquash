@@ -242,7 +242,6 @@ GameObject:
   - 4: {fileID: 489774}
   - 198: {fileID: 19889778}
   - 199: {fileID: 19989778}
-  - 114: {fileID: 11489778}
   - 82: {fileID: 8245448}
   - 114: {fileID: 11447738}
   m_Layer: 0
@@ -1282,18 +1281,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11489778
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 189774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fd2e8874f60266498a388d7229a1bac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnlyDeactivate: 0
 --- !u!135 &13528662
 SphereCollider:
   m_ObjectHideFlags: 1
