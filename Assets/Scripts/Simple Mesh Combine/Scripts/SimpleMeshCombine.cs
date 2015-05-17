@@ -25,7 +25,7 @@ public class SimpleMeshCombine:MonoBehaviour{
 	
 		public void EnableRenderers(bool e) {	
 	    	for(int i = 0; i < combinedGameOjects.Length; i++){
-	        	combinedGameOjects[i].renderer.enabled = e;
+	        	combinedGameOjects[i].GetComponent<Renderer>().enabled = e;
 	   		}  
 		}
 	
