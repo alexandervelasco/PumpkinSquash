@@ -394,7 +394,7 @@ PlayerSettings:
   - WebGL::analyzeBuildSize
   - WebGL::dataCaching
   WebGL::analyzeBuildSize: 0
-  WebGL::dataCaching: 0
+  WebGL::dataCaching: 1
   stringPropertyNames:
   - WebGL::emscriptenArgs
   - WebGL::template
